@@ -1,12 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <button @click="getHello()">Click me</button>
+    <br>
+    <h2>{{hello}}</h2>
   </div>
 </template>
+
+<script>
+
+import api from "./backend-api";
+
+export default {
+  name: 'App',
+
+  data() {
+    return {
+      hello: '',
+      errors: []
+    }
+  },
+
+  methods: {
+    getHello () {
+      api.hello().then(response => {
+        this.hello = response.data.toLowerCase();
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  }
+}
+</script>
 
 <style>
 #app {
@@ -15,18 +40,6 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+  margin-top: 60px;
 }
 </style>
