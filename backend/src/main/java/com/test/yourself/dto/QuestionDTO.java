@@ -1,20 +1,20 @@
-package com.test.yourself.model;
+package com.test.yourself.dto;
 
-import com.test.yourself.model.enums.QuestionMode;
+import com.test.yourself.model.Answer;
+import com.test.yourself.model.Subject;
 import lombok.Builder;
 import lombok.Data;
-
 
 import java.util.Set;
 
 @Data
 @Builder
-public class Question {
+public class QuestionDTO {
+
     private Long id;
-    private Subject subject;
+    private String subjectName;
     private String name;
     private String description;
     private Set<Answer> answers;
-    private QuestionMode mode;
-
+    private String mode;
 }

@@ -19,27 +19,7 @@ public class HelloController {
     @GetMapping("/hello")
     public Subject sayHello() {
 
-        Subject javaScript = Subject.builder()
-                .id(1L)
-                .name("JavaScript")
-                .build();
-        String strQ = "Где ключи от танка?";
-        Question question = Question.builder()
-                .id(1L)
-                .question(strQ)
-                .subject("javaScript")
-                .answers(Arrays.asList("У Васи","У Глухова","У Бэша"))
-                .correctAnswers(Arrays.asList("У Васи"))
-                .build();
-        String strQ2 = "Где еда?";
-        Question question2 = Question.builder()
-                .id(2L)
-                .question(strQ2)
-                .subject("javaScript")
-                .answers(Arrays.asList("У Васи","У Паши","У Бэша"))
-                .correctAnswers(Arrays.asList("У Бэша"))
-                .build();
-        javaScript.setQuestions(Arrays.asList(question,question2));
-        return javaScript;
+
+        return null;
     }
 }
