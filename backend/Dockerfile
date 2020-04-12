@@ -7,7 +7,7 @@ WORKDIR /testyourselfe
 # Just echo so we can see, if everything is there :)
 RUN ls -l
 
-RUN mvn clean verify
+RUN mvn clean install
 # Run Maven build
 
 FROM openjdk:8-jdk-alpine
