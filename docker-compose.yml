@@ -1,0 +1,53 @@
+
+version: '3.7'
+services:
+  db:
+    image: postgres
+    #hostname: postgres
+    container_name: testyourself-docker-db
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: postgres
+      POSTGRES_DB: testyourself
+    ports:
+      #- 5433:5432
+      - target: 5432
+        published: 5433
+        protocol: tcp
+        mode: host
+    networks:
+      - backdb
+    expose:
+      - 5433
+
+
+  back:
+    build: ./backend
+    image: testing/testyourself-back
+    container_name: testyourself-back
+    #environment:
+    #  WAIT_HOSTS: postgres:5433
+    ports:
+      - 8098:8098
+    depends_on:
+      - db
+    networks:
+      - frontback
+      - backdb
+
+  front:
+    build: ./frontend
+    image: testing/testyourself-front
+    container_name: testyourself-front
+    ports:
+      - 8080:8080
+    depends_on:
+      - back
+    networks:
+      - frontback
+
+networks:
+  backdb:
+    driver: bridge
+  frontback:
+    driver: bridge

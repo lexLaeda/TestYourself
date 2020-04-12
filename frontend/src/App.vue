@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <a href="http://localhost:8098/api/hello">Я езмь ссылка</a>
     <button @click="getHello()">Click me</button>
     <br>
     <h2>{{hello}}</h2>
