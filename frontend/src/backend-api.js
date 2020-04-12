@@ -11,5 +11,3 @@ export default {
         return AXIOS.get(`/hello`);
     }
 }
-
-

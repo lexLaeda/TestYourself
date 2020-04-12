@@ -1,2 +1,12 @@
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/model/Field.java
 /home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/TestYourselfApplication.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/service/FieldService.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/model/Question.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/service/TestService.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/model/Category.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/service/QuestionService.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/model/test/Test.java
 /home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/controller/HelloController.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/service/SubjectService.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/service/CategoryService.java
+/home/evgeniia/projects/TestYourself/backend/src/main/java/com/test/yourself/model/Subject.java

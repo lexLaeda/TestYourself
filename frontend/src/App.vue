@@ -1,46 +1,39 @@
 <template>
-  <div id="app">
-    <a href="http://localhost:8098/api/hello">Я езмь ссылка</a>
-    <button @click="getHello()">Click me</button>
-    <br>
-    <h2>{{hello}}</h2>
-  </div>
+  <v-app>
+    <v-container>
+      <v-row>
+        <v-col class="text-center">
+          <a href="http://localhost:8098/api/hello">Я езмь ссылка</a>
+          <v-btn color="primary" @click="getHello()">Click me</v-btn>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h2 class="text-center" v-if="hello.length">{{ hello }}</h2>
+        </v-col>
+      </v-row>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
-
 import api from "./backend-api";
-
 export default {
   name: 'App',
 
-  data() {
-    return {
-      hello: '',
-      errors: []
-    }
-  },
+  data: () => ({
+    hello: ''
+  }),
 
   methods: {
     getHello () {
       api.hello().then(response => {
-        this.hello = response.data.toLowerCase();
+        this.hello = response.data;
       })
-      .catch(e => {
-        this.errors.push(e)
-      })
+              .catch(e => {
+                this.errors.push(e)
+              })
     }
   }
-}
+};
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
