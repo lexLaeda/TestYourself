@@ -1,11 +1,15 @@
 package com.test.yourself.model;
 
-import java.util.List;
+import lombok.Builder;
+import lombok.Data;
 
+import java.util.List;
+@Data
+@Builder
 public class Question {
     private Long id;
-    private Category category;
-    private List<String> questions;
+    private String subject;
+    private String question;
     private List<String> answers;
     private List<String> correctAnswers;
 }
