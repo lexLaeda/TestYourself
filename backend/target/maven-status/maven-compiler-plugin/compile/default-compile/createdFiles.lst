@@ -1,0 +1,12 @@
+com\test\yourself\model\Question.class
+com\test\yourself\model\test\Test.class
+com\test\yourself\model\Category.class
+com\test\yourself\service\SubjectService.class
+com\test\yourself\service\FieldService.class
+com\test\yourself\service\TestService.class
+com\test\yourself\service\CategoryService.class
+com\test\yourself\TestYourselfApplication.class
+com\test\yourself\model\Field.class
+com\test\yourself\model\Subject.class
+com\test\yourself\controller\HelloController.class
+com\test\yourself\service\QuestionService.class
