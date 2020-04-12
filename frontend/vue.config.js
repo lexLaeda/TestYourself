@@ -1,8 +1,4 @@
 module.exports = {
-<<<<<<< HEAD
-
-};
-=======
   "devServer": {
     "proxy": {
       "/api": {
@@ -18,4 +14,3 @@ module.exports = {
     "vuetify"
   ]
 }
->>>>>>> f4fafcee461a40a43b8abf812dab4b91196cd38c
