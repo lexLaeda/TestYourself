@@ -2,20 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.5.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
     <groupId>com.test.testyourself</groupId>
     <modelVersion>4.0.0</modelVersion>
     <version>0.0.1</version>
     <artifactId>backend</artifactId>
     <packaging>jar</packaging>
+    <name>backend</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
-
         <!-- backend dependencies -->
-        <rest-assured.version>4.3.0</rest-assured.version>
         <postgresql.version>42.2.12</postgresql.version>
         <springboot.version>2.2.6.RELEASE</springboot.version>
     </properties>
@@ -36,6 +38,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${springboot.version}</version>
             </plugin>
         </plugins>
     </build>

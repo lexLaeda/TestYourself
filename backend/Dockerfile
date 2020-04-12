@@ -8,9 +8,9 @@ WORKDIR /testyourselfe
 RUN ls -l
 
 RUN mvn clean install
-# Run Maven build
 
 FROM openjdk:8-jdk-alpine
-VOLUME /tmp
-COPY target/*.jar app.jar
+ARG JAR_FILE=/target/*.jar
+COPY ${JAR_FILE} app.jar
+EXPOSE 8098
 ENTRYPOINT ["java","-jar","/app.jar"]
