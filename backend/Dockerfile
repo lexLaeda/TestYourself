@@ -1,16 +1,16 @@
 # Docker multi-stage build
-
-# 1. Building the App with Maven
 FROM maven:3-jdk-8
 
-ADD . /testyourself
-WORKDIR /testyourself
+ADD . /testyourselfe
+WORKDIR /testyourselfe
 
 # Just echo so we can see, if everything is there :)
 RUN ls -l
 
+RUN mvn clean verify
 # Run Maven build
-RUN mvn clean install
 
-
-RUN mvn --projects backend spring-boot:run
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+COPY target/*.jar app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
