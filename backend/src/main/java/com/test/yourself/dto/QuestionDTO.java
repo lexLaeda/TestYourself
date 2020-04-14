@@ -1,7 +1,6 @@
 package com.test.yourself.dto;
 
 import com.test.yourself.model.Answer;
-import com.test.yourself.model.Subject;
 import lombok.Builder;
 import lombok.Data;
 

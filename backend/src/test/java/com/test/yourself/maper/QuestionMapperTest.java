@@ -43,7 +43,7 @@ public class QuestionMapperTest {
     @Test
     public void toDTO() {
         Subject subject = Subject.builder()
-                .questions(new ArrayList<>())
+                .questions(new HashSet<>())
                 .name(SUBJECTNAME)
                 .id(TESTID)
                 .build();
