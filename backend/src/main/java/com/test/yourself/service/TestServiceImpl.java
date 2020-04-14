@@ -5,6 +5,7 @@ import com.test.yourself.model.Subject;
 import com.test.yourself.model.test.Test;
 
 import com.test.yourself.model.test.TestResult;
+import com.test.yourself.util.CacheImpl;
 import com.test.yourself.util.RandomCollectionGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,10 +20,15 @@ public class TestServiceImpl implements TestService {
 
     private RandomCollectionGenerator randomCollectionGenerator;
 
+    private CacheImpl<Test> testCache;
+
     @Autowired
-    public TestServiceImpl(SubjectService subjectService, RandomCollectionGenerator randomCollectionGenerator){
+    public TestServiceImpl(SubjectService subjectService, RandomCollectionGenerator randomCollectionGenerator
+            ,CacheImpl<Test> testCache){
+
         this.subjectService = subjectService;
         this.randomCollectionGenerator = randomCollectionGenerator;
+        this.testCache = testCache;
     }
 
     @Override

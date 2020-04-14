@@ -13,6 +13,8 @@ import java.util.Set;
 @Builder
 public class Test {
 
+    private Long id;
+
     private Subject subject;
 
     private Set<Question> questionSet;

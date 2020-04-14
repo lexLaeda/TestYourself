@@ -1,6 +1,7 @@
 package com.test.yourself.service;
 
 import com.test.yourself.dto.QuestionDTO;
+import com.test.yourself.exception.QuestionNotFoundException;
 import com.test.yourself.maper.QuestionMapper;
 import com.test.yourself.model.Question;
 import com.test.yourself.model.Subject;
@@ -33,6 +34,34 @@ public class QuestionServiceImpl implements QuestionService {
         return questions.stream()
                 .filter(question -> subject.equals(question.getSubject()))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Question> findAllBySubjectId(Long subjectId) {
+
+        return questionRepository.findAllBySubjectId(subjectId);
+    }
+
+    @Override
+    public List<Question> findAll() {
+        return questionRepository.findAll();
+    }
+
+    @Override
+    public Question findById(Long id) {
+        return questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new);
+    }
+
+    @Override
+    public Question update(Question question, Long id) {
+        Question questionFromDb = questionRepository.findById(id)
+                .orElseThrow(QuestionNotFoundException::new);
+        questionFromDb.setAnswers(question.getAnswers());
+        questionFromDb.setDescription(question.getDescription());
+        questionFromDb.setMode(question.getMode());
+        questionFromDb.setName(question.getName());
+        questionFromDb.setSubject(question.getSubject());
+        return questionRepository.saveAndFlush(questionFromDb);
     }
 
 

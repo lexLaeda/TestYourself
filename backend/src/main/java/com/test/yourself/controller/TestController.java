@@ -15,10 +15,12 @@ public class TestController {
     public TestController(TestService testService){
             this.testService = testService;
     }
+
     @GetMapping(value = "/random test", params = {"subject_id", "amount"})
     public @ResponseBody Test generateRandomTest(
             @RequestParam("subject_id") Long subjectID,
             @RequestParam("amount") int amount) {
             return testService.generateRandomTest(subjectID,amount);
     }
+
 }

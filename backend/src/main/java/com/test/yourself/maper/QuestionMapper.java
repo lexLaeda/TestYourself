@@ -26,7 +26,7 @@ public class QuestionMapper implements Mapper<Question, QuestionDTO> {
         QuestionDTO questionDTO = QuestionDTO.builder()
                 .id(question.getId())
                 .name(question.getName())
-                .subjectName(question.getSubject().getName())
+                .subjectId(question.getSubject().getId())
                 .description(question.getDescription())
                 .answers(question.getAnswers())
                 .mode(question.getMode().name())
@@ -40,8 +40,8 @@ public class QuestionMapper implements Mapper<Question, QuestionDTO> {
      */
     @Override
     public Question fromDTO(QuestionDTO questionDTO) {
-        String subjectNameFromQuestionDTO = questionDTO.getSubjectName();
-        Subject subject = subjectService.findSubjectByName(subjectNameFromQuestionDTO);
+        Long subjectId = questionDTO.getSubjectId();
+        Subject subject = subjectService.findSubjectById(subjectId);
         QuestionMode mode = getQuestionModeByName(questionDTO.getMode());
         Question question = Question.builder()
                 .id(questionDTO.getId())

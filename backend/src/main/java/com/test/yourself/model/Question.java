@@ -1,8 +1,10 @@
 package com.test.yourself.model;
 
 import com.test.yourself.model.enums.QuestionMode;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -10,13 +12,15 @@ import java.util.Set;
 @Data
 @Builder
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 public class Question {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
     private String name;
