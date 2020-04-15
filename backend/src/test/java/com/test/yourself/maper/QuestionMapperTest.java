@@ -1,20 +1,15 @@
 package com.test.yourself.maper;
 
-import com.test.yourself.model.Answer;
 import com.test.yourself.model.Question;
 import com.test.yourself.model.Subject;
-import com.test.yourself.service.SubjectService;
+import com.test.yourself.service.subject.SubjectService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import static org.junit.Assert.*;
 
 @SpringBootTest()
 public class QuestionMapperTest {
@@ -31,7 +26,7 @@ public class QuestionMapperTest {
 
     private static Set<String> answers;
 
-    private Answer answer = new Answer();
+
 
     @Before
     public void setUp() throws Exception {

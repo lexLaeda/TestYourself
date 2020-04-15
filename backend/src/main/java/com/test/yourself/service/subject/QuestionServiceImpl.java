@@ -1,8 +1,6 @@
-package com.test.yourself.service;
+package com.test.yourself.service.subject;
 
-import com.test.yourself.dto.QuestionDTO;
 import com.test.yourself.exception.QuestionNotFoundException;
-import com.test.yourself.maper.QuestionMapper;
 import com.test.yourself.model.Question;
 import com.test.yourself.model.Subject;
 import com.test.yourself.repository.QuestionRepository;
@@ -58,7 +56,6 @@ public class QuestionServiceImpl implements QuestionService {
                 .orElseThrow(QuestionNotFoundException::new);
         questionFromDb.setAnswers(question.getAnswers());
         questionFromDb.setDescription(question.getDescription());
-        questionFromDb.setMode(question.getMode());
         questionFromDb.setName(question.getName());
         questionFromDb.setSubject(question.getSubject());
         return questionRepository.saveAndFlush(questionFromDb);

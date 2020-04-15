@@ -1,4 +1,4 @@
-package com.test.yourself.service;
+package com.test.yourself.service.subject;
 
 import com.test.yourself.dto.QuestionDTO;
 import com.test.yourself.model.Question;

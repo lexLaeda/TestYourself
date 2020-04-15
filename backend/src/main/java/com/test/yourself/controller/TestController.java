@@ -1,26 +1,33 @@
 package com.test.yourself.controller;
 
 import com.test.yourself.model.test.Test;
-import com.test.yourself.service.TestService;
+import com.test.yourself.service.test.TestGeneratorService;
+import com.test.yourself.service.test.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "http://localhost:8080")
 @RequestMapping("/api/test")
 public class TestController {
-    private TestService testService;
 
     @Autowired
-    public TestController(TestService testService){
-            this.testService = testService;
-    }
+    @Qualifier(value = "testServiceDb")
+    private TestService testServiceDb;
+
+    @Autowired
+    @Qualifier(value = "testServiceCache")
+    private TestService testServiceCache;
+
+
+
 
     @GetMapping(value = "/random test", params = {"subject_id", "amount"})
     public @ResponseBody Test generateRandomTest(
             @RequestParam("subject_id") Long subjectID,
             @RequestParam("amount") int amount) {
-            return testService.generateRandomTest(subjectID,amount);
+            return null;
     }
 
 }

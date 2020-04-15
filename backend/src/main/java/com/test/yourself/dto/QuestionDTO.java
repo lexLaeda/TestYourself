@@ -1,6 +1,5 @@
 package com.test.yourself.dto;
 
-import com.test.yourself.model.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +21,7 @@ public class QuestionDTO {
 
     private String description;
 
-    private Set<Answer> answers;
+
 
     private String mode;
 }

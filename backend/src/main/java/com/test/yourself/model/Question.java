@@ -1,12 +1,15 @@
 package com.test.yourself.model;
 
 import com.test.yourself.model.enums.QuestionMode;
+import com.test.yourself.model.test.Test;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -23,13 +26,21 @@ public class Question {
     @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "questions")
+    private List<Test> tests;
+
     private String name;
 
     private String description;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<Answer> answers;
+    @ElementCollection
+    @CollectionTable(name = "order_question_mapping",
+            joinColumns = {@JoinColumn(name = "question_id", referencedColumnName = "id")})
+    @MapKeyColumn(name = "answer_number")
+    @Column(name = "answer")
+    private Map<Integer,String> answers;
 
-    @Enumerated(EnumType.STRING)
-    private QuestionMode mode;
+    @ElementCollection
+    private List<Integer> correctAnswers;
+    
 }

@@ -1,5 +1,6 @@
 package com.test.yourself.model;
 
+import com.test.yourself.model.test.Test;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class Subject {
     private Long id;
 
     private String name;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
+    private List<Test> tests;
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "subject")
     private Set<Question> questions;

@@ -1,6 +1,5 @@
-package com.test.yourself.service;
+package com.test.yourself.service.subject;
 
-import com.test.yourself.dto.SubjectDTO;
 import com.test.yourself.exception.SubjectNotFoundException;
 import com.test.yourself.model.Subject;
 import com.test.yourself.repository.SubjectRepository;
@@ -64,5 +63,15 @@ public class SubjectServiceImpl implements SubjectService {
         Subject subjectFromDb = subjectRepository.findById(id).orElseThrow(SubjectNotFoundException::new);
         subjectFromDb.setName(subjectName);
         return subjectRepository.saveAndFlush(subjectFromDb);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        subjectRepository.deleteById(id);
+    }
+
+    @Override
+    public void delete(Subject subject) {
+        subjectRepository.delete(subject);
     }
 }

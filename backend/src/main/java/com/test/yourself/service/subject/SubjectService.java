@@ -1,4 +1,4 @@
-package com.test.yourself.service;
+package com.test.yourself.service.subject;
 
 import com.test.yourself.dto.SubjectDTO;
 import com.test.yourself.model.Subject;
@@ -17,4 +17,8 @@ public interface SubjectService {
     Subject update(Subject subject, Long id);
 
     Subject updateName(String subjectName, Long id);
+
+    void deleteById(Long id);
+
+    void delete(Subject subject);
 }

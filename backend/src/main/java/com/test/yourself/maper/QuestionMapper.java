@@ -4,7 +4,7 @@ import com.test.yourself.dto.QuestionDTO;
 import com.test.yourself.model.Question;
 import com.test.yourself.model.Subject;
 import com.test.yourself.model.enums.QuestionMode;
-import com.test.yourself.service.SubjectService;
+import com.test.yourself.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +28,7 @@ public class QuestionMapper implements Mapper<Question, QuestionDTO> {
                 .name(question.getName())
                 .subjectId(question.getSubject().getId())
                 .description(question.getDescription())
-                .answers(question.getAnswers())
-                .mode(question.getMode().name())
+
                 .build();
         return questionDTO;
     }
@@ -47,9 +46,6 @@ public class QuestionMapper implements Mapper<Question, QuestionDTO> {
                 .id(questionDTO.getId())
                 .subject(subject)
                 .name(questionDTO.getName())
-                .mode(mode)
-                .description(questionDTO.getDescription())
-                .answers(questionDTO.getAnswers())
                 .build();
         return question;
     }

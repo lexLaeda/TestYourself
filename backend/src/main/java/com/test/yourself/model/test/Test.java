@@ -5,18 +5,25 @@ import com.test.yourself.model.Subject;
 import lombok.Builder;
 import lombok.Data;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
+import java.util.Map;
 import java.util.Set;
 
 
 @Data
 @Builder
+@Entity
 public class Test {
-
+    @Id
+    @GeneratedValue
     private Long id;
 
+    @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
-    private Set<Question> questionSet;
+    private String name;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set <Question> questions;
 
 }
