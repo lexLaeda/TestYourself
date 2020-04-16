@@ -1,53 +1,121 @@
 <template>
   <div>
     <v-card
-        class="my-10 mx-auto"
-        max-width="700"
+      class="my-10 mx-auto"
+      max-width="700"
     >
       <v-card-title class="display-1">Добавить вопрос</v-card-title>
       <v-card-text>
-        <v-form>
+        <v-form
+          ref="form"
+          v-model="valid"
+          lazy-validation
+        >
           <v-text-field
-              label="Название"
-              outlined
-              required
+            v-model="postData.name"
+            label="Название"
+            :rules="[v => !!v || validText]"
+            outlined
+            required
           ></v-text-field>
 
           <v-textarea
-              label="Текст вопроса"
-              outlined
+            v-model="postData.description"
+            label="Текст вопроса"
+            outlined
           ></v-textarea>
 
           <v-combobox
-              :items="subjects"
-              label="Предмет"
-              outlined
-              clearable
+            v-model="postData.subject"
+            :items="subjects"
+            label="Предмет"
+            :rules="[v => !!v || validText]"
+            outlined
+            clearable
+            required
           ></v-combobox>
 
           <v-select
-              v-model="postData.type"
-              :items="question_types"
-              label="Тип вопроса"
-              outlined
+            v-model="postData.type"
+            :items="question_types"
+            label="Тип вопроса"
+            outlined
           ></v-select>
 
           <v-card
-              outlined
+            outlined
           >
             <v-card-title>Варианты ответов</v-card-title>
             <v-card-text>
-              <template v-if="postData.type === 'checkbox'">222</template>
-              <template v-else>111</template>
+              <template v-if="postData.type === 'checkbox'">
+                <div class="d-flex flex-column">
+                  <v-row v-for="(element, index) in answers"
+                         :key="index">
+                    <v-col cols="auto">
+                      <v-checkbox
+                          v-model="postData.current"
+                          :value="index"
+                      >
+                      </v-checkbox>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                          v-model="answers[index]"
+                          :label="'Ответ' + (index + 1)"
+                          :rules="[v => !!v || validText]"
+                          outlined
+                          required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="auto">
+                      <v-btn @click="removeAnswer(index)">Удалить</v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-btn @click="addAnswer">Добавить</v-btn>
+                </div>
+              </template>
+              <template v-else>
+                <v-radio-group
+                    v-model="postData.current[0]">
+                  <v-row v-for="(element, index) in answers"
+                   :key="index">
+                    <v-col cols="auto">
+                      <v-radio
+                        :value="index"
+                      >
+                      </v-radio>
+                    </v-col>
+                    <v-col>
+                      <v-text-field
+                        v-model="answers[index]"
+                        :label="'Ответ' + (index + 1)"
+                        :rules="[v => !!v || validText]"
+                        outlined
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="auto">
+                      <v-btn @click="removeAnswer(index)">Удалить</v-btn>
+                    </v-col>
+                  </v-row>
+                  <v-btn @click="addAnswer">Добавить</v-btn>
+                </v-radio-group>
+              </template>
             </v-card-text>
           </v-card>
 
           <v-row class="mt-4">
             <v-col cols="auto">
-              <v-btn large dark color="cyan darken-1">Сохранить</v-btn>
+              <v-btn large color="cyan darken-1 white--text"
+               :disabled="!valid"
+               @click="validate"
+              >Сохранить</v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn large dark color="cyan darken-1">Сохранить и добавить новый</v-btn>
+              <v-btn large color="cyan darken-1 white--text"
+               :disabled="!valid"
+               @click="validate"
+              >Сохранить и добавить новый</v-btn>
             </v-col>
             <v-col cols="auto" class="ml-auto">
               <v-btn large text>Отменить</v-btn>
@@ -64,12 +132,34 @@
     name: 'AddQuestion',
 
     data: () => ({
-      postData: {},
+      answers: ['', ''],
+      valid: true,
+      validText: 'Обязательное поле',
+      postData: {
+          type: 'radio',
+          current: []
+      },
       question_types: [
         {text: 'одиночный', value: 'radio'},
         {text: 'множественный выбор', value: 'checkbox'}
       ],
-      subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок']
+      subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок'],
     }),
+
+    methods: {
+      addAnswer() {
+        this.answers.push('');
+      },
+
+      removeAnswer(index) {
+        this.answers.splice(index, 1);
+      },
+
+      validate() {
+        this.$refs.form.validate();
+        this.postData.answers = this.answers;
+        console.log('postData =>', this.postData);
+      }
+    }
   };
 </script>
