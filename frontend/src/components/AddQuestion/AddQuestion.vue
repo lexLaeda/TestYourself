@@ -154,12 +154,16 @@
       removeAnswer(index) {
         let current = this.postData.current;
         this.answers.splice(index, 1);
-        if (current.includes(index)) {
-          current.splice(current.indexOf(index), 1);
-        }
-        if (current.includes(index + 1)) {
-          current.splice(current.indexOf(index + 1), 1);
-          current.push(index);
+        if (current.length > 1) {
+          console.log('памагити');
+        } else {
+            if (current.includes(index)) {
+                current.splice(current.indexOf(index), 1);
+            }
+            if (current.includes(index + 1)) {
+                current.splice(current.indexOf(index + 1), 1);
+                current.push(index);
+            }
         }
       },
 
