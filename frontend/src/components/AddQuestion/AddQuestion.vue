@@ -67,11 +67,11 @@
                           required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="auto">
-                      <v-btn @click="removeAnswer(index)">Удалить</v-btn>
+                    <v-col v-if="index > 1" cols="auto">
+                      <v-btn @click="removeAnswer(index)" color="red lighten-1 white--text">Удалить</v-btn>
                     </v-col>
                   </v-row>
-                  <v-btn @click="addAnswer">Добавить</v-btn>
+                  <v-btn @click="addAnswer" color="cyan darken-1 white--text">Добавить</v-btn>
                 </div>
               </template>
               <template v-else>
@@ -94,11 +94,11 @@
                         required
                       ></v-text-field>
                     </v-col>
-                    <v-col cols="auto">
-                      <v-btn @click="removeAnswer(index)">Удалить</v-btn>
+                    <v-col v-if="index > 1" cols="auto">
+                      <v-btn @click="removeAnswer(index)" color="red lighten-1 white--text">Удалить</v-btn>
                     </v-col>
                   </v-row>
-                  <v-btn @click="addAnswer">Добавить</v-btn>
+                  <v-btn @click="addAnswer" color="cyan darken-1 white--text">Добавить</v-btn>
                 </v-radio-group>
               </template>
             </v-card-text>
@@ -106,13 +106,13 @@
 
           <v-row class="mt-4">
             <v-col cols="auto">
-              <v-btn large color="cyan darken-1 white--text"
+              <v-btn large color="green lighten-1 white--text"
                :disabled="!valid"
                @click="validate"
               >Сохранить</v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn large color="cyan darken-1 white--text"
+              <v-btn large color="green lighten-1 white--text"
                :disabled="!valid"
                @click="validate"
               >Сохранить и добавить новый</v-btn>
@@ -152,7 +152,15 @@
       },
 
       removeAnswer(index) {
+        let current = this.postData.current;
         this.answers.splice(index, 1);
+        if (current.includes(index)) {
+          current.splice(current.indexOf(index), 1);
+        }
+        if (current.includes(index + 1)) {
+          current.splice(current.indexOf(index + 1), 1);
+          current.push(index);
+        }
       },
 
       validate() {
