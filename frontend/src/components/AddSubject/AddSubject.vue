@@ -40,13 +40,13 @@
 </template>
 
 <script>
-  // import api from "../../backend-api";
+  import api from "../../backend-api";
 
   export default {
     name: 'AddSubject',
 
     data: () => ({
-      valid: true,
+      valid: false,
       validText: 'Обязательное поле',
       postData: {
         num_q: 0
@@ -56,7 +56,15 @@
     methods: {
       sendSubject() {
         this.$refs.form.validate();
-        console.log('postData =>', this.postData);
+        let postData = JSON.stringify(this.postData);
+        console.log('postData =>', this.postData, postData);
+        api.addSubject(postData)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(error => {
+          console.log(error.response.data);
+        });
       }
     }
   }
