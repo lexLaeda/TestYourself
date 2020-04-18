@@ -51,7 +51,12 @@ public class SubjectController {
 
     @GetMapping("/{id}")
     public SubjectDTO findSubjectById(@PathVariable Long id){
-        Subject subject = subjectService.findSubjectById(id);
-        return subjectMapper.toDTO(subject);
+        
+        SubjectDTO sub = new SubjectDTO();
+        sub.setId(1L);
+        sub.setName("Java");
+        sub.setDescription("helloWorld");
+        sub.setNumberOfQuestions(0);
+        return sub;
     }
 }
