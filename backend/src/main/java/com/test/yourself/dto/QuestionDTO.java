@@ -21,7 +21,5 @@ public class QuestionDTO {
 
     private String description;
 
-
-
     private String mode;
 }

@@ -8,6 +8,6 @@ const AXIOS = axios.create({
 
 export default {
     hello() {
-        return AXIOS.get(`/hello`);
+        return AXIOS.get(`/questions/all`);
     }
 }

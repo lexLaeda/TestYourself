@@ -36,7 +36,7 @@
           ></v-combobox>
 
           <v-select
-            v-model="postData.type"
+            v-model="postData.mode"
             :items="question_types"
             label="Тип вопроса"
             outlined
@@ -47,7 +47,7 @@
           >
             <v-card-title>Варианты ответов</v-card-title>
             <v-card-text>
-              <template v-if="postData.type === 'checkbox'">
+              <template v-if="postData.mode === 'MULTI'">
                 <div class="d-flex flex-column">
                   <v-row v-for="(element, index) in answers"
                          :key="index">
@@ -128,7 +128,8 @@
 </template>
 
 <script>
-  export default {
+    import api from "../../backend-api";
+    export default {
     name: 'AddQuestion',
 
     data: () => ({
@@ -136,12 +137,12 @@
       valid: true,
       validText: 'Обязательное поле',
       postData: {
-          type: 'radio',
+          mode: 'SINGLE',
           current: []
       },
       question_types: [
-        {text: 'одиночный', value: 'radio'},
-        {text: 'множественный выбор', value: 'checkbox'}
+        {text: 'одиночный', value: 'SINGLE'},
+        {text: 'множественный выбор', value: 'MULTI'}
       ],
       subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок'],
     }),
@@ -171,6 +172,13 @@
         this.$refs.form.validate();
         this.postData.answers = this.answers;
         console.log('postData =>', this.postData);
+
+        api.hello().then(response => {
+            console.log(response.data);
+        })
+            .catch(e => {
+                this.errors.push(e)
+            })
       }
     }
   };
