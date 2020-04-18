@@ -111,15 +111,15 @@
                @click="validate"
               >Сохранить</v-btn>
             </v-col>
-            <v-col cols="auto">
-              <v-btn large color="green lighten-1 white--text"
-               :disabled="!valid"
-               @click="validate"
-              >Сохранить и добавить новый</v-btn>
-            </v-col>
-            <v-col cols="auto" class="ml-auto">
-              <v-btn large text>Отменить</v-btn>
-            </v-col>
+<!--            <v-col cols="auto">-->
+<!--              <v-btn large color="green lighten-1 white&#45;&#45;text"-->
+<!--               :disabled="!valid"-->
+<!--               @click="validate"-->
+<!--              >Сохранить и добавить новый</v-btn>-->
+<!--            </v-col>-->
+<!--            <v-col cols="auto" class="ml-auto">-->
+<!--              <v-btn large text>Отменить</v-btn>-->
+<!--            </v-col>-->
           </v-row>
         </v-form>
       </v-card-text>
