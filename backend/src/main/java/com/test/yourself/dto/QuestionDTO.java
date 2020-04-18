@@ -5,7 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Set;
+import javax.persistence.ElementCollection;
+import java.util.List;
+import java.util.Map;
+
 
 @Data
 @Builder
@@ -22,4 +25,8 @@ public class QuestionDTO {
     private String description;
 
     private String mode;
+
+    private Map<Integer,String> answers;
+
+    private List<Integer> correctAnswers;
 }

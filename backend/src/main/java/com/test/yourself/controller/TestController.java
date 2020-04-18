@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "http://localhost:8080")
 @RequestMapping("/api/test")
+@CrossOrigin(origins = "*", allowedHeaders = "http://localhost:8080")
 public class TestController {
 
     @Autowired
