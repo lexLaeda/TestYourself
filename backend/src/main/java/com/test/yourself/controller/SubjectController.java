@@ -27,7 +27,7 @@ public class SubjectController {
     public Map<Long,String> findMapSubjects(){
         return subjectService.findMapSubjects();
     }
-    @PostMapping("/add")
+    @PostMapping(value = "/add",produces = "application/json")
     public SubjectDTO addNewSubject(@RequestBody SubjectDTO subjectDTO){
         Subject subject = subjectMapper.fromDTO(subjectDTO);
         Subject savedSubject = subjectService.add(subject);
@@ -51,7 +51,7 @@ public class SubjectController {
 
     @GetMapping("/{id}")
     public SubjectDTO findSubjectById(@PathVariable Long id){
-        
+
         SubjectDTO sub = new SubjectDTO();
         sub.setId(1L);
         sub.setName("Java");
