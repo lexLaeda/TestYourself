@@ -40,7 +40,8 @@
 </template>
 
 <script>
-  import api from "../../backend-api";
+  import axios from 'axios';
+  import { objectToFormData } from "object-to-formdata";
 
   export default {
     name: 'AddSubject',
@@ -57,14 +58,22 @@
       sendSubject() {
         this.$refs.form.validate();
         let postData = JSON.stringify(this.postData);
-        console.log('postData =>', this.postData, postData);
-        api.addSubject(postData)
-          .then(response => {
-            console.log(response.data);
+        let postData2 = objectToFormData(this.postData);
+        console.log('postData =>', this.postData, postData, postData2);
+        axios.post('http://localhost:8098/api/subjects/add', postData)
+          .then(function (response) {
+            console.log(response);
           })
-          .catch(error => {
-          console.log(error.response.data);
-        });
+          .catch(function (error) {
+            console.log(error);
+          });
+//         let xhr = new XMLHttpRequest();
+//         xhr.open("POST", 'http://localhost:8098/api/subjects/add', true)
+//
+// // Отсылаем объект в формате JSON и с Content-Type application/json
+// // Сервер должен уметь такой Content-Type принимать и раскодировать
+//         xhr.send(postData);
+
       }
     }
   }

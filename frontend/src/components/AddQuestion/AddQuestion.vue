@@ -124,6 +124,8 @@
         </v-form>
       </v-card-text>
     </v-card>
+
+    {{hello}}
   </div>
 </template>
 
@@ -145,6 +147,7 @@
         {text: 'множественный выбор', value: 'MULTI'}
       ],
       subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок'],
+      hello: ''
     }),
 
     methods: {
@@ -174,11 +177,11 @@
         console.log('postData =>', this.postData);
 
         api.hello().then(response => {
-            console.log(response.data);
+          this.hello = response.data;
         })
-            .catch(e => {
-                this.errors.push(e)
-            })
+          .catch(e => {
+            this.errors.push(e)
+          })
       }
     }
   };
