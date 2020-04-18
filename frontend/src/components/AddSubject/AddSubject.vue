@@ -41,7 +41,7 @@
 
 <script>
   import axios from 'axios';
-  import { objectToFormData } from "object-to-formdata";
+  // import { objectToFormData } from "object-to-formdata";
 
   export default {
     name: 'AddSubject',
@@ -58,8 +58,8 @@
       sendSubject() {
         this.$refs.form.validate();
         let postData = JSON.stringify(this.postData);
-        let postData2 = objectToFormData(this.postData);
-        console.log('postData =>', this.postData, postData, postData2);
+        // let postData2 = objectToFormData(this.postData);
+        console.log('postData =>', this.postData, postData);
         axios.post('http://localhost:8098/api/subjects/add', postData)
           .then(function (response) {
             console.log(response);
