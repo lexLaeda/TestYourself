@@ -5,6 +5,7 @@ import com.test.yourself.maper.QuestionMapper;
 import com.test.yourself.model.Question;
 import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

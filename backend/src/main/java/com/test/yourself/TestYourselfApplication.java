@@ -1,5 +1,6 @@
 package com.test.yourself;
 
+import org.aspectj.lang.JoinPoint;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

@@ -1,5 +1,7 @@
 package com.test.yourself.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,5 +17,6 @@ public class SubjectDTO {
 
     private String name;
 
+    @JsonProperty("num_q")
     private int numberOfQuestions;
 }
