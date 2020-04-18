@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,10 +25,12 @@ public class Subject {
 
     private String name;
 
+    private String description;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "subject")
-    private List<Test> tests;
+    private List<Test> tests = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "subject")
-    private Set<Question> questions;
+    private Set<Question> questions = new HashSet<>();
 
 }
