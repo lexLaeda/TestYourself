@@ -40,19 +40,23 @@
 </template>
 
 <script>
+  // import api from "../../backend-api";
+
   export default {
     name: 'AddSubject',
 
     data: () => ({
       valid: true,
       validText: 'Обязательное поле',
-      postData: {}
+      postData: {
+        num_q: 0
+      }
     }),
 
     methods: {
       sendSubject() {
         this.$refs.form.validate();
-
+        console.log('postData =>', this.postData);
       }
     }
   }
