@@ -9,7 +9,6 @@
         <v-form
           ref="form"
           v-model="valid"
-          lazy-validation
         >
           <v-text-field
             v-model="postData.name"
@@ -58,7 +57,7 @@
                       <v-checkbox
                           v-model="postData.current"
                           :value="index"
-                          color="cyan darken-2"
+                          :rules="[postData.current.length > 0]"
                       >
                       </v-checkbox>
                     </v-col>
@@ -73,13 +72,13 @@
                       ></v-textarea>
                     </v-col>
                     <v-col cols="auto" style="width: 64px;">
-                      <v-btn v-if="answers.length > 2" @click="removeAnswer(index)" fab dark small color="cyan darken-2">
+                      <v-btn v-if="answers.length > 2" @click="removeAnswer(index)" fab dark small color="primary darken-2">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
                   <div class="text-right">
-                    <v-btn @click="addAnswer" fab dark small color="cyan darken-2">
+                    <v-btn @click="addAnswer" fab dark small color="primary darken-2">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
@@ -107,7 +106,6 @@
                     <v-col cols="auto" class="py-5">
                       <v-radio
                         :value="index"
-                        color="cyan darken-2"
                       >
                       </v-radio>
                     </v-col>
@@ -122,13 +120,13 @@
                       ></v-textarea>
                     </v-col>
                     <v-col cols="auto" style="width: 64px;">
-                      <v-btn v-if="answers.length > 2" @click="removeAnswer(index)" fab dark small color="cyan darken-2">
+                      <v-btn v-if="answers.length > 2" @click="removeAnswer(index)" fab dark small color="primary darken-2">
                         <v-icon>mdi-delete</v-icon>
                       </v-btn>
                     </v-col>
                   </v-row>
                   <div class="text-right">
-                    <v-btn @click="addAnswer" fab dark small color="cyan darken-2">
+                    <v-btn @click="addAnswer" fab dark small color="primary darken-2">
                       <v-icon>mdi-plus</v-icon>
                     </v-btn>
                   </div>
@@ -139,9 +137,9 @@
 
           <v-row class="mt-4">
             <v-col cols="auto">
-              <v-btn large color="cyan darken-2 white--text"
+              <v-btn large color="primary darken-2 white--text"
                :disabled="!valid"
-               @click="validate"
+               @click="send"
               >Сохранить</v-btn>
             </v-col>
 <!--            <v-col cols="auto" class="ml-auto">-->
@@ -173,7 +171,7 @@
         {text: 'множественный выбор', value: 'MULTI'}
       ],
       subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок'],
-      hello: ''
+      hello: '',
     }),
 
     methods: {
@@ -184,27 +182,25 @@
       removeAnswer(index) {
         let current = this.postData.current;
         this.answers.splice(index, 1);
+        let replace = function (element) {
+          if (current.includes(element)) {
+            current.splice(current.indexOf(element), 1);
+          }
+          if (current.includes(element + 1)) {
+            current.splice(current.indexOf(element + 1), 1);
+            current.push(element);
+          }
+        };
         if (current.length > 1) {
           for (let i = index; i < this.answers.length; i++) {
-            if (current.includes(i)) {
-              current.splice(current.indexOf(i), 1);
-            }
-            if (current.includes(i + 1)) {
-              current.splice(current.indexOf(i + 1), 1);
-              current.push(i);
-            }
+            replace(i);
           }
         } else {
-            if (current.includes(index)) {
-                current.splice(current.indexOf(index), 1);
-            } else if (current.includes(index + 1)) {
-                current.splice(current.indexOf(index + 1), 1);
-                current.push(index);
-            }
+            replace(index);
         }
       },
 
-      validate() {
+      send() {
         this.$refs.form.validate();
         this.postData.answers = this.answers;
         console.log('postData =>', this.postData);

@@ -9,7 +9,6 @@
         <v-form
             ref="form"
             v-model="valid"
-            lazy-validation
         >
           <v-text-field
               v-model="postData.name"
@@ -27,7 +26,7 @@
 
           <v-row class="mt-4">
             <v-col cols="auto">
-              <v-btn large color="cyan darken-2 white--text"
+              <v-btn large color="primary darken-2 white--text"
                      :disabled="!valid"
                      @click="sendSubject"
               >Сохранить</v-btn>
@@ -46,7 +45,7 @@
     name: 'AddSubject',
 
     data: () => ({
-      valid: false,
+      valid: true,
       validText: 'Обязательное поле',
       postData: {
         num_q: 0

@@ -2,12 +2,14 @@
   <v-app>
     <toolbar></toolbar>
 
-    <v-container>
-      <router-view></router-view>
-    </v-container>
+    <v-content>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
 
     <v-footer
-        color="cyan darken-4"
+        color="primary darken-4"
         padless
     >
       <v-row
