@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/questions")
-@CrossOrigin(origins = "*",allowedHeaders = "http://localhost:8080")
 public class QuestionController {
     private QuestionService questionService;
     private QuestionMapper questionMapper;

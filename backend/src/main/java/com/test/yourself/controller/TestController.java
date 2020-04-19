@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/test")
-@CrossOrigin(origins = "*", allowedHeaders = "http://localhost:8080")
 public class TestController {
 
     @Autowired
