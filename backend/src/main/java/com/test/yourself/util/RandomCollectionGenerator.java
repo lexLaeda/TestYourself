@@ -1,6 +1,7 @@
 package com.test.yourself.util;
 
 import com.test.yourself.model.Question;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

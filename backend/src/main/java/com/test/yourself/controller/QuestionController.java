@@ -6,8 +6,11 @@ import com.test.yourself.model.Question;
 import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.annotation.AliasFor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.GeneratedValue;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,4 +59,5 @@ public class QuestionController {
     public QuestionDTO findById(@PathVariable Long id){
         return questionMapper.toDTO(questionService.findById(id));
     }
+
 }
