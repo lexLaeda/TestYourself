@@ -16,7 +16,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/subjects")
-@CrossOrigin(origins = "*",allowedHeaders = "http://localhost:8080")
 public class SubjectController {
 
     private SubjectService subjectService;
