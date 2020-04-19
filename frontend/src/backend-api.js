@@ -12,6 +12,10 @@ export default {
   },
 
   addSubject(postData) {
-    return AXIOS.post(`/subjects/add`, postData);
+    return AXIOS.post(`/subjects/add`, postData, {
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
   },
 }

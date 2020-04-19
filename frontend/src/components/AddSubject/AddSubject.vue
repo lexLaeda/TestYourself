@@ -27,7 +27,7 @@
 
           <v-row class="mt-4">
             <v-col cols="auto">
-              <v-btn large color="cyan darken-1 white--text"
+              <v-btn large color="cyan darken-2 white--text"
                      :disabled="!valid"
                      @click="sendSubject"
               >Сохранить</v-btn>
@@ -40,8 +40,7 @@
 </template>
 
 <script>
-  import axios from 'axios';
-  // import { objectToFormData } from "object-to-formdata";
+  import api from "../../backend-api";
 
   export default {
     name: 'AddSubject',
@@ -58,21 +57,14 @@
       sendSubject() {
         this.$refs.form.validate();
         let postData = JSON.stringify(this.postData);
-        // let postData2 = objectToFormData(this.postData);
         console.log('postData =>', this.postData, postData);
-        axios.post('http://localhost:8098/api/subjects/add', postData)
+        api.addSubject({"name":"Java"})
           .then(function (response) {
             console.log(response);
           })
           .catch(function (error) {
             console.log(error);
           });
-//         let xhr = new XMLHttpRequest();
-//         xhr.open("POST", 'http://localhost:8098/api/subjects/add', true)
-//
-// // Отсылаем объект в формате JSON и с Content-Type application/json
-// // Сервер должен уметь такой Content-Type принимать и раскодировать
-//         xhr.send(postData);
 
       }
     }
