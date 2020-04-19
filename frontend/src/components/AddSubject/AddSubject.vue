@@ -57,7 +57,7 @@
         this.$refs.form.validate();
         let postData = JSON.stringify(this.postData);
         console.log('postData =>', this.postData, postData);
-        api.addSubject({"name":"Java"})
+        api.addSubject(postData)
           .then(function (response) {
             console.log(response);
           })
