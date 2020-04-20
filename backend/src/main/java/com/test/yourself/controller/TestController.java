@@ -18,11 +18,11 @@ public class TestController {
         this.testService = testService;
     }
 
-    @GetMapping(value = "/random test", params = {"subject_id", "amount"})
+    @GetMapping(value = "/generate", params = {"id", "number"})
     public @ResponseBody Test generateRandomTest(
-            @RequestParam("subject_id") Long subjectID,
-            @RequestParam("amount") int amount) {
-            return  null;
+            @RequestParam("id") Long subjectID,
+            @RequestParam("number") int amount) {
+            return  testService.getRandomTest(subjectID,amount);
     }
 
 }
