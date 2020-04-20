@@ -1,7 +1,7 @@
 package com.test.yourself.service.subject;
 
 import com.test.yourself.exception.SubjectNotFoundException;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.repository.SubjectRepository;
 import org.springframework.stereotype.Service;
 
@@ -74,4 +74,6 @@ public class SubjectServiceImpl implements SubjectService {
     public void delete(Subject subject) {
         subjectRepository.delete(subject);
     }
+
+
 }

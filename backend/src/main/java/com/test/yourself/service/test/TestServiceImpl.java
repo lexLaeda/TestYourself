@@ -1,12 +1,15 @@
 package com.test.yourself.service.test;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.util.TestGenerator;
 import com.test.yourself.exception.TestNotFoundException;
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.model.test.Test;
 
 import com.test.yourself.repository.TestRepository;
 
+import com.test.yourself.service.subject.QuestionService;
+import com.test.yourself.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,9 +20,27 @@ import java.util.stream.Collectors;
 
 @Service
 @Qualifier(value = "database")
-public class TestServiceDb implements TestService {
+public class TestServiceImpl implements TestService {
 
     private TestRepository testRepository;
+    private TestGeneratorService testGenerator;
+    private SubjectService subjectService;
+    private QuestionService questionService;
+
+    @Autowired
+    public void setQuestionService(QuestionService questionService) {
+        this.questionService = questionService;
+    }
+
+    @Autowired
+    public void setSubjectService(SubjectService subjectService) {
+        this.subjectService = subjectService;
+    }
+
+    @Autowired
+    public void setTestGenerator(TestGeneratorService testGenerator) {
+        this.testGenerator = testGenerator;
+    }
 
     @Autowired
     public void setTestRepository(TestRepository testRepository) {
@@ -82,4 +103,19 @@ public class TestServiceDb implements TestService {
     public void removeAllBySubjectId(Long subjectId) {
         testRepository.deleteAllBySubjectId(subjectId);
     }
+
+    @Override
+    public Test getRandomTest(Long subjectId, int size) {
+        Subject subject = subjectService.findSubjectById(subjectId);
+        return testGenerator.generateRandomTestBySubject(subject,size);
+    }
+
+    @Override
+    public Test getTestByQuestions(List<Long> questionIdList) {
+        List<Question> questionPull = questionIdList.stream()
+                .map(id -> questionService.findById(id))
+                .collect(Collectors.toList());
+        return testGenerator.generateTestByQuestions(questionPull);
+    }
+
 }

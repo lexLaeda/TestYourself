@@ -1,29 +1,32 @@
 package com.test.yourself.model.test;
 
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
-import lombok.Builder;
-import lombok.Data;
+import com.test.yourself.model.AbstractEntity;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
+import lombok.*;
 
 import javax.persistence.*;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 
-@Data
-@Builder
+@Getter
+@Setter
 @Entity
-public class Test {
-    @Id
-    @GeneratedValue
-    private Long id;
+@Table(name = "subjects")
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public class Test extends AbstractEntity {
+
 
     @ManyToOne(fetch = FetchType.EAGER)
     private Subject subject;
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set <Question> questions;
+    @ElementCollection
+    private List<Question> questions;
 
 }

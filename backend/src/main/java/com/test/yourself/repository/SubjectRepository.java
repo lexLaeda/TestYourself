@@ -1,6 +1,6 @@
 package com.test.yourself.repository;
 
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

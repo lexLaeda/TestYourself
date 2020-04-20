@@ -1,6 +1,6 @@
 package com.test.yourself.service.test;
 
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.model.test.Test;
 
 import java.util.List;
@@ -17,4 +17,6 @@ public interface TestService {
     void removeAll();
     void removeAllBySubject(Subject subject);
     void removeAllBySubjectId(Long subjectId);
+    Test getRandomTest(Long subjectId, int size);
+    Test getTestByQuestions(List<Long> questionIdList);
 }
