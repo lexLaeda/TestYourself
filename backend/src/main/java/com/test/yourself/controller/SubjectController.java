@@ -7,7 +7,9 @@ import com.test.yourself.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/subjects")
@@ -50,12 +52,13 @@ public class SubjectController {
 
     @GetMapping("/{id}")
     public SubjectDto findSubjectById(@PathVariable Long id){
+        return subjectMapper.toDto(subjectService.findSubjectById(id));
+    }
 
-        SubjectDto sub = new SubjectDto();
-        sub.setId(1L);
-        sub.setName("Java");
-        sub.setDescription("helloWorld");
-
-        return sub;
+    @GetMapping("/all")
+    public List<SubjectDto> findAll(){
+        return subjectService.findAllSubjects().stream()
+                .map(subject -> subjectMapper.toDto(subject))
+                .collect(Collectors.toList());
     }
 }
