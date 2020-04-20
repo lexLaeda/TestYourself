@@ -1,5 +1,6 @@
 package com.test.yourself.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.test.yourself.model.subject.Answer;
 import com.test.yourself.model.subject.Subject;
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import java.util.Map;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionDto extends AbstractDto{
-
+    @JsonProperty("subject")
     private Long subjectId;
 
     private String name;

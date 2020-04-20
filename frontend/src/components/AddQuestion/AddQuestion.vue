@@ -181,7 +181,7 @@
             Object.keys(data).forEach(item => {
               this.subjects.push({
                 text: data[item],
-                value: item
+                value: Number(item)
               });
             });
           })
