@@ -1,13 +1,8 @@
-package com.test.yourself.model;
+package com.test.yourself.model.subject;
 
+import com.test.yourself.model.AbstractEntity;
 import com.test.yourself.model.test.Test;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.DispatcherServlet;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -15,16 +10,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Data
-@Builder
+@Getter
+@Setter
 @Entity
+@Table(name = "subjects")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Subject {
-
-    @Id
-    @GeneratedValue
-    private Long id;
+@ToString
+@EqualsAndHashCode(callSuper = true)
+public class Subject extends AbstractEntity {
 
     private String name;
 
@@ -34,6 +28,6 @@ public class Subject {
     private List<Test> tests = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "subject")
-    private Set<Question> questions = new HashSet<>();
+    private List<Question> questions = new ArrayList<>();
 
 }

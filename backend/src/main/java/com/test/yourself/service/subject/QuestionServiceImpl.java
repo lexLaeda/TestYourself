@@ -1,8 +1,8 @@
 package com.test.yourself.service.subject;
 
 import com.test.yourself.exception.QuestionNotFoundException;
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

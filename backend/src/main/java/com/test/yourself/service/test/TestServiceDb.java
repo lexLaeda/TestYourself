@@ -1,8 +1,7 @@
 package com.test.yourself.service.test;
 
 import com.test.yourself.exception.TestNotFoundException;
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.model.test.Test;
 
 import com.test.yourself.repository.TestRepository;

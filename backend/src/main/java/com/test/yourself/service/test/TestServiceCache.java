@@ -1,7 +1,7 @@
 package com.test.yourself.service.test;
 
 import com.test.yourself.exception.TestNotFoundException;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.model.test.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;

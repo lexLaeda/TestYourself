@@ -9,7 +9,7 @@ public class TestSystemConfiguration {
 
     @Bean
     public TestValidationService getTestValidation(){
-        return new TestValidationServiceImpl(getCacheService());
+        return new TestValidationServiceImpl();
     }
 
     @Bean

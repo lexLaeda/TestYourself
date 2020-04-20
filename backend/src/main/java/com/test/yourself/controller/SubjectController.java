@@ -1,17 +1,12 @@
 package com.test.yourself.controller;
 
-import com.test.yourself.dto.SubjectDTO;
+import com.test.yourself.dto.SubjectDto;
 import com.test.yourself.maper.SubjectMapper;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.ControllerAdviceBean;
-import org.springframework.web.servlet.DispatcherServlet;
-import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import java.lang.reflect.InvocationHandler;
 import java.util.Map;
 
 @RestController
@@ -32,35 +27,35 @@ public class SubjectController {
         return subjectService.findMapSubjects();
     }
     @PostMapping(value = "/add",produces = "application/json")
-    public SubjectDTO addNewSubject(@RequestBody SubjectDTO subjectDTO){
-        Subject subject = subjectMapper.fromDTO(subjectDTO);
+    public SubjectDto addNewSubject(@RequestBody SubjectDto subjectDTO){
+        Subject subject = subjectMapper.toEntity(subjectDTO);
         Subject savedSubject = subjectService.add(subject);
-        return subjectMapper.toDTO(savedSubject);
+        return subjectMapper.toDto(savedSubject);
     }
 
     @PutMapping("/update/{id}")
-    public SubjectDTO updateSubject(@RequestBody SubjectDTO subjectDTO, @PathVariable Long id){
-        Subject subject = subjectMapper.fromDTO(subjectDTO);
+    public SubjectDto updateSubject(@RequestBody SubjectDto subjectDTO, @PathVariable Long id){
+        Subject subject = subjectMapper.toEntity(subjectDTO);
         Subject updatedSubject = subjectService.update(subject, id);
-        return subjectMapper.toDTO(updatedSubject);
+        return subjectMapper.toDto(updatedSubject);
     }
     @PutMapping("/update_name")
     @ResponseBody
-    public SubjectDTO updateSubjectName(
+    public SubjectDto updateSubjectName(
             @RequestParam("sub_name") String subjectName,
             @RequestParam("sub_id") Long id){
         Subject updatedSubject = subjectService.updateName(subjectName,id);
-        return subjectMapper.toDTO(updatedSubject);
+        return subjectMapper.toDto(updatedSubject);
     }
 
     @GetMapping("/{id}")
-    public SubjectDTO findSubjectById(@PathVariable Long id){
+    public SubjectDto findSubjectById(@PathVariable Long id){
 
-        SubjectDTO sub = new SubjectDTO();
+        SubjectDto sub = new SubjectDto();
         sub.setId(1L);
         sub.setName("Java");
         sub.setDescription("helloWorld");
-        sub.setNumberOfQuestions(0);
+
         return sub;
     }
 }

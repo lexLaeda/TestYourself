@@ -1,5 +1,7 @@
 package com.test.yourself.dto;
 
+import com.test.yourself.model.subject.Answer;
+import com.test.yourself.model.subject.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,9 +16,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionDTO {
-
-    private Long id;
+public class QuestionDto extends AbstractDto{
 
     private Long subjectId;
 
@@ -24,9 +24,9 @@ public class QuestionDTO {
 
     private String description;
 
-    private String mode;
-
-    private Map<Integer,String> answers;
+    private List<Answer> answers;
 
     private List<Integer> correctAnswers;
+
+
 }

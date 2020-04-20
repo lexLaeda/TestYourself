@@ -1,60 +1,42 @@
 package com.test.yourself.maper;
 
-import com.test.yourself.dto.QuestionDTO;
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
-import com.test.yourself.model.enums.QuestionMode;
-import com.test.yourself.service.subject.SubjectService;
+import com.test.yourself.dto.QuestionDto;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import java.util.Objects;
 @Component
-public class QuestionMapper implements Mapper<Question, QuestionDTO> {
-    private SubjectService subjectService;
+public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
+
+    private ModelMapper modelMapper;
 
     @Autowired
-    public QuestionMapper(SubjectService subjectService) {
-        this.subjectService = subjectService;
+    public QuestionMapper(ModelMapper modelMapper){
+        super(Question.class, QuestionDto.class);
+        this.modelMapper = modelMapper;
     }
 
-    /**
-     * @param question
-     * @return
-     */
+    @Autowired
+    public void initMapper(){
+        modelMapper.createTypeMap(Question.class,QuestionDto.class)
+                .setPostConverter(toDtoConverter());
+        modelMapper.createTypeMap(QuestionDto.class,Question.class)
+                .setPostConverter(toEntityConverter());
+    }
+
     @Override
-    public QuestionDTO toDTO(Question question) {
-        QuestionDTO questionDTO = QuestionDTO.builder()
-                .id(question.getId())
-                .name(question.getName())
-                .subjectId(question.getSubject().getId())
-                .description(question.getDescription())
-
-                .build();
-        return questionDTO;
-    }
-
-    /**
-     * @param questionDTO
-     * @return
-     */
-    @Override
-    public Question fromDTO(QuestionDTO questionDTO) {
-        Long subjectId = questionDTO.getSubjectId();
-        Subject subject = subjectService.findSubjectById(subjectId);
-        QuestionMode mode = getQuestionModeByName(questionDTO.getMode());
-        Question question = Question.builder()
-                .id(questionDTO.getId())
-                .subject(subject)
-                .name(questionDTO.getName())
-                .build();
-        return question;
-    }
-
-    private QuestionMode getQuestionModeByName(String modeName) {
-        if (modeName.equals(QuestionMode.MULTI.name())) {
-            return QuestionMode.MULTI;
+    public void mapSpecificFields(Question source, QuestionDto destination) {
+        Subject subject = source.getSubject();
+        if (subject!= null){
+            Long id = subject.getId();
+            destination.setSubjectId(id);
         } else {
-            return QuestionMode.SINGLE;
+            destination.setSubjectId(null);
         }
     }
 }

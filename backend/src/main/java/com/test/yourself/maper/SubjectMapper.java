@@ -1,32 +1,38 @@
 package com.test.yourself.maper;
 
-import com.test.yourself.dto.SubjectDTO;
-import com.test.yourself.model.Subject;
+import com.test.yourself.dto.SubjectDto;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
+import com.test.yourself.service.subject.QuestionService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 @Component
-public class SubjectMapper implements Mapper<Subject,SubjectDTO> {
-    @Override
-    public SubjectDTO toDTO(Subject subject) {
-        return SubjectDTO.builder()
-                .id(subject.getId())
-                .name(subject.getName())
-                .description(subject.getDescription())
-                .numberOfQuestions(subject.getQuestions().size())
-                .build();
+public class SubjectMapper extends AbstractMapper<Subject, SubjectDto> {
+
+    private ModelMapper modelMapper;
+
+    private QuestionService questionService;
+
+    @Autowired
+    public SubjectMapper(ModelMapper modelMapper, QuestionService questionService) {
+        super(Subject.class, SubjectDto.class);
+        this.modelMapper = modelMapper;
+        this.questionService = questionService;
     }
 
-    @Override
-    public Subject fromDTO(SubjectDTO subjectDTO) {
-        return Subject.builder()
-                .name(subjectDTO.getName())
-                .description(subjectDTO.getDescription())
-                .questions(new HashSet<>())
-                .tests(new ArrayList<>())
-                .build();
+    @PostConstruct
+    public void initMapper(){
+
+        modelMapper.createTypeMap(Subject.class,SubjectDto.class)
+            .setPostConverter(toDtoConverter());
+
+        modelMapper.createTypeMap(SubjectDto.class,Subject.class)
+            .setPostConverter(toEntityConverter());
     }
+
 }

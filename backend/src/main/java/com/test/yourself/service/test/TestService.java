@@ -1,6 +1,6 @@
 package com.test.yourself.service.test;
 
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 import com.test.yourself.model.test.Test;
 
 import java.util.List;

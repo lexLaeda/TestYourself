@@ -1,7 +1,6 @@
 package com.test.yourself.service.subject;
 
-import com.test.yourself.dto.SubjectDTO;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Subject;
 
 import java.util.List;
 import java.util.Map;

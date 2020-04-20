@@ -1,12 +1,11 @@
 package com.test.yourself.model.test;
 
-import com.test.yourself.model.Question;
-import com.test.yourself.model.Subject;
+import com.test.yourself.model.subject.Question;
+import com.test.yourself.model.subject.Subject;
 import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Map;
 import java.util.Set;
 
 
@@ -23,7 +22,7 @@ public class Test {
 
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ElementCollection
     private Set <Question> questions;
 
 }
