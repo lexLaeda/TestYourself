@@ -17,15 +17,15 @@ public abstract class AbstractEntity {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "crated",updatable = false)
-    private LocalDateTime crated;
+    @Column(name = "created",updatable = false)
+    private LocalDateTime created;
 
     @Column(name = "updated", insertable = false)
     private LocalDateTime updated;
 
     @PrePersist
     public void  toCreate(){
-        setCrated(LocalDateTime.now());
+        setCreated(LocalDateTime.now());
     }
 
     @PreUpdate

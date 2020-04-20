@@ -22,7 +22,15 @@ export default {
     return AXIOS_JSON.post(`/subjects/add`, postData);
   },
 
+  addQuestion(postData) {
+    return AXIOS_JSON.post(`/questions/add`, postData);
+  },
+
   getSubjects() {
     return AXIOS.get(`/subjects/map`);
+  },
+
+  getAllSubjects() {
+    return AXIOS.get(`/subjects/all`);
   }
 }

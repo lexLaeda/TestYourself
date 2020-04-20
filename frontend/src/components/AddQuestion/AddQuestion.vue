@@ -39,7 +39,7 @@
             :items="question_types"
             label="Тип вопроса"
             outlined
-            @change="postData.current = [0]"
+            @change="postData.correctAnswers = [0]"
           ></v-select>
 
           <v-card
@@ -55,15 +55,15 @@
                          :key="index">
                     <v-col cols="auto" class="py-0">
                       <v-checkbox
-                          v-model="postData.current"
+                          v-model="postData.correctAnswers"
                           :value="index"
-                          :rules="[postData.current.length > 0]"
+                          :rules="[postData.correctAnswers.length > 0]"
                       >
                       </v-checkbox>
                     </v-col>
                     <v-col class="py-0">
                       <v-textarea
-                          v-model="answers[index]"
+                          v-model="answers[index].title"
                           :label="'Ответ' + (index + 1)"
                           :rules="[v => !!v || validText]"
                           rows="2"
@@ -87,7 +87,7 @@
                       <transition name="message">
                         <div
                           class="v-messages__message"
-                          v-if="!postData.current.length > 0">
+                          v-if="!postData.correctAnswers.length > 0">
                           {{ validVariant }}
                         </div>
                       </transition>
@@ -98,8 +98,8 @@
               <template v-else>
                 <v-radio-group
                   class="mt-0 pt-0"
-                  v-model="postData.current[0]"
-                  :rules="[postData.current.length > 0 || validVariant]"
+                  v-model="postData.correctAnswers[0]"
+                  :rules="[postData.correctAnswers.length > 0 || validVariant]"
                 >
                   <v-row v-for="(element, index) in answers"
                    :key="index">
@@ -111,7 +111,7 @@
                     </v-col>
                     <v-col class="py-0">
                       <v-textarea
-                          v-model="answers[index]"
+                          v-model="answers[index].title"
                           :label="'Ответ' + (index + 1)"
                           :rules="[v => !!v || validText]"
                           rows="2"
@@ -158,7 +158,7 @@
     name: 'AddQuestion',
 
     data: () => ({
-      answers: ['', ''],
+      answers: [{number: 1}, {number: 2}],
       valid: true,
       validText: 'Обязательное поле',
       validVariant: 'Должен быть хотя бы один правильный вариант ответа',
@@ -169,7 +169,7 @@
       ],
       postData: {
         mode: 'SINGLE',
-        current: [0]
+        correctAnswers: [0]
       }
     }),
 
@@ -187,26 +187,26 @@
           })
           .catch(error => {
             console.log(error);
-          })
+          });
       },
 
       addAnswer() {
-        this.answers.push('');
+        this.answers.push({number: this.answers.length + 1});
       },
 
       removeAnswer(index) {
-        let current = this.postData.current;
+        let correctAnswers = this.postData.correctAnswers;
         this.answers.splice(index, 1);
         let replace = function (element) {
-          if (current.includes(element)) {
-            current.splice(current.indexOf(element), 1);
+          if (correctAnswers.includes(element)) {
+            correctAnswers.splice(correctAnswers.indexOf(element), 1);
           }
-          if (current.includes(element + 1)) {
-            current.splice(current.indexOf(element + 1), 1);
-            current.push(element);
+          if (correctAnswers.includes(element + 1)) {
+            correctAnswers.splice(correctAnswers.indexOf(element + 1), 1);
+            correctAnswers.push(element);
           }
         };
-        if (current.length > 1) {
+        if (correctAnswers.length > 1) {
           for (let i = index; i < this.answers.length; i++) {
             replace(i);
           }
@@ -218,7 +218,14 @@
       send() {
         this.$refs.form.validate();
         this.postData.answers = this.answers;
-        console.log('postData =>', this.postData);
+        let postData = JSON.stringify(this.postData);
+        api.addQuestion(postData)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     },
 
