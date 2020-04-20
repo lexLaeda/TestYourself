@@ -17,7 +17,7 @@ public abstract class AbstractEntity {
     @GeneratedValue
     private Long id;
 
-    @Column(name = "crated",updatable = false)
+    @Column(name = "created",updatable = false)
     private LocalDateTime crated;
 
     @Column(name = "updated", insertable = false)

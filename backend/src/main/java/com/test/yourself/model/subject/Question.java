@@ -1,12 +1,10 @@
 package com.test.yourself.model.subject;
 
 import com.test.yourself.model.AbstractEntity;
-import com.test.yourself.model.test.Test;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
-import java.util.Map;
+
 
 @Getter
 @Setter
