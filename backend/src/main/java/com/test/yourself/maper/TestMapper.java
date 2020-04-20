@@ -18,6 +18,7 @@ public class TestMapper extends AbstractMapper<Test, TestDto> {
     @Autowired
     public TestMapper(ModelMapper modelMapper) {
         super(Test.class, TestDto.class);
+        this.modelMapper = modelMapper;
     }
     @PostConstruct
     public void initMapper(){
