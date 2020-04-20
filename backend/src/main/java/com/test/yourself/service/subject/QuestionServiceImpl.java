@@ -7,7 +7,8 @@ import com.test.yourself.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,6 +61,33 @@ public class QuestionServiceImpl implements QuestionService {
         questionFromDb.setSubject(question.getSubject());
         return questionRepository.saveAndFlush(questionFromDb);
     }
+
+    @Override
+    public List<Question> getRandomQuestionsBySubject(Subject subject, int size) {
+        List<Question> questionPull = getQuestionsByPredicate(question -> subject.equals(question.getSubject()));
+        return getRandomQuestions(questionPull,size);
+     }
+
+     private List<Question> getRandomQuestions(List<Question> questionPull, int size){
+        int pullSize = questionPull.size();
+        if (size >= pullSize){
+            size = pullSize;
+        }
+        List<Question> questions = new ArrayList<>();
+        Random random = new Random();
+        while (questions.size() < size){
+            int randomIndex = random.nextInt();
+            Question randomQuestion = questionPull.get(randomIndex);
+            questions.add(randomQuestion);
+        }
+        return questions;
+     }
+
+     private List<Question> getQuestionsByPredicate(Predicate<? super Question> predicate){
+        return findAll().stream()
+                 .filter(predicate)
+                 .collect(Collectors.toList());
+     }
 
 
 }

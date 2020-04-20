@@ -17,4 +17,6 @@ public interface TestService {
     void removeAll();
     void removeAllBySubject(Subject subject);
     void removeAllBySubjectId(Long subjectId);
+    Test getRandomTest(Long subjectId, int size);
+    Test getTestByQuestions(List<Long> questionIdList);
 }
