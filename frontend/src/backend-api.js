@@ -39,6 +39,6 @@ export default {
   },
 
   generateTest(url) {
-    return AXIOS.post(url);
+    return AXIOS.get(url);
   }
 }
