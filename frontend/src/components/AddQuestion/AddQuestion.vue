@@ -188,6 +188,13 @@
           .catch(error => {
             console.log(error);
           });
+        // api.getAllQuestion()
+        //   .then(response => {
+        //     console.log(response);
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   });
       },
 
       addAnswer() {
@@ -219,6 +226,7 @@
         this.$refs.form.validate();
         this.postData.answers = this.answers;
         let postData = JSON.stringify(this.postData);
+        console.log('postData =>', this.postData);
         api.addQuestion(postData)
           .then(function (response) {
             console.log(response);

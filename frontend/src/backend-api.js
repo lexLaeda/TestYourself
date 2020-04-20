@@ -32,5 +32,9 @@ export default {
 
   getAllSubjects() {
     return AXIOS.get(`/subjects/all`);
+  },
+
+  getAllQuestion() {
+    return AXIOS.get(`/questions/all`);
   }
 }
