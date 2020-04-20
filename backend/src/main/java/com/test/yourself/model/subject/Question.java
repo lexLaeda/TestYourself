@@ -24,8 +24,8 @@ public class Question extends AbstractEntity {
     private String description;
 
     @ElementCollection
-
-    @Column(name = "answer")
+    @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
+    @Column(name = "question_answer")
     private List<Answer> answers;
 
     @ElementCollection
