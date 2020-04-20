@@ -162,19 +162,34 @@
       valid: true,
       validText: 'Обязательное поле',
       validVariant: 'Должен быть хотя бы один правильный вариант ответа',
-      postData: {
-          mode: 'SINGLE',
-          current: [0]
-      },
+      subjects: [],
       question_types: [
         {text: 'одиночный', value: 'SINGLE'},
         {text: 'множественный выбор', value: 'MULTI'}
       ],
-      subjects: ['Java', 'JavaScript', 'Docker', 'как испечь пирожок'],
-      hello: '',
+      postData: {
+        mode: 'SINGLE',
+        current: [0]
+      }
     }),
 
     methods: {
+      getData() {
+        api.getSubjects()
+          .then(response => {
+            let data = response.data;
+            Object.keys(data).forEach(item => {
+              this.subjects.push({
+                text: data[item],
+                value: item
+              });
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      },
+
       addAnswer() {
         this.answers.push('');
       },
@@ -204,14 +219,11 @@
         this.$refs.form.validate();
         this.postData.answers = this.answers;
         console.log('postData =>', this.postData);
-
-        api.hello().then(response => {
-          this.hello = response.data;
-        })
-          .catch(e => {
-            this.errors.push(e)
-          })
       }
+    },
+
+    mounted() {
+      this.getData();
     }
   };
 </script>
