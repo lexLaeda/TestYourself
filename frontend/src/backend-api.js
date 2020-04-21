@@ -46,5 +46,9 @@ export default {
 
   generateTest(id, number) {
     return window.axios.get(`/test/generate?id=`+ id + `&number=` + number);
+  },
+
+  getTest(id) {
+    return window.axios.get(`/test/` + id);
   }
 }
