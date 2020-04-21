@@ -2,6 +2,7 @@ package com.test.yourself.model.testsystem.subject;
 
 import com.test.yourself.model.AbstractEntity;
 import com.test.yourself.model.enums.QuestionMode;
+import com.test.yourself.model.testsystem.test.Test;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +28,9 @@ public class Question extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private QuestionMode mode;
 
+    @ManyToMany(mappedBy = "questions")
+    private List<Test> tests;
+
     @ElementCollection
     @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
     @Column(name = "question_answer")
@@ -34,5 +38,5 @@ public class Question extends AbstractEntity {
 
     @ElementCollection
     private List<Integer> correctAnswers;
-    
+
 }

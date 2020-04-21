@@ -51,11 +51,7 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Test addTest(Test test) {
-        if (!isSuchTestPresent(test)){
-            return testRepository.saveAndFlush(test);
-        }else {
-            throw new TestAlreadyExistException("Test with name \"" + test.getName() + "\" already exist");
-        }
+        return testRepository.save(test);
     }
 
     @Override
@@ -127,6 +123,7 @@ public class TestServiceImpl implements TestService {
         Test randomTest = testGenerator.generateRandomTestBySubject(subject,size);
         return addTest(randomTest);
     }
+
     @Override
     public Test getTestByQuestions(List<Long> questionIdList) {
         List<Question> questionPull = questionIdList.stream()
@@ -137,7 +134,7 @@ public class TestServiceImpl implements TestService {
 
     private boolean isSuchTestPresent(Test test){
 
-        if (test.getTestMode() == TestMode.RANDOM){
+        if (test.getTestMode().equals(TestMode.RANDOM)){
             return false;
         }
 
@@ -147,6 +144,6 @@ public class TestServiceImpl implements TestService {
                 .filter(testFromDb -> test.getName().equals(testFromDb.getName()))
                 .count();
 
-        return count == 0;
+        return count != 0;
     }
 }

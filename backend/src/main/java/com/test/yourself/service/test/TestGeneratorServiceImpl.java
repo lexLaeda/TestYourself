@@ -1,5 +1,6 @@
 package com.test.yourself.service.test;
 
+import com.test.yourself.model.enums.TestMode;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.model.testsystem.test.Test;
@@ -37,11 +38,11 @@ public class TestGeneratorServiceImpl implements TestGeneratorService {
         test.setCreated(LocalDateTime.now());
         test.setName("Тест на знание " + test.getSubject().getName());
         test.setQuestions(questionPull);
+        test.setTestMode(TestMode.RANDOM);
         return test;
     }
 
     private boolean isSameSubject(List<Question> questionPull){
-        System.out.println(questionPull.get(0));
         Subject fromFirst = questionPull.get(0).getSubject();
         long count = questionPull.stream()
                 .filter(question -> fromFirst.equals(question.getSubject()))
