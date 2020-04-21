@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 
 public class ReflectionUpdate {
     private static final String SET = "set";
+
     private static final String GET = "get";
 
     public static  <T extends AbstractEntity> T updateObject(T source, T target){

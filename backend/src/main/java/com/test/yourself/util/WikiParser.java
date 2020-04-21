@@ -13,22 +13,20 @@ import java.util.stream.Collectors;
 
 public class WikiParser {
 
-
-    private String homeUrl;
-    private String searchTag;
+    private static final String WIKI = "https://ru.wikipedia.org/wiki/";
     @SneakyThrows
-    public String parseHtml(){
-        Connection connect = Jsoup.connect("https://ru.wikipedia.org/wiki/javascript" );
+    public static String getDescription (String subject){
+
+        Connection connect = Jsoup.connect(WIKI + subject );
         Document document = connect.get();
         Element body = document.body();
         Elements elementsByTag = body.getElementsByTag("p");
-        String sb = elementsByTag.stream().map(Element::text).collect(Collectors.joining());
-        String[] split = sb.split(".");
-        return sb;
+
+        return elementsByTag.stream()
+                .map(Element::text)
+                .collect(Collectors.joining());
+
     }
 
-    public static void main(String[] args) {
-        System.out.println(new WikiParser().parseHtml());
-    }
 
 }

@@ -124,7 +124,8 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getRandomTest(Long subjectId, int size) {
         Subject subject = subjectService.findSubjectById(subjectId);
-        return testGenerator.generateRandomTestBySubject(subject,size);
+        Test randomTest = testGenerator.generateRandomTestBySubject(subject,size);
+        return addTest(randomTest);
     }
     @Override
     public Test getTestByQuestions(List<Long> questionIdList) {
