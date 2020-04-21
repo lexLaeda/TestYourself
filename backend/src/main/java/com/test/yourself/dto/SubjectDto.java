@@ -1,11 +1,7 @@
 package com.test.yourself.dto;
 
 
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.test.Test;
 import lombok.*;
-
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,10 +1,9 @@
 package com.test.yourself.service.subject;
 
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
 
 import java.util.List;
-import java.util.Set;
 
 public interface QuestionService {
     Question addQuestion(Question question);

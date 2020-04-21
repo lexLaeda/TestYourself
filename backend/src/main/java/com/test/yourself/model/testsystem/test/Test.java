@@ -1,13 +1,13 @@
-package com.test.yourself.model.test;
+package com.test.yourself.model.testsystem.test;
 
 import com.test.yourself.model.AbstractEntity;
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.enums.TestMode;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
@@ -25,6 +25,9 @@ public class Test extends AbstractEntity {
     private Subject subject;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    TestMode testMode;
 
     @ElementCollection
     private List<Question> questions;

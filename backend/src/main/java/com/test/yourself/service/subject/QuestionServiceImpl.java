@@ -1,9 +1,10 @@
 package com.test.yourself.service.subject;
 
 import com.test.yourself.exception.QuestionNotFoundException;
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
+import com.test.yourself.util.ReflectionUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -55,11 +56,8 @@ public class QuestionServiceImpl implements QuestionService {
     public Question update(Question question, Long id) {
         Question questionFromDb = questionRepository.findById(id)
                 .orElseThrow(QuestionNotFoundException::new);
-        questionFromDb.setAnswers(question.getAnswers());
-        questionFromDb.setDescription(question.getDescription());
-        questionFromDb.setName(question.getName());
-        questionFromDb.setSubject(question.getSubject());
-        return questionRepository.saveAndFlush(questionFromDb);
+        Question updated = ReflectionUpdate.updateObject(question, questionFromDb);
+        return questionRepository.saveAndFlush(updated);
     }
 
     @Override

@@ -1,14 +1,12 @@
-package com.test.yourself.model.subject;
+package com.test.yourself.model.testsystem.subject;
 
 import com.test.yourself.model.AbstractEntity;
-import com.test.yourself.model.test.Test;
+import com.test.yourself.model.testsystem.test.Test;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter

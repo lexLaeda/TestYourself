@@ -1,4 +1,4 @@
-package com.test.yourself.model.subject;
+package com.test.yourself.model.testsystem.subject;
 
 import com.test.yourself.model.AbstractEntity;
 import com.test.yourself.model.enums.QuestionMode;

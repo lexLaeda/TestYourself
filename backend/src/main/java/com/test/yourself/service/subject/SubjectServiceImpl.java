@@ -1,8 +1,9 @@
 package com.test.yourself.service.subject;
 
 import com.test.yourself.exception.SubjectNotFoundException;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.SubjectRepository;
+import com.test.yourself.util.ReflectionUpdate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -53,9 +54,8 @@ public class SubjectServiceImpl implements SubjectService {
     @Override
     public Subject update(Subject subject, Long id) {
         Subject subjectFromDB = subjectRepository.findById(id).orElseThrow(SubjectNotFoundException::new);
-        subjectFromDB.setName(subject.getName());
-        subjectFromDB.setQuestions(subject.getQuestions());
-        return subjectRepository.saveAndFlush(subjectFromDB);
+        Subject updated = ReflectionUpdate.updateObject(subject, subjectFromDB);
+        return subjectRepository.saveAndFlush(updated);
     }
 
     @Override

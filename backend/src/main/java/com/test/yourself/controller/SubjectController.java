@@ -2,7 +2,7 @@ package com.test.yourself.controller;
 
 import com.test.yourself.dto.SubjectDto;
 import com.test.yourself.maper.SubjectMapper;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.service.subject.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

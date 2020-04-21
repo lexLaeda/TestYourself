@@ -1,15 +1,14 @@
 package com.test.yourself.service.test;
 
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
-import com.test.yourself.model.test.Test;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
+import com.test.yourself.model.testsystem.test.Test;
 import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class TestGeneratorServiceImpl implements TestGeneratorService {
