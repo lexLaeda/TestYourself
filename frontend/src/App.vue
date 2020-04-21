@@ -3,7 +3,7 @@
     <toolbar></toolbar>
 
     <v-content>
-      <v-container>
+      <v-container class="py-10">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -20,7 +20,8 @@
             class="py-4 text-center white--text"
             cols="12"
         >
-          {{ new Date().getFullYear() }}
+          <a href="https://github.com/lexLaeda" target="_blank">Aleksey Ermakov</a> &
+          <a href="https://github.com/EvRusskikh" target="_blank">Evgeniia Russkikh</a>
         </v-col>
       </v-row>
     </v-footer>

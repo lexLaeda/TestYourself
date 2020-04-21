@@ -22,6 +22,11 @@ export default new Router({
             path: "/add-question",
             name: "add-question",
             component: () => import("./components/AddQuestion/AddQuestion")
+        },
+        {
+            path: "/test-generator",
+            name: "test-generator",
+            component: () => import("./components/TestGenerator/TestGenerator")
         }
     ]
 });

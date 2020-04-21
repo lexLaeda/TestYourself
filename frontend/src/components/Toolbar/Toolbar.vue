@@ -93,6 +93,11 @@
           title: 'Добавить вопрос',
           path: '/add-question',
           icon: 'mdi-plus'
+        },
+        {
+          title: 'Сгенерировать тест',
+          path: '/test-generator',
+          icon: 'mdi-plus'
         }
       ],
       menuList: [

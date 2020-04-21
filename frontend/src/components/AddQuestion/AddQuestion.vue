@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card
-      class="my-10 mx-auto"
+      class="mx-auto"
       max-width="700"
     >
       <v-card-title class="display-1">Добавить вопрос</v-card-title>
