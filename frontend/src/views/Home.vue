@@ -8,7 +8,7 @@
 
 <script>
   import api from "../backend-api";
-  import SubjectList from "../components/SubjectList/SubjectList";
+  import SubjectList from "../components/Subject/SubjectList";
 
   export default {
     name: 'Home',

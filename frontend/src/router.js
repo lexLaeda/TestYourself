@@ -27,6 +27,11 @@ export default new Router({
             path: "/test-generator",
             name: "test-generator",
             component: () => import("./components/TestGenerator/TestGenerator")
+        },
+        {
+            path: "/:name",
+            name: "subject",
+            component: () => import("./components/Subject/Subject")
         }
     ]
 });

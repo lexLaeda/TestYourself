@@ -4,6 +4,7 @@ import router from "./router";
 import vuetify from './plugins/vuetify';
 
 import "./scss/main.scss";
+import "./backend-api";
 
 /*Components*/
 import AddSubject from './components/AddSubject/AddSubject';
