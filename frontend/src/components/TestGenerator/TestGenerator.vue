@@ -42,7 +42,7 @@
 
     methods: {
       generate() {
-        api.generateTest(`/test/generate?id=`+ this.postData.id + `&number=` + this.postData.number)
+        api.generateTest(this.postData.id, this.postData.number)
           .then(response => {
             let data = response.data;
             console.log('TEST-GENERATOR', response);

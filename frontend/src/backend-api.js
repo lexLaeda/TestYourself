@@ -36,11 +36,15 @@ export default {
     return window.axios.get(`/subjects/all`);
   },
 
-  getAllQuestion() {
-    return window.axios.get(`/questions/all`);
+  getSubject(id) {
+    return window.axios.get(`/subjects/` + id);
   },
 
-  generateTest(url) {
-    return window.axios.get(url);
+  getQuestionBySubject(id) {
+    return window.axios.get(`/questions/subject?sub_id=` + id);
+  },
+
+  generateTest(id, number) {
+    return window.axios.get(`/test/generate?id=`+ id + `&number=` + number);
   }
 }

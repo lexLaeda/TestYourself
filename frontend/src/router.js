@@ -29,7 +29,12 @@ export default new Router({
             component: () => import("./components/TestGenerator/TestGenerator")
         },
         {
-            path: "/:name",
+            path: "/subjects",
+            name: "subjects",
+            component: () => import("./components/Subject/SubjectList")
+        },
+        {
+            path: "/subjects/:id",
             name: "subject",
             component: () => import("./components/Subject/Subject")
         }
