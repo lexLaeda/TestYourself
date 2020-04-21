@@ -1,11 +1,10 @@
 package com.test.yourself.maper;
 
 import com.test.yourself.dto.QuestionDto;
-import com.test.yourself.dto.SubjectDto;
 import com.test.yourself.dto.TestDto;
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
-import com.test.yourself.model.test.Test;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
+import com.test.yourself.model.testsystem.test.Test;
 import com.test.yourself.service.subject.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

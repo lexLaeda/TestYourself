@@ -1,16 +1,13 @@
 package com.test.yourself.maper;
 
 import com.test.yourself.dto.QuestionDto;
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.service.subject.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.util.Objects;
 @Component
 public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
 

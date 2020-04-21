@@ -1,16 +1,14 @@
 package com.test.yourself.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.test.yourself.model.subject.Answer;
-import com.test.yourself.model.subject.Subject;
+import com.test.yourself.model.enums.QuestionMode;
+import com.test.yourself.model.testsystem.subject.Answer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.ElementCollection;
 import java.util.List;
-import java.util.Map;
 
 
 @Data
@@ -24,6 +22,8 @@ public class QuestionDto extends AbstractDto{
     private String name;
 
     private String description;
+
+    private QuestionMode mode;
 
     private List<Answer> answers;
 

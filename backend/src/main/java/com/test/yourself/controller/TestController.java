@@ -2,11 +2,9 @@ package com.test.yourself.controller;
 
 import com.test.yourself.dto.TestDto;
 import com.test.yourself.maper.TestMapper;
-import com.test.yourself.model.test.Test;
-import com.test.yourself.service.test.TestService;
+import com.test.yourself.model.testsystem.test.Test;
 import com.test.yourself.service.test.TestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +30,20 @@ public class TestController {
             @RequestParam("id") Long subjectID,
             @RequestParam("number") int amount) {
             Test randomTest = testService.getRandomTest(subjectID,amount);
-            return  testMapper.toDto(randomTest);
+            return testMapper.toDto(randomTest);
+    }
+
+    @GetMapping("/{id}")
+    public TestDto findTestById(@PathVariable("id") Long id){
+        Test test = testService.findTestById(id);
+        return testMapper.toDto(test);
+    }
+
+    @PostMapping("/add")
+    public TestDto addNewTest(@RequestBody TestDto testDto){
+        Test testToAdd = testMapper.toEntity(testDto);
+        Test addedToDb = testService.addTest(testToAdd);
+        return testMapper.toDto(addedToDb);
     }
 
 }

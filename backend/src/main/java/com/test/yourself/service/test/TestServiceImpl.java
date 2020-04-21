@@ -1,18 +1,21 @@
 package com.test.yourself.service.test;
 
 
+import com.test.yourself.exception.TestAlreadyExistException;
 import com.test.yourself.exception.TestNotFoundException;
-import com.test.yourself.model.subject.Question;
-import com.test.yourself.model.subject.Subject;
-import com.test.yourself.model.test.Test;
+import com.test.yourself.model.enums.TestMode;
+import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
+import com.test.yourself.model.testsystem.test.Test;
 
 import com.test.yourself.repository.TestRepository;
 
 import com.test.yourself.service.subject.QuestionService;
 import com.test.yourself.service.subject.SubjectService;
+import com.test.yourself.util.ReflectionUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -47,13 +50,26 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public Test addTest(Test test) {
+        if (!isSuchTestPresent(test)){
+            return testRepository.saveAndFlush(test);
+        }else {
+            throw new TestAlreadyExistException("Test with name \"" + test.getName() + "\" already exist");
+        }
+    }
+
+    @Override
     public Test findTestById(Long id) {
         return testRepository.findById(id).orElseThrow(TestNotFoundException::new);
     }
 
     @Override
     public Test findTestByName(String name) {
-        return testRepository.findByName(name);
+        Test test = testRepository.findByName(name);
+        if (test == null){
+            throw new TestNotFoundException("Test with name \"" + name + "\" not found\"");
+        }
+        return test;
     }
 
     @Override
@@ -68,7 +84,9 @@ public class TestServiceImpl implements TestService {
 
     @Override
     public Test updateTest(Long id, Test test) {
-        return null;
+        Test testFromDb = findTestById(id);
+        Test update = ReflectionUpdate.updateObject(test, testFromDb);
+        return testRepository.saveAndFlush(update);
     }
 
     @Override
@@ -106,7 +124,8 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getRandomTest(Long subjectId, int size) {
         Subject subject = subjectService.findSubjectById(subjectId);
-        return testGenerator.generateRandomTestBySubject(subject,size);
+        Test randomTest = testGenerator.generateRandomTestBySubject(subject,size);
+        return addTest(randomTest);
     }
     @Override
     public Test getTestByQuestions(List<Long> questionIdList) {
@@ -114,5 +133,20 @@ public class TestServiceImpl implements TestService {
                 .map(id -> questionService.findById(id))
                 .collect(Collectors.toList());
         return testGenerator.generateTestByQuestions(questionPull);
+    }
+
+    private boolean isSuchTestPresent(Test test){
+
+        if (test.getTestMode() == TestMode.RANDOM){
+            return false;
+        }
+
+        List<Test> testsBySubject = findAllBySubject(test.getSubject());
+
+        long count = testsBySubject.stream()
+                .filter(testFromDb -> test.getName().equals(testFromDb.getName()))
+                .count();
+
+        return count == 0;
     }
 }

@@ -1,8 +1,7 @@
-package com.test.yourself.model.result;
+package com.test.yourself.model.testsystem.test;
 
 import lombok.Data;
 
-import java.util.List;
 import java.util.Map;
 
 @Data
