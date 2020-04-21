@@ -4,32 +4,47 @@
       <h1 class="display-1 mb-6"> {{ test.name }} </h1>
       <v-form>
         <div class="mt-6" v-for="(question, index) in questions" :key="index">
-          <v-divider class="mb-4" v-if="index !== 0"></v-divider>
-          <div class="title mb-3">{{question.name}}</div>
-          <div v-if="question.description" class="mt-2">{{ question.description }}</div>
-          <template v-if="question.mode === 'SINGLE'">
-            <v-radio-group v-model="question.id">
-              <v-radio
-                class="mb-4"
+          <div v-show="index === questionIndex">
+            <div class="title mb-3">{{question.name}}</div>
+            <div v-if="question.description" class="mt-2">{{ question.description }}</div>
+            <template v-if="question.mode === 'SINGLE'">
+              <v-radio-group v-model="question.id">
+                <v-radio
+                  class="mb-4"
+                  v-for="(answer, index) in question.answers" :key="index"
+                  :label="answer.title"
+                  :value="answer.number"
+                >
+                </v-radio>
+              </v-radio-group>
+            </template>
+            <template v-if="question.mode === 'MULTI'">
+              <v-checkbox
                 v-for="(answer, index) in question.answers" :key="index"
                 :label="answer.title"
                 :value="answer.number"
+                hide-details="true"
               >
-              </v-radio>
-            </v-radio-group>
-          </template>
-          <template v-if="question.mode === 'MULTI'">
-            <v-checkbox
-              v-for="(answer, index) in question.answers" :key="index"
-              :label="answer.title"
-              :value="answer.number"
-              hide-details="true"
-            >
-            </v-checkbox>
-          </template>
+              </v-checkbox>
+            </template>
+          </div>
         </div>
-        <v-btn large color="primary darken-2 white--text"
-        >Завершить</v-btn>
+        <v-row>
+          <v-col cols="auto" v-if="questionIndex > 0">
+            <v-btn large color="primary white--text" @click="prev">
+              Предыдущий
+            </v-btn>
+          </v-col>
+          <v-col cols="auto" v-if="questionIndex < questions.length - 1">
+            <v-btn large color="primary white--text" @click="next">
+              Следующий
+            </v-btn>
+          </v-col>
+          <v-col cols="auto" v-if="questionIndex === questions.length - 1">
+            <v-btn large color="primary darken-2 white--text"
+            >Завершить</v-btn>
+          </v-col>
+        </v-row>
       </v-form>
     </template>
     <div v-if="!dataLoad" class="text-center mt-5 mb-5">
@@ -47,7 +62,8 @@
     data: () => ({
       dataLoad: false,
       test: {},
-      questions: []
+      questions: [],
+      questionIndex: 0,
     }),
 
     methods: {
@@ -64,6 +80,14 @@
           .catch(error => {
             console.log(error);
           });
+      },
+
+      next: function() {
+        this.questionIndex++;
+      },
+
+      prev: function() {
+        this.questionIndex--;
       }
     },
 
