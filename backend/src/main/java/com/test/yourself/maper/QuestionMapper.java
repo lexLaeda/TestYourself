@@ -3,6 +3,7 @@ package com.test.yourself.maper;
 import com.test.yourself.dto.QuestionDto;
 import com.test.yourself.model.subject.Question;
 import com.test.yourself.model.subject.Subject;
+import com.test.yourself.service.subject.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,13 @@ import java.util.Objects;
 public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
 
     private ModelMapper modelMapper;
+    private SubjectService subjectService;
 
     @Autowired
-    public QuestionMapper(ModelMapper modelMapper){
+    public QuestionMapper(ModelMapper modelMapper, SubjectService subjectService){
         super(Question.class, QuestionDto.class);
         this.modelMapper = modelMapper;
+        this.subjectService = subjectService;
     }
 
     @Autowired
@@ -38,5 +41,12 @@ public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
         } else {
             destination.setSubjectId(null);
         }
+    }
+
+    @Override
+    public void mapSpecificFields(QuestionDto source, Question destination) {
+        Long subId = source.getSubjectId();
+        Subject subject = subjectService.findSubjectById(subId);
+        destination.setSubject(subject);
     }
 }

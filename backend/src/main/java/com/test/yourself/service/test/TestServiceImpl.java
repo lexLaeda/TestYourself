@@ -107,6 +107,8 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getRandomTest(Long subjectId, int size) {
         Subject subject = subjectService.findSubjectById(subjectId);
+        System.out.println(subject);
+        System.out.println(findAll());
         return testGenerator.generateRandomTestBySubject(subject,size);
     }
 

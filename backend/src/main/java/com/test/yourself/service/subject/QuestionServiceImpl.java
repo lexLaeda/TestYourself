@@ -76,7 +76,7 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questions = new ArrayList<>();
         Random random = new Random();
         while (questions.size() < size){
-            int randomIndex = random.nextInt();
+            int randomIndex = random.nextInt(size);
             Question randomQuestion = questionPull.get(randomIndex);
             questions.add(randomQuestion);
         }

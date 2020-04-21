@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 public class TestDto extends AbstractDto{
 
-    private Subject subject;
+    private Long subjectId;
 
     private String name;
 
