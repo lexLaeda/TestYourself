@@ -73,14 +73,14 @@ public class QuestionServiceImpl implements QuestionService {
         if (size >= pullSize){
             size = pullSize;
         }
-        List<Question> questions = new ArrayList<>();
+        Set<Question> questions = new HashSet<>();
         Random random = new Random();
         while (questions.size() < size){
             int randomIndex = random.nextInt(size);
             Question randomQuestion = questionPull.get(randomIndex);
             questions.add(randomQuestion);
         }
-        return questions;
+        return new ArrayList<>(questions);
      }
 
      private List<Question> getQuestionsByPredicate(Predicate<? super Question> predicate){

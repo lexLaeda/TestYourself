@@ -1,6 +1,8 @@
 package com.test.yourself.dto;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.test.yourself.model.enums.QuestionMode;
 import com.test.yourself.model.subject.Answer;
 import com.test.yourself.model.subject.Subject;
 import lombok.AllArgsConstructor;
@@ -24,6 +26,8 @@ public class QuestionDto extends AbstractDto{
     private String name;
 
     private String description;
+
+    private QuestionMode mode;
 
     private List<Answer> answers;
 

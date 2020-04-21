@@ -1,6 +1,7 @@
 package com.test.yourself.model.subject;
 
 import com.test.yourself.model.AbstractEntity;
+import com.test.yourself.model.enums.QuestionMode;
 import lombok.*;
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +23,9 @@ public class Question extends AbstractEntity {
     private String name;
 
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private QuestionMode mode;
 
     @ElementCollection
     @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
