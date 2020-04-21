@@ -23,6 +23,7 @@ public class TestGeneratorServiceImpl implements TestGeneratorService {
     @Override
     public Test generateRandomTestBySubject(Subject subject, int testSize) {
         List<Question> testQuestions = questionService.getRandomQuestionsBySubject(subject,testSize);
+        System.out.println(testQuestions.size());
         return generateTestByQuestions(testQuestions);
     }
 
@@ -31,12 +32,14 @@ public class TestGeneratorServiceImpl implements TestGeneratorService {
         Test test = new Test();
         if (isSameSubject(questionPull)){
             Subject subject = questionPull.get(0).getSubject();
+            test.setSubject(subject);
         }
         test.setName("Тест на знание " + test.getSubject());
         return test;
     }
 
     private boolean isSameSubject(List<Question> questionPull){
+        System.out.println(questionPull.get(0));
         Subject fromFirst = questionPull.get(0).getSubject();
         long count = questionPull.stream()
                 .filter(question -> fromFirst.equals(question.getSubject()))

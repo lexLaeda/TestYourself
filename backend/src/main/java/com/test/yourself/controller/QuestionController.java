@@ -24,7 +24,9 @@ public class QuestionController {
 
     @PostMapping("/add")
     public QuestionDto addQuestion(@RequestBody QuestionDto questionDTO){
+        System.out.println(questionDTO.getSubjectId());
         Question question = questionMapper.toEntity(questionDTO);
+        System.out.println(question.getSubject());
         Question fromdb = questionService.addQuestion(question);
         return questionMapper.toDto(fromdb);
     }
