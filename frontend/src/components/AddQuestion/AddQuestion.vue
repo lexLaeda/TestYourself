@@ -58,6 +58,7 @@
                           v-model="postData.correctAnswers"
                           :value="index"
                           :rules="[postData.correctAnswers.length > 0]"
+                          hide-details="true"
                       >
                       </v-checkbox>
                     </v-col>
