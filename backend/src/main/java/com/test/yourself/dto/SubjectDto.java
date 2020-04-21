@@ -1,7 +1,6 @@
 package com.test.yourself.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
+
 import com.test.yourself.model.subject.Question;
 import com.test.yourself.model.test.Test;
 import lombok.*;
@@ -20,7 +19,4 @@ public class SubjectDto extends AbstractDto{
 
     private String description;
 
-    private List<Test> tests;
-
-    private List<Question> questions;
 }
