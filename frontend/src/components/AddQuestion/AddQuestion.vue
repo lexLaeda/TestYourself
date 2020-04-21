@@ -188,13 +188,6 @@
           .catch(error => {
             console.log(error);
           });
-        // api.getAllQuestion()
-        //   .then(response => {
-        //     console.log(response);
-        //   })
-        //   .catch(error => {
-        //     console.log(error);
-        //   });
       },
 
       addAnswer() {

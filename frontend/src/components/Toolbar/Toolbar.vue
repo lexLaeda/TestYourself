@@ -85,6 +85,11 @@
       },
       authorMenuList: [
         {
+          title: 'Предметы',
+          path: '/subjects',
+          icon: 'mdi-bookshelf'
+        },
+        {
           title: 'Добавить предмет',
           path: '/add-subject',
           icon: 'mdi-plus'
@@ -97,7 +102,7 @@
         {
           title: 'Сгенерировать тест',
           path: '/test-generator',
-          icon: 'mdi-plus'
+          icon: 'mdi-format-list-checkbox'
         }
       ],
       menuList: [

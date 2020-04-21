@@ -3,23 +3,35 @@
       class="mx-auto"
       max-width="700"
   >
+    <v-card-title class="display-1">Сгенерировать тест</v-card-title>
     <v-card-text>
       <v-form
-          ref="form"
+        ref="form"
+        v-model="valid"
       >
-        <v-text-field
-            v-model="postData.id"
-            label="Subject ID"
+        <v-autocomplete
+            v-model="postData.subject"
+            :items="subjects"
+            label="Предмет"
+            :rules="[v => !!v || validText]"
             outlined
-            type="number"
-        ></v-text-field>
+            required
+            hide-no-data
+        ></v-autocomplete>
+
         <v-text-field
             v-model="postData.number"
-            label="Number"
+            label="Число вопросов"
             outlined
             type="number"
+            required
+            :rules="[v => !!v || validText]"
         ></v-text-field>
-        <v-btn large color="primary darken-2 white--text" @click="generate">Generate</v-btn>
+
+        <v-btn large color="primary darken-2 white--text"
+               :disabled="!valid"
+               @click="generateTest"
+        >Начать тест</v-btn>
       </v-form>
 
       <div class="mt-4">{{message}}</div>
@@ -36,22 +48,46 @@
     data: () => {
       return {
         postData: {},
-        message: ''
+        valid: true,
+        validText: 'Обязательное поле',
+        message: '',
+        subjects: []
       }
     },
 
     methods: {
-      generate() {
-        api.generateTest(this.postData.id, this.postData.number)
+      getData() {
+        api.getSubjects()
           .then(response => {
             let data = response.data;
-            console.log('TEST-GENERATOR', response);
+            Object.keys(data).forEach(item => {
+              this.subjects.push({
+                text: data[item],
+                value: Number(item)
+              });
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      },
+
+      generateTest() {
+        this.$refs.form.validate();
+        console.log('TEST-GENERATE =>', this.postData);
+        api.generateTest(this.postData.subject, this.postData.number)
+          .then(response => {
+            let data = response.data;
             this.message = data;
           })
           .catch(error => {
             console.log(error);
           });
       }
+    },
+
+    mounted() {
+      this.getData();
     }
   }
 </script>

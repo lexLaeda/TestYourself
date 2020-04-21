@@ -1,20 +1,19 @@
 <template>
   <div>
-    <subject-list></subject-list>
-
+    <test-generator></test-generator>
 <!--    <v-btn @click="hello">Hello</v-btn>-->
   </div>
 </template>
 
 <script>
   import api from "../backend-api";
-  import SubjectList from "../components/Subject/SubjectList";
+  import TestGenerator from "../components/TestGenerator/TestGenerator";
 
   export default {
     name: 'Home',
 
     components: {
-      SubjectList
+      TestGenerator
     },
 
     methods: {
