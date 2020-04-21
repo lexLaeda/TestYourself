@@ -7,6 +7,7 @@ import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -34,7 +35,9 @@ public class TestGeneratorServiceImpl implements TestGeneratorService {
             Subject subject = questionPull.get(0).getSubject();
             test.setSubject(subject);
         }
-        test.setName("Тест на знание " + test.getSubject());
+        test.setCreated(LocalDateTime.now());
+        test.setName("Тест на знание " + test.getSubject().getName());
+        test.setQuestions(questionPull);
         return test;
     }
 

@@ -18,5 +18,5 @@ public class TestDto extends AbstractDto{
 
     private String name;
 
-    private List<Question> questions;
+    private List<QuestionDto> questions;
 }
