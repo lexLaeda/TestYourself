@@ -37,6 +37,11 @@ export default new Router({
             path: "/subjects/:id",
             name: "subject",
             component: () => import("./components/Subject/Subject")
+        },
+        {
+            path: "/test/:id",
+            name: "test",
+            component: () => import("./components/Test/Test")
         }
     ]
 });

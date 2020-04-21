@@ -33,8 +33,6 @@
                @click="generateTest"
         >Начать тест</v-btn>
       </v-form>
-
-      <div class="mt-4">{{message}}</div>
     </v-card-text>
   </v-card>
 </template>
@@ -50,7 +48,6 @@
         postData: {},
         valid: true,
         validText: 'Обязательное поле',
-        message: '',
         subjects: []
       }
     },
@@ -59,13 +56,15 @@
       getData() {
         api.getSubjects()
           .then(response => {
-            let data = response.data;
-            Object.keys(data).forEach(item => {
-              this.subjects.push({
-                text: data[item],
-                value: Number(item)
+            if (response.status === 200) {
+              let data = response.data;
+              Object.keys(data).forEach(item => {
+                this.subjects.push({
+                  text: data[item],
+                  value: Number(item)
+                });
               });
-            });
+            }
           })
           .catch(error => {
             console.log(error);
@@ -77,8 +76,10 @@
         console.log('TEST-GENERATE =>', this.postData);
         api.generateTest(this.postData.subject, this.postData.number)
           .then(response => {
-            let data = response.data;
-            this.message = data;
+            if (response.status === 200) {
+              let data = response.data;
+              this.router.push('/test/' + data.id);
+            }
           })
           .catch(error => {
             console.log(error);

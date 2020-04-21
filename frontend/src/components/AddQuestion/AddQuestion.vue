@@ -177,13 +177,15 @@
       getData() {
         api.getSubjects()
           .then(response => {
-            let data = response.data;
-            Object.keys(data).forEach(item => {
-              this.subjects.push({
-                text: data[item],
-                value: Number(item)
+            if (response.status === 200) {
+              let data = response.data;
+              Object.keys(data).forEach(item => {
+                this.subjects.push({
+                  text: data[item],
+                  value: Number(item)
+                });
               });
-            });
+            }
           })
           .catch(error => {
             console.log(error);
