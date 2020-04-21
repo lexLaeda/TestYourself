@@ -11,7 +11,7 @@
             >
               <div class="title">{{ subject.name }}</div>
               <div v-if="subject.description" class="mt-4">{{ subject.description }}</div>
-              <div class="mt-4 caption">{{subject.questions.length}} вопросов</div>
+              <div v-if="subject.questions" class="mt-4 caption">{{subject.questions.length}} вопросов</div>
             </v-card>
           </template>
         </v-hover>

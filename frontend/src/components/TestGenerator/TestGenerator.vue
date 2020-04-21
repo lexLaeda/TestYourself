@@ -21,6 +21,8 @@
         ></v-text-field>
         <v-btn large color="primary darken-2 white--text" @click="generate">Generate</v-btn>
       </v-form>
+
+      <div class="mt-4">{{message}}</div>
     </v-card-text>
   </v-card>
 </template>
@@ -33,7 +35,8 @@
 
     data: () => {
       return {
-        postData: {}
+        postData: {},
+        message: ''
       }
     },
 
@@ -41,7 +44,9 @@
       generate() {
         api.generateTest(`/test/generate?id=`+ this.postData.id + `&number=` + this.postData.number)
           .then(response => {
+            let data = response.data;
             console.log('TEST-GENERATOR', response);
+            this.message = data;
           })
           .catch(error => {
             console.log(error);
