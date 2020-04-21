@@ -29,7 +29,11 @@ public class Test extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     TestMode testMode;
 
-    @ElementCollection
+    @ManyToMany
+    @JoinTable(
+            name = "test_questions",
+            joinColumns = @JoinColumn(name = "question_id"),
+            inverseJoinColumns = @JoinColumn(name = "test_id"))
     private List<Question> questions;
 
 }
