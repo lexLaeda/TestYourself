@@ -78,7 +78,8 @@
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
-              this.router.push('/test/' + data.id);
+              console.log(data);
+              // this.$router.push('/test/' + data.id);
             }
           })
           .catch(error => {
