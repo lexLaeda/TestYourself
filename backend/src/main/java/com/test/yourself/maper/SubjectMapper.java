@@ -42,13 +42,16 @@ public class SubjectMapper extends AbstractMapper<Subject, SubjectDto> {
     @Override
     public void mapSpecificFields(Subject source, SubjectDto destination) {
         List<Question> questions = source.getQuestions();
-        destination.setAmount(questions.size());
+        destination.setAmountQuestions(questions.size());
     }
 
     @Override
     public void mapSpecificFields(SubjectDto source, Subject destination) {
-        Subject subject = subjectService.findSubjectById(source.getId());
-        List<Question> questions = questionService.findAllBySubjectId(subject.getId());
-        destination.setQuestions(questions);
+        if (source.getId()!= null){
+            Subject subject = subjectService.findSubjectById(source.getId());
+            List<Question> questions = questionService.findAllBySubjectId(subject.getId());
+            destination.setQuestions(questions);
+        }
+
     }
 }
