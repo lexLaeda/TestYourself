@@ -21,7 +21,7 @@ import java.util.Set;
 public class Test extends AbstractEntity {
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
     private String name;

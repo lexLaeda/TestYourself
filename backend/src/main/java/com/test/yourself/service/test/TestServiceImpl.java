@@ -19,7 +19,6 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Qualifier(value = "database")
 public class TestServiceImpl implements TestService {
 
     private TestRepository testRepository;
@@ -107,11 +106,8 @@ public class TestServiceImpl implements TestService {
     @Override
     public Test getRandomTest(Long subjectId, int size) {
         Subject subject = subjectService.findSubjectById(subjectId);
-        System.out.println(subject);
-        System.out.println(findAll());
         return testGenerator.generateRandomTestBySubject(subject,size);
     }
-
     @Override
     public Test getTestByQuestions(List<Long> questionIdList) {
         List<Question> questionPull = questionIdList.stream()
@@ -119,5 +115,4 @@ public class TestServiceImpl implements TestService {
                 .collect(Collectors.toList());
         return testGenerator.generateTestByQuestions(questionPull);
     }
-
 }

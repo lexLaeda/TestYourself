@@ -16,7 +16,6 @@ import java.util.Set;
 @Table(name = "subjects")
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode(callSuper = true)
 public class Subject extends AbstractEntity {
 

@@ -25,7 +25,9 @@ public abstract class AbstractEntity {
 
     @PrePersist
     public void  toCreate(){
-        setCreated(LocalDateTime.now());
+        if (created == null){
+            setCreated(LocalDateTime.now());
+        }
     }
 
     @PreUpdate

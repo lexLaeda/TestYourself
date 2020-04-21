@@ -19,4 +19,5 @@ public class SubjectDto extends AbstractDto{
 
     private String description;
 
+    private int amount;
 }
