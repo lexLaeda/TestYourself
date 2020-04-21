@@ -2,7 +2,7 @@
   <div>
     <template v-if="dataLoad">
       <h1 class="display-1 mb-6"> {{ test.name }} </h1>
-      <div v-for="(question, index) in questions">
+      <div v-for="(question, index) in questions" :key="index">
         {{question.name}}
       </div>
     </template>
