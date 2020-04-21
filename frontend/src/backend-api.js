@@ -1,11 +1,11 @@
 import axios from 'axios'
 
-const AXIOS = axios.create({
+window.axios = axios.create({
   baseURL: `/api`,
   timeout: 1000
 });
 
-const AXIOS_JSON = axios.create({
+window.axiosJson = axios.create({
   baseURL: `/api`,
   timeout: 1000,
   headers: {
@@ -14,31 +14,41 @@ const AXIOS_JSON = axios.create({
 });
 
 export default {
+  name: 'Api',
+
   hello() {
-    return AXIOS.get(`/hello`);
+    return window.axios.get(`/hello`);
   },
 
   addSubject(postData) {
-    return AXIOS_JSON.post(`/subjects/add`, postData);
+    return window.axiosJson.post(`/subjects/add`, postData);
   },
 
   addQuestion(postData) {
-    return AXIOS_JSON.post(`/questions/add`, postData);
+    return window.axiosJson.post(`/questions/add`, postData);
   },
 
   getSubjects() {
-    return AXIOS.get(`/subjects/map`);
+    return window.axios.get(`/subjects/map`);
   },
 
   getAllSubjects() {
-    return AXIOS.get(`/subjects/all`);
+    return window.axios.get(`/subjects/all`);
   },
 
-  getAllQuestion() {
-    return AXIOS.get(`/questions/all`);
+  getSubject(id) {
+    return window.axios.get(`/subjects/` + id);
   },
 
-  generateTest(url) {
-    return AXIOS.get(url);
+  getQuestionBySubject(id) {
+    return window.axios.get(`/questions/subject?sub_id=` + id);
+  },
+
+  generateTest(id, number) {
+    return window.axios.get(`/test/generate?id=`+ id + `&number=` + number);
+  },
+
+  getTest(id) {
+    return window.axios.get(`/test/` + id);
   }
 }
