@@ -39,7 +39,13 @@
 
     methods: {
       generate() {
-        api.generateTest(`/test/generate?id=`+ this.postData.id + `&number=` + this.postData.number);
+        api.generateTest(`/test/generate?id=`+ this.postData.id + `&number=` + this.postData.number)
+          .then(response => {
+            console.log('TEST-GENERATOR', response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
       }
     }
   }

@@ -229,7 +229,7 @@
         console.log('postData =>', this.postData);
         api.addQuestion(postData)
           .then(function (response) {
-            console.log(response);
+            console.log('ADD-QUESTION =>', response);
           })
           .catch(function (error) {
             console.log(error);

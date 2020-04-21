@@ -58,7 +58,7 @@
         let postData = JSON.stringify(this.postData);
         api.addSubject(postData)
           .then(function (response) {
-            console.log(response);
+            console.log('ADD-SUBJECT =>', response);
           })
           .catch(function (error) {
             console.log(error);
