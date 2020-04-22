@@ -5,6 +5,8 @@ import com.test.yourself.maper.QuestionMapper;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +25,10 @@ public class QuestionController {
     }
 
     @PostMapping("/add")
-    public QuestionDto addQuestion(@RequestBody QuestionDto questionDTO){
-        System.out.println(questionDTO.getSubjectId());
+    public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDTO){
         Question question = questionMapper.toEntity(questionDTO);
-        System.out.println(question.getSubject());
         Question fromdb = questionService.addQuestion(question);
-        return questionMapper.toDto(fromdb);
+        return new ResponseEntity<>(questionMapper.toDto(fromdb), HttpStatus.CREATED);
     }
     @PutMapping("/update/{id}")
     public QuestionDto updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDTO){

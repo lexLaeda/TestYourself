@@ -28,6 +28,7 @@ public class SubjectController {
     public Map<Long,String> findMapSubjects(){
         return subjectService.findMapSubjects();
     }
+
     @PostMapping(value = "/add",produces = "application/json")
     public SubjectDto addNewSubject(@RequestBody SubjectDto subjectDTO){
         Subject subject = subjectMapper.toEntity(subjectDTO);

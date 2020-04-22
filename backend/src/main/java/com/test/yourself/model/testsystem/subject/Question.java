@@ -17,14 +17,16 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class Question extends AbstractEntity {
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Subject subject;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private QuestionMode mode;
 
@@ -33,7 +35,7 @@ public class Question extends AbstractEntity {
 
     @ElementCollection
     @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "question_answer")
+    @Column(name = "question_answer",nullable = false)
     private List<Answer> answers;
 
     @ElementCollection

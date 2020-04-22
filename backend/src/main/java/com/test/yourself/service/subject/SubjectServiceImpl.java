@@ -1,6 +1,7 @@
 package com.test.yourself.service.subject;
 
 import com.test.yourself.exception.SubjectNotFoundException;
+import com.test.yourself.exception.SubjectServiceValidationException;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.SubjectRepository;
 import com.test.yourself.util.ReflectionUpdate;
@@ -35,10 +36,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjects.stream().collect(Collectors.toMap(Subject::getId,Subject::getName));
     }
 
-    @Override
-    public Subject addSubject(Subject subject) {
-        return subjectRepository.saveAndFlush(subject);
-    }
+
 
     @Override
     public Subject findSubjectById(Long id) {
@@ -48,7 +46,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject add(Subject subject) {
-        return subjectRepository.saveAndFlush(subject);
+        Subject subFromBD = subjectRepository.findByName(subject.getName());
+        System.out.println(subFromBD);
+        if (subFromBD != null){
+            throw new SubjectServiceValidationException("Subject with " + subject.getName() + "already exist");
+        } else {
+            return subjectRepository.saveAndFlush(subject);
+        }
     }
 
     @Override
