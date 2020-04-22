@@ -8,8 +8,8 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.test.testyourself</groupId>
-        <artifactId>test-yourself</artifactId>
+        <groupId>com.subjectTest.testyourself</groupId>
+        <artifactId>subjectTest-yourself</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
@@ -58,19 +58,19 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
-            <scope>test</scope>
+            <scope>subjectTest</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-test</artifactId>
+            <artifactId>spring-boot-subjectTest</artifactId>
             <version>2.2.6.RELEASE</version>
-            <scope>test</scope>
+            <scope>subjectTest</scope>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>1.10.19</version>
-            <scope>test</scope>
+            <scope>subjectTest</scope>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -79,15 +79,15 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <artifactId>spring-subjectTest</artifactId>
             <version>5.2.5.RELEASE</version>
-            <scope>test</scope>
+            <scope>subjectTest</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
+            <artifactId>spring-subjectTest</artifactId>
             <version>5.2.5.RELEASE</version>
-            <scope>test</scope>
+            <scope>subjectTest</scope>
         </dependency>
 
     </dependencies>

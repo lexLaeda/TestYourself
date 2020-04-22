@@ -3,7 +3,7 @@ package com.test.yourself.service.test;
 import com.test.yourself.model.enums.TestMode;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
-import com.test.yourself.model.testsystem.test.Test;
+import com.test.yourself.model.testsystem.test.SubjectTest;
 import com.test.yourself.service.subject.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,24 +22,24 @@ public class TestGeneratorServiceImpl implements TestGeneratorService {
     }
 
     @Override
-    public Test generateRandomTestBySubject(Subject subject, int testSize) {
+    public SubjectTest generateRandomTestBySubject(Subject subject, int testSize) {
         List<Question> testQuestions = questionService.getRandomQuestionsBySubject(subject,testSize);
         System.out.println(testQuestions.size());
         return generateTestByQuestions(testQuestions);
     }
 
     @Override
-    public Test generateTestByQuestions(List<Question> questionPull) {
-        Test test = new Test();
+    public SubjectTest generateTestByQuestions(List<Question> questionPull) {
+        SubjectTest subjectTest = new SubjectTest();
         if (isSameSubject(questionPull)){
             Subject subject = questionPull.get(0).getSubject();
-            test.setSubject(subject);
+            subjectTest.setSubject(subject);
         }
-        test.setCreated(LocalDateTime.now());
-        test.setName("Тест на знание " + test.getSubject().getName());
-        test.setQuestions(questionPull);
-        test.setTestMode(TestMode.RANDOM);
-        return test;
+        subjectTest.setCreated(LocalDateTime.now());
+        subjectTest.setName("Тест на знание " + subjectTest.getSubject().getName());
+        subjectTest.setQuestions(questionPull);
+        subjectTest.setTestMode(TestMode.RANDOM);
+        return subjectTest;
     }
 
     private boolean isSameSubject(List<Question> questionPull){

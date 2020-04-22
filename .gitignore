@@ -33,9 +33,9 @@ frontend/node/
 frontend/node_modules/
 frontend/npm-debug.log
 frontend/target
-frontend/test-output
-frontend/tests/e2e/reports
-frontend/tests/unit/coverage
+frontend/subjectTest-output
+frontend/subjectTests/e2e/reports
+frontend/subjectTests/unit/coverage
 frontend/yarn-error.log
 frontend/yarn.lock
 security/target/

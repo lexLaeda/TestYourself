@@ -1,7 +1,7 @@
 <template>
   <div>
     <template v-if="dataLoad">
-      <h1 class="display-1 mb-6"> {{ test.name }} </h1>
+      <h1 class="display-1 mb-6"> {{ subjectTest.name }} </h1>
       <div v-for="(question, index) in questions" :key="index">
         {{question.name}}
       </div>
@@ -20,7 +20,7 @@
 
     data: () => ({
       dataLoad: false,
-      test: {},
+      subjectTest: {},
       questions: []
     }),
 
@@ -30,7 +30,7 @@
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
-              this.test = data;
+              this.subjectTest = data;
               this.questions = data.questions;
               this.dataLoad = true;
             }

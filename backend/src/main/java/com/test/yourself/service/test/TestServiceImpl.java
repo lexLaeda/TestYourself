@@ -1,12 +1,11 @@
 package com.test.yourself.service.test;
 
 
-import com.test.yourself.exception.TestAlreadyExistException;
 import com.test.yourself.exception.TestNotFoundException;
 import com.test.yourself.model.enums.TestMode;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
-import com.test.yourself.model.testsystem.test.Test;
+import com.test.yourself.model.testsystem.test.SubjectTest;
 
 import com.test.yourself.repository.TestRepository;
 
@@ -15,7 +14,6 @@ import com.test.yourself.service.subject.SubjectService;
 import com.test.yourself.util.ReflectionUpdate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -50,27 +48,27 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test addTest(Test test) {
-        return testRepository.save(test);
+    public SubjectTest addTest(SubjectTest subjectTest) {
+        return testRepository.save(subjectTest);
     }
 
     @Override
-    public Test findTestById(Long id) {
+    public SubjectTest findTestById(Long id) {
         return testRepository.findById(id).orElseThrow(TestNotFoundException::new);
     }
 
     @Override
-    public Test findTestByName(String name) {
-        Test test = testRepository.findByName(name);
-        if (test == null){
-            throw new TestNotFoundException("Test with name \"" + name + "\" not found\"");
+    public SubjectTest findTestByName(String name) {
+        SubjectTest subjectTest = testRepository.findByName(name);
+        if (subjectTest == null){
+            throw new TestNotFoundException("SubjectTest with name \"" + name + "\" not found\"");
         }
-        return test;
+        return subjectTest;
     }
 
     @Override
-    public void deleteTest(Test test) {
-        testRepository.delete(test);
+    public void deleteTest(SubjectTest subjectTest) {
+        testRepository.delete(subjectTest);
     }
 
     @Override
@@ -79,26 +77,26 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test updateTest(Long id, Test test) {
-        Test testFromDb = findTestById(id);
-        Test update = ReflectionUpdate.updateObject(test, testFromDb);
+    public SubjectTest updateTest(Long id, SubjectTest subjectTest) {
+        SubjectTest subjectTestFromDb = findTestById(id);
+        SubjectTest update = ReflectionUpdate.updateObject(subjectTest, subjectTestFromDb);
         return testRepository.saveAndFlush(update);
     }
 
     @Override
-    public List<Test> findAll() {
+    public List<SubjectTest> findAll() {
         return testRepository.findAll();
     }
 
     @Override
-    public List<Test> findAllBySubject(Subject subject) {
+    public List<SubjectTest> findAllBySubject(Subject subject) {
         return testRepository.findAll().stream()
                 .filter(test -> subject.equals(test.getSubject()))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Test> findAllBySubjectId(Long subjectId) {
+    public List<SubjectTest> findAllBySubjectId(Long subjectId) {
         return testRepository.findAllBySubjectId(subjectId);
     }
 
@@ -118,30 +116,30 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public Test getRandomTest(Long subjectId, int size) {
+    public SubjectTest getRandomTest(Long subjectId, int size) {
         Subject subject = subjectService.findSubjectById(subjectId);
-        Test randomTest = testGenerator.generateRandomTestBySubject(subject,size);
-        return addTest(randomTest);
+        SubjectTest randomSubjectTest = testGenerator.generateRandomTestBySubject(subject,size);
+        return addTest(randomSubjectTest);
     }
 
     @Override
-    public Test getTestByQuestions(List<Long> questionIdList) {
+    public SubjectTest getTestByQuestions(List<Long> questionIdList) {
         List<Question> questionPull = questionIdList.stream()
                 .map(id -> questionService.findById(id))
                 .collect(Collectors.toList());
         return testGenerator.generateTestByQuestions(questionPull);
     }
 
-    private boolean isSuchTestPresent(Test test){
+    private boolean isSuchTestPresent(SubjectTest subjectTest){
 
-        if (test.getTestMode().equals(TestMode.RANDOM)){
+        if (subjectTest.getTestMode().equals(TestMode.RANDOM)){
             return false;
         }
 
-        List<Test> testsBySubject = findAllBySubject(test.getSubject());
+        List<SubjectTest> testsBySubject = findAllBySubject(subjectTest.getSubject());
 
         long count = testsBySubject.stream()
-                .filter(testFromDb -> test.getName().equals(testFromDb.getName()))
+                .filter(testFromDb -> subjectTest.getName().equals(testFromDb.getName()))
                 .count();
 
         return count != 0;

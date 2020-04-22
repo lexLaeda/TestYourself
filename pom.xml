@@ -3,12 +3,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.test.testyourself</groupId>
-    <artifactId>test-yourself</artifactId>
+    <groupId>com.subjectTest.testyourself</groupId>
+    <artifactId>subjectTest-yourself</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>test-yourself-application</name>
+    <name>subjectTest-yourself-application</name>
 
 
     <parent>
@@ -42,16 +42,16 @@
                     runtime agent which is passed as VM argument when Maven the Surefire plugin
                     is executed. -->
                     <execution>
-                        <id>pre-unit-test</id>
+                        <id>pre-unit-subjectTest</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
                     <!-- Ensures that the code coverage report for
-                    unit tests is created after unit tests have been run. -->
+                    unit subjectTests is created after unit subjectTests have been run. -->
                     <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
+                        <id>post-unit-subjectTest</id>
+                        <phase>subjectTest</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
