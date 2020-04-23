@@ -11,10 +11,6 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class TestControllerExceptionHandler {
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ExceptionHandler({TestNotFoundException.class})
-    public void handle(TestNotFoundException e){}
-
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({SQLException.class, NullPointerException.class})

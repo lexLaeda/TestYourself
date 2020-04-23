@@ -3,7 +3,7 @@ package com.test.yourself.controller;
 import com.test.yourself.dto.QuestionDto;
 import com.test.yourself.maper.QuestionMapper;
 import com.test.yourself.model.testsystem.subject.Question;
-import com.test.yourself.service.subject.QuestionService;
+import com.test.yourself.service.test.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,42 +19,45 @@ public class QuestionController {
     private QuestionMapper questionMapper;
 
     @Autowired
-    public QuestionController(QuestionMapper questionMapper, QuestionService questionService){
+    public QuestionController(QuestionMapper questionMapper, QuestionService questionService) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDTO){
+    public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDTO) {
         Question question = questionMapper.toEntity(questionDTO);
         Question fromdb = questionService.addQuestion(question);
-        return new ResponseEntity<>(questionMapper.toDto(fromdb), HttpStatus.CREATED);
-    }
-    @PutMapping("/update/{id}")
-    public QuestionDto updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDTO){
-        Question question = questionMapper.toEntity(questionDTO);
-        return questionMapper.toDto(questionService.update(question, id));
+        return new ResponseEntity<>(questionMapper.toDto(fromdb), HttpStatus.OK);
     }
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDTO) {
+        Question question = questionMapper.toEntity(questionDTO);
+        return new ResponseEntity<>(questionMapper.toDto(questionService.update(question, id)), HttpStatus.OK);
+    }
 
     @GetMapping("/subject")
     @ResponseBody
-    public List<QuestionDto> findAllBySubject(@RequestParam("sub_id") Long subjectId){
-        return questionService.findAllBySubjectId(subjectId).stream()
+    public ResponseEntity<List<QuestionDto>> findAllBySubject(@RequestParam("sub_id") Long subjectId) {
+        List<QuestionDto> questions = questionService.findAllBySubjectId(subjectId).stream()
                 .map(question -> questionMapper.toDto(question))
                 .collect(Collectors.toList());
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<QuestionDto> findAll(){
-        return questionService.findAll().stream()
+    public ResponseEntity<List<QuestionDto>> findAll() {
+        List<QuestionDto> questions = questionService.findAll().stream()
                 .map(question -> questionMapper.toDto(question)).
                         collect(Collectors.toList());
+        return new ResponseEntity<>(questions, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public QuestionDto findById(@PathVariable Long id){
-        return questionMapper.toDto(questionService.findById(id));
+    public ResponseEntity<QuestionDto> findById(@PathVariable Long id) {
+        QuestionDto questionDto = questionMapper.toDto(questionService.findById(id));
+        return new ResponseEntity<>(questionDto, HttpStatus.OK);
     }
 
 }

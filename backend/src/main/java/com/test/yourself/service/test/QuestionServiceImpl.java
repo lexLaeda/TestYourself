@@ -1,4 +1,4 @@
-package com.test.yourself.service.subject;
+package com.test.yourself.service.test;
 
 import com.test.yourself.exception.QuestionNotFoundException;
 import com.test.yourself.model.testsystem.subject.Question;
@@ -54,8 +54,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question update(Question question, Long id) {
-        Question questionFromDb = questionRepository.findById(id)
-                .orElseThrow(QuestionNotFoundException::new);
+        Question questionFromDb = findById(id);
         Question updated = ReflectionUpdate.updateObject(question, questionFromDb);
         return questionRepository.saveAndFlush(updated);
     }

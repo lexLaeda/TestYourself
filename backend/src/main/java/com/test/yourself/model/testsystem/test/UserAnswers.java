@@ -2,6 +2,8 @@ package com.test.yourself.model.testsystem.test;
 
 import lombok.Data;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -9,7 +11,9 @@ public class UserAnswers {
 
     private Long testId;
 
-    private String testName;
+    private List<QuestionAnswer> answers;
 
-    private Map<Integer, Map<Integer,String>> results;
+    private LocalDateTime start;
+
+    private LocalDateTime end;
 }

@@ -3,8 +3,10 @@ package com.test.yourself.controller;
 import com.test.yourself.dto.SubjectDto;
 import com.test.yourself.maper.SubjectMapper;
 import com.test.yourself.model.testsystem.subject.Subject;
-import com.test.yourself.service.subject.SubjectService;
+import com.test.yourself.service.test.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,36 +32,38 @@ public class SubjectController {
     }
 
     @PostMapping(value = "/add",produces = "application/json")
-    public SubjectDto addNewSubject(@RequestBody SubjectDto subjectDTO){
-        Subject subject = subjectMapper.toEntity(subjectDTO);
+    public ResponseEntity<SubjectDto> addNewSubject(@RequestBody SubjectDto subjectDto){
+        Subject subject = subjectMapper.toEntity(subjectDto);
         Subject savedSubject = subjectService.add(subject);
-        return subjectMapper.toDto(savedSubject);
+        return new ResponseEntity<>(subjectMapper.toDto(savedSubject), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public SubjectDto updateSubject(@RequestBody SubjectDto subjectDTO, @PathVariable Long id){
-        Subject subject = subjectMapper.toEntity(subjectDTO);
+    public ResponseEntity<SubjectDto> updateSubject(@RequestBody SubjectDto subjectDto, @PathVariable Long id){
+        Subject subject = subjectMapper.toEntity(subjectDto);
         Subject updatedSubject = subjectService.update(subject, id);
-        return subjectMapper.toDto(updatedSubject);
+        return new ResponseEntity<>(subjectMapper.toDto(updatedSubject),HttpStatus.OK);
     }
     @PutMapping("/update_name")
     @ResponseBody
-    public SubjectDto updateSubjectName(
+    public ResponseEntity<SubjectDto> updateSubjectName(
             @RequestParam("sub_name") String subjectName,
             @RequestParam("sub_id") Long id){
         Subject updatedSubject = subjectService.updateName(subjectName,id);
-        return subjectMapper.toDto(updatedSubject);
+        return new ResponseEntity<>(subjectMapper.toDto(updatedSubject), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public SubjectDto findSubjectById(@PathVariable Long id){
-        return subjectMapper.toDto(subjectService.findSubjectById(id));
+    public ResponseEntity<SubjectDto> findSubjectById(@PathVariable Long id){
+        SubjectDto subjectDto = subjectMapper.toDto(subjectService.findSubjectById(id));
+        return new ResponseEntity<>(subjectDto,HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public List<SubjectDto> findAll(){
-        return subjectService.findAllSubjects().stream()
+    public ResponseEntity<List<SubjectDto>> findAll(){
+        List<SubjectDto> subList = subjectService.findAllSubjects().stream()
                 .map(subject -> subjectMapper.toDto(subject))
                 .collect(Collectors.toList());
+        return new ResponseEntity<>(subList,HttpStatus.OK);
     }
 }
