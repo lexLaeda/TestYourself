@@ -63,7 +63,7 @@
       dataLoad: false,
       test: {},
       questions: [],
-      questionIndex: 0,
+      questionIndex: 0
     }),
 
     methods: {
