@@ -2,7 +2,7 @@
   <div class="ty-test">
     <template v-if="dataLoad">
       <h1 class="display-1 mb-6"> {{ test.name }} </h1>
-      <v-form class="ty-test__form" v-model="valid" ref="form">
+      <v-form class="ty-test__form">
           <div class="ty-test__aside d-none d-sm-block">
             <ul class="ty-test__steps">
             <li v-for="(question, index) in questions" :key="index"
@@ -16,13 +16,12 @@
           <div class="ty-test__body">
             <div class="ty-test__question">
               <div v-for="(question, index) in questions" :key="index">
-                <template v-show="index === questionIndex">
+                <template v-if="index === questionIndex">
                   <div class="title mb-3">{{question.name}}</div>
                   <div v-if="question.description" class="mt-2">{{ question.description }}</div>
                   <template v-if="question.mode === 'SINGLE'">
                     <v-radio-group
-                        v-model="userAnswer[question.id][0]"
-                        :rules="[userAnswer[question.id].length > 0 || validText]"
+                        v-model="userAnswer[index]['answers'][0]"
                     >
                       <v-radio
                           class="mb-4"
@@ -35,11 +34,10 @@
                   </template>
                   <template v-if="question.mode === 'MULTI'">
                     <v-checkbox
-                        v-for="(answer, index) in question.answers" :key="index"
+                        v-for="(answer, key) in question.answers" :key="key"
                         :label="answer.title"
                         :value="answer.number"
-                        v-model="userAnswer[question.id]"
-                        :rules="[userAnswer[question.id].length > 0 || validText]"
+                        v-model="userAnswer[index]['answers']"
                         hide-details="true"
                     >
                     </v-checkbox>
@@ -63,7 +61,6 @@
                 </v-col>
                 <v-col cols="auto" v-if="questionIndex === questions.length - 1">
                   <v-btn large color="primary darken-2 white--text"
-                   :disabled="!valid"
                    @click="sendTest"
                   >Завершить</v-btn>
                 </v-col>
@@ -86,12 +83,10 @@
 
     data: () => ({
       dataLoad: false,
-      valid: true,
-      validText: 'Выберите ответ',
       test: {},
       questions: [],
       questionIndex: 0,
-      userAnswer: {}
+      userAnswer: []
     }),
 
     methods: {
@@ -104,7 +99,10 @@
               this.test = data;
               this.questions = data.questions;
               this.questions.forEach(question => {
-                this.userAnswer[question.id] = [];
+                this.userAnswer.push({
+                  questionId: question.id,
+                  answers: []
+                });
               });
               this.dataLoad = true;
             }
@@ -127,7 +125,7 @@
       },
 
       sendTest() {
-        this.$refs.form.validate();
+
         console.log(this.userAnswer);
       }
     },
