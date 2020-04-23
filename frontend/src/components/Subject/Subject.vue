@@ -13,8 +13,8 @@
                     :elevation="hover ? 24 : 6"
                     class="mx-auto pa-6"
                 >
-                  <div class="title mb-3">{{ question.name }}</div>
-                  <div v-if="question.description" class="mt-2">{{ question.description }}</div>
+                  <div class="title">{{ question.name }}</div>
+                  <div v-if="question.description" class="mt-3">{{ question.description }}</div>
                 </v-card>
               </template>
             </v-hover>

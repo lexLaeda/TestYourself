@@ -1,50 +1,75 @@
 <template>
-  <div>
+  <div class="ty-test">
     <template v-if="dataLoad">
       <h1 class="display-1 mb-6"> {{ test.name }} </h1>
-      <v-form>
-        <div class="mt-6" v-for="(question, index) in questions" :key="index">
-          <div v-show="index === questionIndex">
-            <div class="title mb-3">{{question.name}}</div>
-            <div v-if="question.description" class="mt-2">{{ question.description }}</div>
-            <template v-if="question.mode === 'SINGLE'">
-              <v-radio-group v-model="question.id">
-                <v-radio
-                  class="mb-4"
-                  v-for="(answer, index) in question.answers" :key="index"
-                  :label="answer.title"
-                  :value="answer.number"
-                >
-                </v-radio>
-              </v-radio-group>
-            </template>
-            <template v-if="question.mode === 'MULTI'">
-              <v-checkbox
-                v-for="(answer, index) in question.answers" :key="index"
-                :label="answer.title"
-                :value="answer.number"
-                hide-details="true"
-              >
-              </v-checkbox>
-            </template>
+      <v-form class="ty-test__form" v-model="valid" ref="form">
+          <div class="ty-test__aside d-none d-sm-block">
+            <ul class="ty-test__steps">
+            <li v-for="(question, index) in questions" :key="index"
+                class="ty-test__step"
+                :class="{'active': index === questionIndex}"
+                @click="changeStep(index)">
+              {{question.name}}
+            </li>
+            </ul>
           </div>
-        </div>
-        <v-row>
-          <v-col cols="auto" v-if="questionIndex > 0">
-            <v-btn large color="primary white--text" @click="prev">
-              Предыдущий
-            </v-btn>
-          </v-col>
-          <v-col cols="auto" v-if="questionIndex < questions.length - 1">
-            <v-btn large color="primary white--text" @click="next">
-              Следующий
-            </v-btn>
-          </v-col>
-          <v-col cols="auto" v-if="questionIndex === questions.length - 1">
-            <v-btn large color="primary darken-2 white--text"
-            >Завершить</v-btn>
-          </v-col>
-        </v-row>
+          <div class="ty-test__body">
+            <div class="ty-test__question">
+              <div v-for="(question, index) in questions" :key="index">
+                <template v-show="index === questionIndex">
+                  <div class="title mb-3">{{question.name}}</div>
+                  <div v-if="question.description" class="mt-2">{{ question.description }}</div>
+                  <template v-if="question.mode === 'SINGLE'">
+                    <v-radio-group
+                        v-model="userAnswer[question.id][0]"
+                        :rules="[userAnswer[question.id].length > 0 || validText]"
+                    >
+                      <v-radio
+                          class="mb-4"
+                          v-for="(answer, index) in question.answers" :key="index"
+                          :label="answer.title"
+                          :value="answer.number"
+                      >
+                      </v-radio>
+                    </v-radio-group>
+                  </template>
+                  <template v-if="question.mode === 'MULTI'">
+                    <v-checkbox
+                        v-for="(answer, index) in question.answers" :key="index"
+                        :label="answer.title"
+                        :value="answer.number"
+                        v-model="userAnswer[question.id]"
+                        :rules="[userAnswer[question.id].length > 0 || validText]"
+                        hide-details="true"
+                    >
+                    </v-checkbox>
+                  </template>
+                </template>
+              </div>
+            </div>
+            <div class="ty-test__btns">
+              <v-row>
+                <v-col cols="auto" v-if="questionIndex > 0">
+                  <v-btn large color="primary white--text"
+                   @click="prevStep">
+                    Предыдущий
+                  </v-btn>
+                </v-col>
+                <v-col cols="auto" v-if="questionIndex < questions.length - 1">
+                  <v-btn large color="primary white--text"
+                   @click="nextStep">
+                    Следующий
+                  </v-btn>
+                </v-col>
+                <v-col cols="auto" v-if="questionIndex === questions.length - 1">
+                  <v-btn large color="primary darken-2 white--text"
+                   :disabled="!valid"
+                   @click="sendTest"
+                  >Завершить</v-btn>
+                </v-col>
+              </v-row>
+            </div>
+          </div>
       </v-form>
     </template>
     <div v-if="!dataLoad" class="text-center mt-5 mb-5">
@@ -61,9 +86,12 @@
 
     data: () => ({
       dataLoad: false,
+      valid: true,
+      validText: 'Выберите ответ',
       test: {},
       questions: [],
-      questionIndex: 0
+      questionIndex: 0,
+      userAnswer: {}
     }),
 
     methods: {
@@ -72,8 +100,12 @@
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
+              console.log(data);
               this.test = data;
               this.questions = data.questions;
+              this.questions.forEach(question => {
+                this.userAnswer[question.id] = [];
+              });
               this.dataLoad = true;
             }
           })
@@ -82,12 +114,21 @@
           });
       },
 
-      next: function() {
+      nextStep() {
         this.questionIndex++;
       },
 
-      prev: function() {
+      prevStep() {
         this.questionIndex--;
+      },
+
+      changeStep(index) {
+        this.questionIndex = index;
+      },
+
+      sendTest() {
+        this.$refs.form.validate();
+        console.log(this.userAnswer);
       }
     },
 

@@ -1,0 +1,57 @@
+.ty-test {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__form {
+    display: flex;
+    flex-grow: 1;
+    margin-left: -$grid-gutter;
+    margin-right: -$grid-gutter;
+  }
+
+  &__aside,
+  &__body {
+    padding: $grid-gutter/2 $grid-gutter;
+  }
+
+  &__aside {
+    width: 40%;
+    max-height: 100%;
+    overflow-y: auto;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &__steps {
+    margin: 0;
+    list-style: none;
+  }
+
+  &__step {
+    margin-bottom: 6px;
+    cursor: pointer;
+
+    &:hover,
+    &.active {
+      color: map-get($cyan, 'darken-2');
+    }
+    
+    &.active {
+      cursor: default;
+    }
+  }
+
+  &__question {
+    flex-grow: 1;
+  }
+
+  &__btns {
+    margin-bottom: -$grid-gutter/2;
+  }
+}

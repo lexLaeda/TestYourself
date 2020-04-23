@@ -1,3 +1,7 @@
+@import "~vuetify/src/styles/settings/colors";
+@import "~vuetify/src/styles/settings/variables";
+@import "~vuetify/src/styles/generic/colors";
+
 .v-toolbar__title {
   a {
     text-decoration: none;
@@ -7,3 +11,5 @@
 .ty-hover-box {
   text-decoration: none;
 }
+
+@import "components/Test";
