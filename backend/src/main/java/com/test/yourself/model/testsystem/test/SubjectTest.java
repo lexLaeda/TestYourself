@@ -13,12 +13,12 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "tests")
+@Table(name = "subjectTests")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode(callSuper = true)
-public class Test extends AbstractEntity {
+@EqualsAndHashCode(callSuper = false)
+public class SubjectTest extends AbstractEntity {
 
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -6,8 +6,8 @@
     <artifactId>frontend</artifactId>
 
     <parent>
-        <groupId>com.test.testyourself</groupId>
-        <artifactId>test-yourself</artifactId>
+        <groupId>com.subjectTest.testyourself</groupId>
+        <artifactId>subjectTest-yourself</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

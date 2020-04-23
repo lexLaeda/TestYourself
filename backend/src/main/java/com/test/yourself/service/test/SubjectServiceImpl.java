@@ -1,6 +1,7 @@
-package com.test.yourself.service.subject;
+package com.test.yourself.service.test;
 
 import com.test.yourself.exception.SubjectNotFoundException;
+import com.test.yourself.exception.SubjectServiceValidationException;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.SubjectRepository;
 import com.test.yourself.util.ReflectionUpdate;
@@ -21,7 +22,11 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject findSubjectByName(String name) {
-        return subjectRepository.findByName(name);
+        Subject byName = subjectRepository.findByName(name);
+        if (byName == null){
+            throw new SubjectNotFoundException(name);
+        }
+        return byName;
     }
 
     @Override
@@ -35,10 +40,7 @@ public class SubjectServiceImpl implements SubjectService {
         return subjects.stream().collect(Collectors.toMap(Subject::getId,Subject::getName));
     }
 
-    @Override
-    public Subject addSubject(Subject subject) {
-        return subjectRepository.saveAndFlush(subject);
-    }
+
 
     @Override
     public Subject findSubjectById(Long id) {
@@ -48,12 +50,17 @@ public class SubjectServiceImpl implements SubjectService {
 
     @Override
     public Subject add(Subject subject) {
-        return subjectRepository.saveAndFlush(subject);
+        Subject subFromBD = subjectRepository.findByName(subject.getName());
+        if (subFromBD != null){
+            throw new SubjectServiceValidationException("Subject with " + subject.getName() + "already exist");
+        } else {
+            return subjectRepository.saveAndFlush(subject);
+        }
     }
 
     @Override
     public Subject update(Subject subject, Long id) {
-        Subject subjectFromDB = subjectRepository.findById(id).orElseThrow(SubjectNotFoundException::new);
+        Subject subjectFromDB = findSubjectById(id);
         Subject updated = ReflectionUpdate.updateObject(subject, subjectFromDB);
         return subjectRepository.saveAndFlush(updated);
     }

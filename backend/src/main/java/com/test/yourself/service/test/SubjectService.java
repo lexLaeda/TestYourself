@@ -1,4 +1,4 @@
-package com.test.yourself.service.subject;
+package com.test.yourself.service.test;
 
 import com.test.yourself.model.testsystem.subject.Subject;
 
@@ -9,7 +9,7 @@ public interface SubjectService {
     Subject findSubjectByName(String name);
     List<Subject> findAllSubjects();
     Map<Long,String> findMapSubjects();
-    Subject addSubject(Subject subject);
+
     Subject findSubjectById(Long id);
     Subject add(Subject subject);
 

@@ -17,5 +17,5 @@ public class SubjectDto extends AbstractDto{
 
     private int amountQuestions;
 
-    private int amountTest;
+    private int amountTests;
 }

@@ -4,8 +4,8 @@ import com.test.yourself.dto.QuestionDto;
 import com.test.yourself.dto.TestDto;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
-import com.test.yourself.model.testsystem.test.Test;
-import com.test.yourself.service.subject.SubjectService;
+import com.test.yourself.model.testsystem.test.SubjectTest;
+import com.test.yourself.service.test.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TestMapper extends AbstractMapper<Test, TestDto> {
+public class TestMapper extends AbstractMapper<SubjectTest, TestDto> {
 
     private ModelMapper modelMapper;
 
@@ -24,7 +24,7 @@ public class TestMapper extends AbstractMapper<Test, TestDto> {
     private QuestionMapper questionMapper;
     @Autowired
     public TestMapper(ModelMapper modelMapper, SubjectService subjectService, QuestionMapper questionMapper) {
-        super(Test.class, TestDto.class);
+        super(SubjectTest.class, TestDto.class);
         this.modelMapper = modelMapper;
         this.subjectService = subjectService;
         this.questionMapper = questionMapper;
@@ -32,15 +32,15 @@ public class TestMapper extends AbstractMapper<Test, TestDto> {
     @PostConstruct
     public void initMapper(){
 
-        modelMapper.createTypeMap(Test.class, TestDto.class)
+        modelMapper.createTypeMap(SubjectTest.class, TestDto.class)
                 .setPostConverter(toDtoConverter());
 
-        modelMapper.createTypeMap(TestDto.class,Test.class)
+        modelMapper.createTypeMap(TestDto.class, SubjectTest.class)
                 .setPostConverter(toEntityConverter());
     }
 
     @Override
-    public void mapSpecificFields(Test source, TestDto destination) {
+    public void mapSpecificFields(SubjectTest source, TestDto destination) {
         System.out.println(source);
         Long subId = source.getSubject().getId();
         destination.setSubjectId(subId);
@@ -52,7 +52,7 @@ public class TestMapper extends AbstractMapper<Test, TestDto> {
     }
 
     @Override
-    public void mapSpecificFields(TestDto source, Test destination) {
+    public void mapSpecificFields(TestDto source, SubjectTest destination) {
         Long subId = source.getSubjectId();
         Subject subject = subjectService.findSubjectById(subId);
         destination.setSubject(subject);
