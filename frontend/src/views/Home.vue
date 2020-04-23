@@ -1,6 +1,6 @@
 <template>
   <div>
-    <subjectTest-generator></subjectTest-generator>
+    <test-generator></test-generator>
 <!--    <v-btn @click="hello">Hello</v-btn>-->
   </div>
 </template>

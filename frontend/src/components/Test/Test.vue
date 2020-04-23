@@ -76,6 +76,7 @@
 </template>
 
 <script>
+  import moment from 'moment';
   import api from "../../backend-api";
 
   export default {
@@ -83,10 +84,12 @@
 
     data: () => ({
       dataLoad: false,
+      dateFormat: 'YYYY-MM-DD HH:mm:ss.SSS',
       test: {},
       questions: [],
       questionIndex: 0,
-      userAnswer: []
+      userAnswer: [],
+      postData: {}
     }),
 
     methods: {
@@ -95,21 +98,30 @@
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
-              console.log(data);
+              // console.log(data);
               this.test = data;
               this.questions = data.questions;
-              this.questions.forEach(question => {
-                this.userAnswer.push({
-                  questionId: question.id,
-                  answers: []
-                });
-              });
+              this.constructorResult();
               this.dataLoad = true;
             }
           })
           .catch(error => {
             console.log(error);
           });
+      },
+
+      constructorResult() {
+        this.questions.forEach(question => {
+          this.userAnswer.push({
+            questionId: question.id,
+            answers: []
+          });
+        });
+
+        let postData = this.postData;
+        postData.testId = this.test.id;
+        postData.answers = this.userAnswer;
+        postData.start = moment().format(this.dateFormat);
       },
 
       nextStep() {
@@ -125,8 +137,8 @@
       },
 
       sendTest() {
-
-        console.log(this.userAnswer);
+        this.postData.end = moment().format(this.dateFormat);
+        console.log('TEST-ANSWERS =>', this.postData);
       }
     },
 
