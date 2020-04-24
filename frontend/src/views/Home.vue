@@ -7,7 +7,7 @@
 
 <script>
   import api from "../backend-api";
-  import TestGenerator from "../components/TestGenerator/TestGenerator";
+  import TestGenerator from "../components/Test/TestGenerator";
 
   export default {
     name: 'Home',

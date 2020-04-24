@@ -3,6 +3,7 @@
     <v-card
         class="mx-auto"
         max-width="700"
+        ref="formWrap"
     >
       <v-card-title class="display-1">Добавить предмет</v-card-title>
       <v-card-text>
@@ -21,15 +22,27 @@
           <v-textarea
               v-model="postData.description"
               label="Описание"
+              :rules="[v => !!v || validText]"
               outlined
+              required
           ></v-textarea>
-
           <v-row class="mt-4">
-            <v-col cols="auto">
-              <v-btn large color="primary darken-2 white--text"
+            <v-col cols="12" sm="auto">
+              <v-btn large block color="primary darken-2 white--text"
                      :disabled="!valid"
-                     @click="sendSubject"
+                     @click="saveSubject"
               >Сохранить</v-btn>
+            </v-col>
+            <v-col cols="12" sm="auto">
+              <v-btn large block color="primary darken-2 white--text"
+                     :disabled="!valid"
+                     @click="addNewSubject"
+              >Сохранить и добавить новый</v-btn>
+            </v-col>
+            <v-col cols="12" sm="auto" class="ml-auto">
+              <v-btn large block
+                     @click="back"
+              >Отменить</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -63,7 +76,21 @@
           .catch(function (error) {
             console.log(error);
           });
+      },
 
+      back() {
+        this.$router.go(-1);
+      },
+
+      saveSubject() {
+        this.sendSubject();
+        this.back();
+      },
+
+      addNewSubject() {
+        this.sendSubject();
+        this.$refs.form.reset();
+        this.$vuetify.goTo(this.$refs.formWrap);
       }
     }
   }

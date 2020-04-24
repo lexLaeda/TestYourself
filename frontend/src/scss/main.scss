@@ -12,4 +12,8 @@
   text-decoration: none;
 }
 
+.v-card__title {
+  word-break: normal;
+}
+
 @import "components/Test";
