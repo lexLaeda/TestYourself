@@ -52,8 +52,6 @@
 </template>
 
 <script>
-  import api from "../../backend-api";
-
   export default {
     name: 'AddSubject',
 
@@ -69,7 +67,7 @@
       sendSubject() {
         this.$refs.form.validate();
         let postData = JSON.stringify(this.postData);
-        api.addSubject(postData)
+        this.$axiosJson.post(`/subjects/add`, postData)
           .then(function (response) {
             console.log('ADD-SUBJECT =>', response);
           })

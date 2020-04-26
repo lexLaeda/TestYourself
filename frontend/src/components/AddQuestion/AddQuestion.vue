@@ -163,7 +163,6 @@
 </template>
 
 <script>
-    import api from "../../backend-api";
     export default {
     name: 'AddQuestion',
 
@@ -185,7 +184,7 @@
 
     methods: {
       getData() {
-        api.getSubjects()
+        this.$axios.get(`/subjects/map`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
@@ -236,7 +235,7 @@
         this.postData.answers = this.answers;
         let postData = JSON.stringify(this.postData);
         console.log('postData =>', this.postData);
-        api.addQuestion(postData)
+        this.$axiosJson.post(`/questions/add`, postData)
           .then(function (response) {
             console.log('ADD-QUESTION =>', response);
           })

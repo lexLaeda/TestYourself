@@ -39,8 +39,6 @@
 </template>
 
 <script>
-  import api from "../../backend-api";
-
   export default {
     name: "Subject",
 
@@ -52,7 +50,7 @@
 
     methods: {
       getData() {
-        api.getSubject(Number(this.$route.params.id))
+        this.$axios.get(`/subjects/${Number(this.$route.params.id)}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
@@ -66,7 +64,7 @@
       },
 
       getQuestions(id) {
-        api.getQuestionBySubject(id)
+        this.$axios.get(`/questions/subject?sub_id=${id}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;

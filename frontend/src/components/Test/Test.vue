@@ -77,7 +77,6 @@
 
 <script>
   import moment from 'moment';
-  import api from "../../backend-api";
 
   export default {
     name: 'Test',
@@ -94,7 +93,7 @@
 
     methods: {
       getData() {
-        api.getTest(Number(this.$route.params.id))
+        this.$axios.get(`/test/${Number(this.$route.params.id)}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;

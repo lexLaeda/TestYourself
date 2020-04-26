@@ -14,7 +14,10 @@
                 >
                   <div class="title mb-3">{{ subject.name }}</div>
                   <div v-if="subject.description" class="mt-2">{{ subject.description }}</div>
-                  <div class="mt-2 caption">{{subject.amountQuestions}} вопросов</div>
+                  <div class="mt-2 caption">
+                    {{subject.amountQuestions}}
+                    {{$declOfNum(subject.amountQuestions, ['вопрос', 'вопроса', 'вопросов'])}}
+                  </div>
                 </v-card>
               </template>
             </v-hover>
@@ -48,8 +51,6 @@
 </template>
 
 <script>
-  import api from "../../backend-api";
-
   export default {
     name: 'SubjectList',
 
@@ -60,7 +61,7 @@
 
     methods: {
       getData() {
-        api.getAllSubjects()
+        this.$axios.get(`/subjects/all`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
