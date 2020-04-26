@@ -3,7 +3,7 @@
     <h1 class="display-1 mb-6">Предметы</h1>
     <template v-if="dataLoad">
       <template v-if="subjects && subjects.length > 0">
-        <form>
+        <form class="mb-6">
           <v-text-field
               v-model="filter"
               label="Название предмета"
@@ -13,7 +13,7 @@
               hide-details
           ></v-text-field>
         </form>
-        <v-row class="mt-3" v-if="filteredSubjects.length > 0">
+        <v-row v-if="filteredSubjects.length > 0">
           <v-col cols="12" sm="6" v-for="(subject, index) in filteredSubjects" :key="index">
             <v-card
               class="mx-auto pa-6 elevation-6"

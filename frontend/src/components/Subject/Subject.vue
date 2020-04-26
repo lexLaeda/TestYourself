@@ -6,7 +6,7 @@
 
       <div class="mt-8">
         <template v-if="questions && questions.length > 0">
-          <form>
+          <form class="mb-6">
             <v-text-field
                 v-model="filter"
                 label="Название вопроса"
@@ -16,8 +16,8 @@
                 hide-details
             ></v-text-field>
           </form>
-          <template v-if="filteredQuestions.length > 0">
-            <div class="mt-6" v-for="(question, index) in filteredQuestions" :key="index">
+          <v-row v-if="filteredQuestions.length > 0">
+            <v-col cols="12" v-for="(question, index) in filteredQuestions" :key="index">
               <v-card
                 class="mx-auto pa-6 elevation-6"
               >
@@ -45,8 +45,8 @@
                 </div>
                 <div v-if="question.description" class="mt-3">{{ question.description }}</div>
               </v-card>
-            </div>
-          </template>
+            </v-col>
+          </v-row>
           <template v-else>
             <v-alert
                 color="red lighten-2"
