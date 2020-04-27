@@ -30,6 +30,6 @@ public class TestResult extends AbstractEntity {
     @ElementCollection
     private List<Long> listOfCorrectId = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private AnswerSheet answerSheet;
 }
