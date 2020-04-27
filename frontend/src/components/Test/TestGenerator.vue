@@ -1,40 +1,42 @@
 <template>
-  <v-card
-      class="mx-auto"
-      max-width="700"
-  >
-    <v-card-title class="display-1">Сгенерировать тест</v-card-title>
-    <v-card-text>
-      <v-form
-        ref="form"
-        v-model="valid"
-      >
-        <v-autocomplete
-            v-model="postData.subject"
-            :items="subjects"
-            label="Предмет"
-            :rules="[v => !!v || validText]"
-            outlined
-            required
-            hide-no-data
-        ></v-autocomplete>
+  <div>
+    <v-card
+        class="mx-auto"
+        max-width="700"
+    >
+      <v-card-title class="display-1">Сгенерировать тест</v-card-title>
+      <v-card-text>
+        <v-form
+          ref="form"
+          v-model="valid"
+        >
+          <v-autocomplete
+              v-model="postData.subject"
+              :items="subjects"
+              label="Предмет"
+              :rules="[v => !!v || validText]"
+              outlined
+              required
+              hide-no-data
+          ></v-autocomplete>
 
-        <v-text-field
-            v-model="postData.number"
-            label="Число вопросов"
-            outlined
-            type="number"
-            required
-            :rules="[v => !!v || validText]"
-        ></v-text-field>
+          <v-text-field
+              v-model="postData.number"
+              label="Число вопросов"
+              outlined
+              type="number"
+              required
+              :rules="[v => !!v || validText]"
+          ></v-text-field>
 
-        <v-btn large color="primary darken-2 white--text"
-               :disabled="!valid"
-               @click="generateTest"
-        >Начать тест</v-btn>
-      </v-form>
-    </v-card-text>
-  </v-card>
+          <v-btn large color="primary darken-2 white--text"
+                 :disabled="!valid"
+                 @click="generateTest"
+          >Начать тест</v-btn>
+        </v-form>
+      </v-card-text>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -72,7 +74,8 @@
       generateTest() {
         this.$refs.form.validate();
         console.log('TEST-GENERATE =>', this.postData);
-        this.$axios.get(`/test/generate?id=${this.postData.subject}&number=${this.postData.number}`)
+        this.$axios.get(`/generator/test
+        ?subjectId=${Number(this.postData.subject)}&size=${Number(this.postData.number)}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;

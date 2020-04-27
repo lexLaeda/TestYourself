@@ -101,7 +101,7 @@
         },
         {
           title: 'Сгенерировать тест',
-          path: '/subjectTest-generator',
+          path: '/test-generator',
           icon: 'mdi-format-list-checkbox'
         }
       ],
