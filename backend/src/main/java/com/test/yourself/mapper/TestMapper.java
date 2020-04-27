@@ -1,7 +1,7 @@
-package com.test.yourself.maper;
+package com.test.yourself.mapper;
 
 import com.test.yourself.dto.QuestionDto;
-import com.test.yourself.dto.TestDto;
+import com.test.yourself.dto.SubjectTestDto;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.model.testsystem.test.SubjectTest;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class TestMapper extends AbstractMapper<SubjectTest, TestDto> {
+public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
 
     private ModelMapper modelMapper;
 
@@ -24,7 +24,7 @@ public class TestMapper extends AbstractMapper<SubjectTest, TestDto> {
     private QuestionMapper questionMapper;
     @Autowired
     public TestMapper(ModelMapper modelMapper, SubjectService subjectService, QuestionMapper questionMapper) {
-        super(SubjectTest.class, TestDto.class);
+        super(SubjectTest.class, SubjectTestDto.class);
         this.modelMapper = modelMapper;
         this.subjectService = subjectService;
         this.questionMapper = questionMapper;
@@ -32,29 +32,29 @@ public class TestMapper extends AbstractMapper<SubjectTest, TestDto> {
     @PostConstruct
     public void initMapper(){
 
-        modelMapper.createTypeMap(SubjectTest.class, TestDto.class)
+        modelMapper.createTypeMap(SubjectTest.class, SubjectTestDto.class)
                 .setPostConverter(toDtoConverter());
 
-        modelMapper.createTypeMap(TestDto.class, SubjectTest.class)
+        modelMapper.createTypeMap(SubjectTestDto.class, SubjectTest.class)
                 .setPostConverter(toEntityConverter());
     }
 
     @Override
-    public void mapSpecificFields(SubjectTest source, TestDto destination) {
-        System.out.println(source);
+    public void mapSpecificFields(SubjectTest source, SubjectTestDto destination) {
         Long subId = source.getSubject().getId();
         destination.setSubjectId(subId);
         List<Question> questions = source.getQuestions();
         List<QuestionDto> questionDtos = questions.stream()
                 .map(question -> questionMapper.toDto(question))
+                .peek(questionDto -> questionDto.getCorrectAnswers().clear())
                 .collect(Collectors.toList());
         destination.setQuestions(questionDtos);
     }
 
     @Override
-    public void mapSpecificFields(TestDto source, SubjectTest destination) {
+    public void mapSpecificFields(SubjectTestDto source, SubjectTest destination) {
         Long subId = source.getSubjectId();
-        Subject subject = subjectService.findSubjectById(subId);
+        Subject subject = subjectService.findById(subId);
         destination.setSubject(subject);
         List<QuestionDto> questions = source.getQuestions();
         List<Question> questionList = questions.stream()

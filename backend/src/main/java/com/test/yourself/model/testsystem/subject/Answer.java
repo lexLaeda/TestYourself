@@ -1,17 +1,21 @@
 package com.test.yourself.model.testsystem.subject;
 
+import com.test.yourself.model.AbstractEntity;
 import lombok.*;
 
-import javax.persistence.Embeddable;
+import javax.persistence.*;
 
-
-@Embeddable
 @Getter
 @Setter
+@Entity
+@Table(name = "answers")
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
-public class Answer {
+@EqualsAndHashCode(callSuper = false)
+@ToString
+public class Answer extends AbstractEntity {
+
     private Integer number;
     private String title;
+
 }

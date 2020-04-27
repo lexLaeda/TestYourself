@@ -1,8 +1,13 @@
 package com.test.yourself.controller;
 
-import com.test.yourself.dto.TestDto;
-import com.test.yourself.maper.TestMapper;
+import com.test.yourself.dto.SubjectTestDto;
+import com.test.yourself.mapper.TestMapper;
+import com.test.yourself.model.testsystem.test.AnswerSheet;
 import com.test.yourself.model.testsystem.test.SubjectTest;
+import com.test.yourself.model.testsystem.test.TestResult;
+import com.test.yourself.service.test.TestVerificationService;
+import com.test.yourself.service.test.SubjectService;
+import com.test.yourself.service.test.TestResultService;
 import com.test.yourself.service.test.TestServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,40 +21,42 @@ public class TestController {
     private TestServiceImpl testService;
 
     private TestMapper testMapper;
+    private TestVerificationService testVerificationService;
+    private TestResultService testResultService;
+    private SubjectService subjectService;
 
     @Autowired
-    public void setTestMapper(TestMapper testMapper) {
-        this.testMapper = testMapper;
-    }
-
-    @Autowired
-    public void setTestService(TestServiceImpl testService) {
+    public TestController(TestServiceImpl testService, TestMapper testMapper,
+                          TestVerificationService testVerificationService,
+                          TestResultService testResultService, SubjectService subjectService) {
         this.testService = testService;
+        this.testMapper = testMapper;
+        this.testVerificationService = testVerificationService;
+        this.testResultService = testResultService;
+        this.subjectService = subjectService;
     }
 
-    @GetMapping(value = "/generate", params = {"id", "number"})
-    public @ResponseBody ResponseEntity<TestDto> generateRandomTest(
-            @RequestParam("id") Long subjectID,
-            @RequestParam("number") int amount) {
-
-        SubjectTest randomSubjectTest = testService.getRandomTest(subjectID,amount);
-        TestDto testDto = testMapper.toDto(randomSubjectTest);
-        return new ResponseEntity<>(testDto, HttpStatus.OK);
-    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TestDto> findTestById(@PathVariable("id") Long id){
-        SubjectTest subjectTest = testService.findTestById(id);
-        TestDto testDto = testMapper.toDto(subjectTest);
+    public ResponseEntity<SubjectTestDto> findTestById(@PathVariable("id") Long id){
+        SubjectTest subjectTest = testService.findById(id);
+        SubjectTestDto subjectTestDto = testMapper.toDto(subjectTest);
 
-        return new ResponseEntity<>(testDto,HttpStatus.OK);
+        return new ResponseEntity<>(subjectTestDto,HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TestDto> addNewTest(@RequestBody TestDto testDto){
+    public ResponseEntity<SubjectTestDto> addNewTest(@RequestBody SubjectTestDto testDto){
         SubjectTest subjectTestToAdd = testMapper.toEntity(testDto);
-        SubjectTest addedToDb = testService.addTest(subjectTestToAdd);
+        SubjectTest addedToDb = testService.add(subjectTestToAdd);
         return new ResponseEntity<>(testMapper.toDto(addedToDb),HttpStatus.OK);
+    }
+
+    @GetMapping("/test_results")
+    public ResponseEntity<TestResult> getTestResults(@RequestBody AnswerSheet userAnswers){
+        TestResult results = testVerificationService.checkTest(userAnswers);
+        testResultService.add(results);
+        return new ResponseEntity<>(results,HttpStatus.OK);
     }
 
 }

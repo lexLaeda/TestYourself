@@ -21,7 +21,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject findSubjectByName(String name) {
+    public Subject findByName(String name) {
         Subject byName = subjectRepository.findByName(name);
         if (byName == null){
             throw new SubjectNotFoundException(name);
@@ -30,7 +30,7 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<Subject> findAllSubjects() {
+    public List<Subject> findAll() {
         return subjectRepository.findAll();
     }
 
@@ -43,7 +43,7 @@ public class SubjectServiceImpl implements SubjectService {
 
 
     @Override
-    public Subject findSubjectById(Long id) {
+    public Subject findById(Long id) {
         return subjectRepository.findById(id).orElseThrow(()->new SubjectNotFoundException(id.toString()));
     }
 
@@ -59,8 +59,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public Subject update(Subject subject, Long id) {
-        Subject subjectFromDB = findSubjectById(id);
+    public Subject update(Long id, Subject subject) {
+        Subject subjectFromDB = findById(id);
         Subject updated = ReflectionUpdate.updateObject(subject, subjectFromDB);
         return subjectRepository.saveAndFlush(updated);
     }
@@ -73,13 +73,21 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public void deleteById(Long id) {
+    public Subject deleteById(Long id) {
+        Subject byId = findById(id);
         subjectRepository.deleteById(id);
+        return byId;
     }
 
     @Override
-    public void delete(Subject subject) {
+    public Subject delete(Subject subject) {
         subjectRepository.delete(subject);
+        return subject;
+    }
+
+    @Override
+    public void deleteAll() {
+        subjectRepository.deleteAll();
     }
 
 

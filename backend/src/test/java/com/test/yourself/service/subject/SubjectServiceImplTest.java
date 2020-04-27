@@ -67,13 +67,13 @@ public class SubjectServiceImplTest {
 
     @Test
     public void testFindSubjectByName() {
-        Subject javaFromService = subjectService.findSubjectByName(java.getName());
+        Subject javaFromService = subjectService.findByName(java.getName());
         assertEquals(java,javaFromService);
     }
 
     @Test
     public void testFindAllSubjects() {
-        assertEquals(subjectList,subjectService.findAllSubjects());
+        assertEquals(subjectList,subjectService.findAll());
     }
 
     @Test
@@ -86,12 +86,12 @@ public class SubjectServiceImplTest {
     @Test
     public void testFindSubjectById() {
 
-        assertEquals(java,subjectService.findSubjectById(testId));
+        assertEquals(java,subjectService.findById(testId));
     }
 
     @Test(expected = SubjectNotFoundException.class)
     public void testExceptionFindSubjectById() {
-        assertEquals(java,subjectService.findSubjectById(fakeTestId));
+        assertEquals(java,subjectService.findById(fakeTestId));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class SubjectServiceImplTest {
     @Test
     public void TestUpdate() {
         //TODO разобраться почему фейлится
-        Subject updated = subjectService.update(java, testId);
+        Subject updated = subjectService.update(testId,java);
 
 
     }

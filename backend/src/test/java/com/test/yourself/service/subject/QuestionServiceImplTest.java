@@ -67,7 +67,7 @@ public class QuestionServiceImplTest {
 
     @Test
     public void testAddQuestion() {
-        Question question = service.addQuestion(newQuestion);
+        Question question = service.add(newQuestion);
         assertEquals(newQuestion, question);
     }
 
@@ -103,7 +103,7 @@ public class QuestionServiceImplTest {
 
     @Test
     public void TestUpdate() {
-        assertEquals(newQuestion,service.update(newQuestion, testId));
+        assertEquals(newQuestion,service.update(testId, newQuestion));
     }
 
     @Test

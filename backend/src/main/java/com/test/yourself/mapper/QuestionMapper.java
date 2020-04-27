@@ -1,12 +1,19 @@
-package com.test.yourself.maper;
+package com.test.yourself.mapper;
 
 import com.test.yourself.dto.QuestionDto;
+import com.test.yourself.exception.AnswerNotFoundException;
+import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.service.test.SubjectService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
@@ -21,7 +28,7 @@ public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
         this.subjectService = subjectService;
     }
 
-    @Autowired
+    @PostConstruct
     public void initMapper(){
         modelMapper.createTypeMap(Question.class,QuestionDto.class)
                 .setPostConverter(toDtoConverter());
@@ -32,18 +39,14 @@ public class QuestionMapper extends AbstractMapper<Question, QuestionDto> {
     @Override
     public void mapSpecificFields(Question source, QuestionDto destination) {
         Subject subject = source.getSubject();
-        if (subject!= null){
-            Long id = subject.getId();
-            destination.setSubjectId(id);
-        } else {
-            destination.setSubjectId(null);
-        }
+        destination.setSubjectId(subject.getId());
+
     }
 
     @Override
     public void mapSpecificFields(QuestionDto source, Question destination) {
         Long subId = source.getSubjectId();
-        Subject subject = subjectService.findSubjectById(subId);
+        Subject subject = subjectService.findById(subId);
         destination.setSubject(subject);
     }
 }

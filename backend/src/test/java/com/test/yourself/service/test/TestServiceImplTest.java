@@ -41,7 +41,7 @@ public class TestServiceImplTest {
     private List<Question> questions;
     @Before
     public void setUp() throws Exception {
-        testService = new TestServiceImpl(repository,subjectService,questionService);
+        testService = new TestServiceImpl(repository);
         tests = new ArrayList<>();
         subjectTest = new SubjectTest();
         subject = new Subject();
@@ -66,7 +66,7 @@ public class TestServiceImplTest {
         Mockito.when(repository.findByName(java)).thenReturn(subjectTest);
         Mockito.when(repository.findAll()).thenReturn(tests);
         Mockito.when(repository.findAllBySubjectId(testId)).thenReturn(tests);
-        Mockito.when(subjectService.findSubjectById(testId)).thenReturn(subject);
+        Mockito.when(subjectService.findById(testId)).thenReturn(subject);
         Mockito.when(questionService.getRandomQuestionsBySubject(subject,2)).thenReturn(questions);
     }
 
@@ -76,36 +76,36 @@ public class TestServiceImplTest {
 
     @Test
     public void addTest() {
-        SubjectTest actualSubjectTest = testService.addTest(this.subjectTest);
+        SubjectTest actualSubjectTest = testService.add(this.subjectTest);
         assertEquals(subjectTest,actualSubjectTest);
     }
     @Test(expected = TestAlreadyExistException.class)
     public void addExceptionTest() {
-        SubjectTest actualSubjectTest = testService.addTest(this.subjectTest);
+        SubjectTest actualSubjectTest = testService.add(this.subjectTest);
         SubjectTest fakeTest = new SubjectTest();
         Mockito.when(repository.saveAndFlush(fakeTest)).thenThrow(TestAlreadyExistException.class);
         assertEquals(subjectTest,actualSubjectTest);
     }
     @Test
     public void findTestById() {
-        SubjectTest testById = testService.findTestById(testId);
+        SubjectTest testById = testService.findById(testId);
         assertEquals(subjectTest,testById);
     }
     @Test(expected = TestNotFoundException.class)
     public void findFakeTestById() {
-        SubjectTest testById = testService.findTestById(testId);
+        SubjectTest testById = testService.findById(fakeTestId);
         assertEquals(subjectTest,testById);
     }
 
     @Test
     public void findTestByName() {
-        SubjectTest testByName = testService.findTestByName(java);
+        SubjectTest testByName = testService.findByName(java);
         assertEquals(subjectTest,testByName);
     }
 
     @Test
     public void updateTest() {
-        SubjectTest updatedTest = testService.updateTest(testId, this.subjectTest);
+        SubjectTest updatedTest = testService.update(testId, this.subjectTest);
         assertEquals(subjectTest,updatedTest);
     }
 
@@ -127,27 +127,4 @@ public class TestServiceImplTest {
         assertEquals(tests,allBySubject);
     }
 
-    @Test
-    public void getRandomTest() {
-        SubjectTest randomTest = testService.getRandomTest(testId, 2);
-        System.out.println(randomTest);
-        Subject subjectFromTest = randomTest.getSubject();
-        assertEquals(subject,subjectFromTest);
-    }
-
-    @Test
-    public void getTestByQuestions() {
-    }
-
-    @Test
-    public void generateRandomTestBySubject() {
-    }
-
-    @Test
-    public void generateTestByQuestions() {
-    }
-
-    @Test
-    public void validate() {
-    }
 }

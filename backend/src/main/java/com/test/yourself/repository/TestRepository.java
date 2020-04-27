@@ -11,6 +11,4 @@ import java.util.List;
 public interface TestRepository extends JpaRepository<SubjectTest,Long> {
     SubjectTest findByName(String name);
     List<SubjectTest> findAllBySubjectId(Long subjectId);
-    void deleteAllBySubject(Subject subject);
-    void deleteAllBySubjectId(Long subjectId);
 }

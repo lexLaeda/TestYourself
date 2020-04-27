@@ -6,11 +6,10 @@ import java.util.List;
 
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-public class TestDto extends AbstractDto{
+public class SubjectTestDto extends AbstractDto{
 
     private Long subjectId;
 
