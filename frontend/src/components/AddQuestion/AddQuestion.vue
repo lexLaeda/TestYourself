@@ -13,7 +13,7 @@
         >
           <v-text-field
             v-model="postData.name"
-            label="Название"
+            label="Вопрос"
             :rules="[v => !!v || validText]"
             outlined
             required
@@ -21,7 +21,7 @@
 
           <v-textarea
             v-model="postData.description"
-            label="Текст вопроса"
+            label="Описание"
             outlined
           ></v-textarea>
 
