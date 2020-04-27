@@ -79,13 +79,7 @@ public class TestServiceImplTest {
         SubjectTest actualSubjectTest = testService.add(this.subjectTest);
         assertEquals(subjectTest,actualSubjectTest);
     }
-    @Test(expected = TestAlreadyExistException.class)
-    public void addExceptionTest() {
-        SubjectTest actualSubjectTest = testService.add(this.subjectTest);
-        SubjectTest fakeTest = new SubjectTest();
-        Mockito.when(repository.saveAndFlush(fakeTest)).thenThrow(TestAlreadyExistException.class);
-        assertEquals(subjectTest,actualSubjectTest);
-    }
+
     @Test
     public void findTestById() {
         SubjectTest testById = testService.findById(testId);
