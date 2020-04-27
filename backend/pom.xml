@@ -62,7 +62,7 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-subjectTest</artifactId>
+            <artifactId>spring-boot-test</artifactId>
             <version>2.2.6.RELEASE</version>
             <scope>subjectTest</scope>
         </dependency>

@@ -35,7 +35,7 @@ public class Question extends AbstractEntity {
     @ManyToMany(mappedBy = "questions")
     private List<SubjectTest> subjectTests = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Answer> answers = new ArrayList<>();
 
     @ElementCollection
