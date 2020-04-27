@@ -74,11 +74,11 @@
       generateTest() {
         this.$refs.form.validate();
         console.log('TEST-GENERATE =>', this.postData);
-        this.$axios.get(`/generator/test?subjectId=${this.postData.subject}&size=${this.postData.number}`)
+        this.$axios.get(`/generator/test?subjectId=${Number(this.postData.subject)}&size=${Number(this.postData.number)}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
-              this.$router.push(`/subjectTest/${data.id}`);
+              this.$router.push(`/test/${data.id}`);
             }
           })
           .catch(error => {
