@@ -24,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question addQuestion(Question question) {
+    public Question add(Question question) {
         return questionRepository.saveAndFlush(question);
     }
 
@@ -48,12 +48,35 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public Question deleteById(Long id) {
+        Question byId = findById(id);
+        questionRepository.deleteById(id);
+        return byId;
+    }
+
+    @Override
+    public Question delete(Question entity) {
+        questionRepository.delete(entity);
+        return entity;
+    }
+
+    @Override
+    public void deleteAll() {
+        questionRepository.deleteAll();
+    }
+
+    @Override
     public Question findById(Long id) {
         return questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new);
     }
 
     @Override
-    public Question update(Question question, Long id) {
+    public Question findByName(String name) {
+        return questionRepository.findByName(name);
+    }
+
+    @Override
+    public Question update(Long id, Question question) {
         Question questionFromDb = findById(id);
         Question updated = ReflectionUpdate.updateObject(question, questionFromDb);
         return questionRepository.saveAndFlush(updated);

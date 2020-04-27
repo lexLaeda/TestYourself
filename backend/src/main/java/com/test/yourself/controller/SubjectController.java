@@ -1,7 +1,7 @@
 package com.test.yourself.controller;
 
 import com.test.yourself.dto.SubjectDto;
-import com.test.yourself.maper.SubjectMapper;
+import com.test.yourself.mapper.SubjectMapper;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.service.test.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class SubjectController {
     @PutMapping("/update/{id}")
     public ResponseEntity<SubjectDto> updateSubject(@RequestBody SubjectDto subjectDto, @PathVariable Long id){
         Subject subject = subjectMapper.toEntity(subjectDto);
-        Subject updatedSubject = subjectService.update(subject, id);
+        Subject updatedSubject = subjectService.update(id,subject);
         return new ResponseEntity<>(subjectMapper.toDto(updatedSubject),HttpStatus.OK);
     }
     @PutMapping("/update_name")
@@ -55,13 +55,13 @@ public class SubjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<SubjectDto> findSubjectById(@PathVariable Long id){
-        SubjectDto subjectDto = subjectMapper.toDto(subjectService.findSubjectById(id));
+        SubjectDto subjectDto = subjectMapper.toDto(subjectService.findById(id));
         return new ResponseEntity<>(subjectDto,HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<SubjectDto>> findAll(){
-        List<SubjectDto> subList = subjectService.findAllSubjects().stream()
+        List<SubjectDto> subList = subjectService.findAll().stream()
                 .map(subject -> subjectMapper.toDto(subject))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(subList,HttpStatus.OK);

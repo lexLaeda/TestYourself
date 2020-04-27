@@ -1,4 +1,4 @@
-package com.test.yourself.maper;
+package com.test.yourself.mapper;
 
 import com.test.yourself.dto.SubjectDto;
 import com.test.yourself.model.testsystem.subject.Question;
@@ -48,7 +48,7 @@ public class SubjectMapper extends AbstractMapper<Subject, SubjectDto> {
     @Override
     public void mapSpecificFields(SubjectDto source, Subject destination) {
         if (source.getId()!= null){
-            Subject subject = subjectService.findSubjectById(source.getId());
+            Subject subject = subjectService.findById(source.getId());
             List<Question> questions = questionService.findAllBySubjectId(subject.getId());
             destination.setQuestions(questions);
         }

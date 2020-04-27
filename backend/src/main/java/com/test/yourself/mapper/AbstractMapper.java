@@ -1,4 +1,4 @@
-package com.test.yourself.maper;
+package com.test.yourself.mapper;
 
 import com.test.yourself.dto.AbstractDto;
 import com.test.yourself.model.AbstractEntity;

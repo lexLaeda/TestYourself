@@ -5,6 +5,7 @@ import com.test.yourself.model.enums.QuestionMode;
 import com.test.yourself.model.testsystem.test.SubjectTest;
 import lombok.*;
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -32,14 +33,12 @@ public class Question extends AbstractEntity {
     private QuestionMode mode;
 
     @ManyToMany(mappedBy = "questions")
-    private List<SubjectTest> subjectTests;
+    private List<SubjectTest> subjectTests = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Answer> answers = new ArrayList<>();
 
     @ElementCollection
-    @CollectionTable(name = "question_answers", joinColumns = @JoinColumn(name = "question_id"))
-    @Column(name = "question_answer",nullable = false)
-    private List<Answer> answers;
-
-    @ElementCollection
-    private List<Integer> correctAnswers;
+    private List<Integer> correctAnswers = new ArrayList<>();
 
 }

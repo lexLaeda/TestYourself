@@ -1,7 +1,7 @@
 package com.test.yourself.controller;
 
 import com.test.yourself.dto.QuestionDto;
-import com.test.yourself.maper.QuestionMapper;
+import com.test.yourself.mapper.QuestionMapper;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.service.test.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +27,14 @@ public class QuestionController {
     @PostMapping("/add")
     public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDTO) {
         Question question = questionMapper.toEntity(questionDTO);
-        Question fromdb = questionService.addQuestion(question);
+        Question fromdb = questionService.add(question);
         return new ResponseEntity<>(questionMapper.toDto(fromdb), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<QuestionDto> updateQuestion(@PathVariable Long id, @RequestBody QuestionDto questionDTO) {
         Question question = questionMapper.toEntity(questionDTO);
-        return new ResponseEntity<>(questionMapper.toDto(questionService.update(question, id)), HttpStatus.OK);
+        return new ResponseEntity<>(questionMapper.toDto(questionService.update(id, question)), HttpStatus.OK);
     }
 
     @GetMapping("/subject")
