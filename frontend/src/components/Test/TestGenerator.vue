@@ -74,8 +74,7 @@
       generateTest() {
         this.$refs.form.validate();
         console.log('TEST-GENERATE =>', this.postData);
-        this.$axios.get(`/generator/test
-        ?subjectId=${Number(this.postData.subject)}&size=${Number(this.postData.number)}`)
+        this.$axios.get(`/generator/test?subjectId=${Number(this.postData.subject)}&size=${Number(this.postData.number)}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
