@@ -7,6 +7,8 @@ import com.test.yourself.service.test.QuestionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
+
 @Component
 public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> {
 
@@ -20,6 +22,7 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
 
     }
 
+    @PostConstruct
     @Override
     public void initMapper() {
         modelMapper.createTypeMap(UserAnswer.class, UserAnswerDto.class)
@@ -29,14 +32,14 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
     }
 
     @Override
-    public void mapSpecificFields(UserAnswerDto source, UserAnswer destination) {
+    protected void mapSpecificFields(UserAnswerDto source, UserAnswer destination) {
         Long questionId = source.getQuestionId();
         Question byId = questionService.findById(questionId);
         destination.setQuestion(byId);
     }
 
     @Override
-    public void mapSpecificFields(UserAnswer source, UserAnswerDto destination) {
+    protected void mapSpecificFields(UserAnswer source, UserAnswerDto destination) {
         Question question = source.getQuestion();
         Long id = question.getId();
         destination.setQuestionId(id);

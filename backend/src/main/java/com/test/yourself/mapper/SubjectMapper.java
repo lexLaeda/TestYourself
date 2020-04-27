@@ -30,24 +30,25 @@ public class SubjectMapper extends AbstractMapper<Subject, SubjectDto> {
     }
 
     @PostConstruct
-    public void initMapper(){
+    @Override
+    public void initMapper() {
 
-        modelMapper.createTypeMap(Subject.class,SubjectDto.class)
-            .setPostConverter(toDtoConverter());
+        modelMapper.createTypeMap(Subject.class, SubjectDto.class)
+                .setPostConverter(toDtoConverter());
 
-        modelMapper.createTypeMap(SubjectDto.class,Subject.class)
-            .setPostConverter(toEntityConverter());
+        modelMapper.createTypeMap(SubjectDto.class, Subject.class)
+                .setPostConverter(toEntityConverter());
     }
 
     @Override
-    public void mapSpecificFields(Subject source, SubjectDto destination) {
+    protected void mapSpecificFields(Subject source, SubjectDto destination) {
         List<Question> questions = source.getQuestions();
         destination.setAmountQuestions(questions.size());
     }
 
     @Override
-    public void mapSpecificFields(SubjectDto source, Subject destination) {
-        if (source.getId()!= null){
+    protected void mapSpecificFields(SubjectDto source, Subject destination) {
+        if (source.getId() != null) {
             Subject subject = subjectService.findById(source.getId());
             List<Question> questions = questionService.findAllBySubjectId(subject.getId());
             destination.setQuestions(questions);

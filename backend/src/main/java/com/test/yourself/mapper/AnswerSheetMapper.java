@@ -10,10 +10,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.stream.Collectors;
+
 @Component
-public class AnswerSheetMapper extends AbstractMapper<AnswerSheet, AnswerSheetDto>{
+public class AnswerSheetMapper extends AbstractMapper<AnswerSheet, AnswerSheetDto> {
 
     private ModelMapper modelMapper;
     private UserAnswerMapper userAnswerMapper;
@@ -27,6 +29,7 @@ public class AnswerSheetMapper extends AbstractMapper<AnswerSheet, AnswerSheetDt
         this.testService = testService;
     }
 
+    @PostConstruct
     @Override
     public void initMapper() {
         modelMapper.createTypeMap(AnswerSheet.class, AnswerSheetDto.class)

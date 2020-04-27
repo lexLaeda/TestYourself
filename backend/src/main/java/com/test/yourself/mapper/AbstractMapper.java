@@ -16,7 +16,7 @@ public abstract class AbstractMapper<E extends AbstractEntity, D extends Abstrac
 
     private Class<D> dtoClass;
 
-    AbstractMapper(Class<E> entityClass, Class<D> dtoClass) {
+    public AbstractMapper(Class<E> entityClass, Class<D> dtoClass) {
         this.entityClass = entityClass;
         this.dtoClass = dtoClass;
     }
@@ -51,10 +51,10 @@ public abstract class AbstractMapper<E extends AbstractEntity, D extends Abstrac
         };
     }
 
-    public void mapSpecificFields(E source, D destination){
+    protected void mapSpecificFields(E source, D destination){
 
     }
-    public void mapSpecificFields(D source, E destination){
+    protected void mapSpecificFields(D source, E destination){
 
     }
 }

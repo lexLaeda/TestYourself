@@ -12,20 +12,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
 
 @Component
-public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto>{
+public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto> {
+
     private ModelMapper modelMapper;
+
     private TestService testService;
+
     private AnswerSheetMapper answerSheetMapper;
-    private QuestionService questionService;
+
     @Autowired
-    TestResultMapper(ModelMapper modelMapper, TestService testService, QuestionService questionService) {
+    TestResultMapper(ModelMapper modelMapper, TestService testService, AnswerSheetMapper answerSheetMapper) {
         super(TestResult.class, TestResultDto.class);
         this.modelMapper = modelMapper;
         this.testService = testService;
-        this.questionService = questionService;
+        this.answerSheetMapper = answerSheetMapper;
     }
 
     @PostConstruct
@@ -38,7 +40,7 @@ public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto>{
     }
 
     @Override
-    public void mapSpecificFields(TestResult source, TestResultDto destination) {
+    protected void mapSpecificFields(TestResult source, TestResultDto destination) {
 
         AnswerSheet answerSheet = source.getAnswerSheet();
         destination.setAnswerSheetDto(answerSheetMapper.toDto(answerSheet));
@@ -48,7 +50,7 @@ public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto>{
     }
 
     @Override
-    public void mapSpecificFields(TestResultDto source, TestResult destination) {
+    protected void mapSpecificFields(TestResultDto source, TestResult destination) {
 
         Long testId = source.getTestId();
         SubjectTest subjectTest = testService.findById(testId);

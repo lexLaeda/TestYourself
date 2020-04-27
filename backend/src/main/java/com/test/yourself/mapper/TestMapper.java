@@ -22,6 +22,7 @@ public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
     private SubjectService subjectService;
 
     private QuestionMapper questionMapper;
+
     @Autowired
     public TestMapper(ModelMapper modelMapper, SubjectService subjectService, QuestionMapper questionMapper) {
         super(SubjectTest.class, SubjectTestDto.class);
@@ -29,8 +30,10 @@ public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
         this.subjectService = subjectService;
         this.questionMapper = questionMapper;
     }
+
     @PostConstruct
-    public void initMapper(){
+    @Override
+    public void initMapper() {
 
         modelMapper.createTypeMap(SubjectTest.class, SubjectTestDto.class)
                 .setPostConverter(toDtoConverter());
@@ -40,7 +43,7 @@ public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
     }
 
     @Override
-    public void mapSpecificFields(SubjectTest source, SubjectTestDto destination) {
+    protected void mapSpecificFields(SubjectTest source, SubjectTestDto destination) {
         Long subId = source.getSubject().getId();
         destination.setSubjectId(subId);
         List<Question> questions = source.getQuestions();
@@ -52,7 +55,7 @@ public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
     }
 
     @Override
-    public void mapSpecificFields(SubjectTestDto source, SubjectTest destination) {
+    protected void mapSpecificFields(SubjectTestDto source, SubjectTest destination) {
         Long subId = source.getSubjectId();
         Subject subject = subjectService.findById(subId);
         destination.setSubject(subject);
