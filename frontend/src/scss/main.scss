@@ -1,9 +1,17 @@
-.v-toolbar__title {
-  a {
-    text-decoration: none;
-  }
+@import "~vuetify/src/styles/settings/colors";
+@import "~vuetify/src/styles/settings/variables";
+@import "~vuetify/src/styles/generic/colors";
+
+a {
+  text-decoration: none;
 }
 
 .ty-hover-box {
   text-decoration: none;
 }
+
+.v-card__title {
+  word-break: normal;
+}
+
+@import "components/Test";

@@ -1,30 +1,17 @@
 <template>
   <div>
-    <subjectTest-generator></subjectTest-generator>
-<!--    <v-btn @click="hello">Hello</v-btn>-->
+    <test-generator></test-generator>
   </div>
 </template>
 
 <script>
-  import api from "../backend-api";
-  import TestGenerator from "../components/TestGenerator/TestGenerator";
+  import TestGenerator from "../components/Test/TestGenerator";
 
   export default {
     name: 'Home',
 
     components: {
       TestGenerator
-    },
-
-    methods: {
-      hello() {
-        api.hello().then(response => {
-          console.log('DATA =>', response.data);
-        })
-          .catch(error => {
-            console.log('ERROR =>', error);
-          })
-      }
     }
   }
 </script>

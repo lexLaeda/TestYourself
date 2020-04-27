@@ -38,8 +38,6 @@
 </template>
 
 <script>
-  import api from "../../backend-api";
-
   export default {
     name: 'TestGenerator',
 
@@ -54,7 +52,7 @@
 
     methods: {
       getData() {
-        api.getSubjects()
+        this.$axios.get(`/subjects/map`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
@@ -74,11 +72,11 @@
       generateTest() {
         this.$refs.form.validate();
         console.log('TEST-GENERATE =>', this.postData);
-        api.generateTest(this.postData.subject, this.postData.number)
+        this.$axios.get(`/test/generate?id=${this.postData.subject}&number=${this.postData.number}`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
-              this.$router.push('/subjectTest/' + data.id);
+              this.$router.push(`/subjectTest/${data.id}`);
             }
           })
           .catch(error => {

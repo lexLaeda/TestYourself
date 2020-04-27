@@ -3,6 +3,7 @@
     <v-card
       class="mx-auto"
       max-width="700"
+      ref="formWrap"
     >
       <v-card-title class="display-1">Добавить вопрос</v-card-title>
       <v-card-text>
@@ -58,6 +59,7 @@
                           v-model="postData.correctAnswers"
                           :value="index"
                           :rules="[postData.correctAnswers.length > 0]"
+                          hide-details="true"
                       >
                       </v-checkbox>
                     </v-col>
@@ -136,15 +138,23 @@
           </v-card>
 
           <v-row class="mt-4">
-            <v-col cols="auto">
-              <v-btn large color="primary darken-2 white--text"
-               :disabled="!valid"
-               @click="send"
+            <v-col cols="12" sm="auto">
+              <v-btn large block color="primary darken-2 white--text"
+                     :disabled="!valid"
+                     @click="saveQuestion"
               >Сохранить</v-btn>
             </v-col>
-<!--            <v-col cols="auto" class="ml-auto">-->
-<!--              <v-btn large text>Отменить</v-btn>-->
-<!--            </v-col>-->
+            <v-col cols="12" sm="auto">
+              <v-btn large block color="primary darken-2 white--text"
+                     :disabled="!valid"
+                     @click="addNewQuestion"
+              >Сохранить и добавить новый</v-btn>
+            </v-col>
+            <v-col cols="12" sm="auto" class="ml-auto">
+              <v-btn large block
+                     @click="back"
+              >Отменить</v-btn>
+            </v-col>
           </v-row>
         </v-form>
       </v-card-text>
@@ -153,7 +163,6 @@
 </template>
 
 <script>
-    import api from "../../backend-api";
     export default {
     name: 'AddQuestion',
 
@@ -175,7 +184,7 @@
 
     methods: {
       getData() {
-        api.getSubjects()
+        this.$axios.get(`/subjects/map`)
           .then(response => {
             if (response.status === 200) {
               let data = response.data;
@@ -217,18 +226,33 @@
         }
       },
 
+      back() {
+        this.$router.go(-1);
+      },
+
       send() {
         this.$refs.form.validate();
         this.postData.answers = this.answers;
         let postData = JSON.stringify(this.postData);
         console.log('postData =>', this.postData);
-        api.addQuestion(postData)
+        this.$axiosJson.post(`/questions/add`, postData)
           .then(function (response) {
             console.log('ADD-QUESTION =>', response);
           })
           .catch(function (error) {
             console.log(error);
           });
+      },
+
+      saveQuestion() {
+        this.send();
+        this.back();
+      },
+
+      addNewQuestion() {
+        this.send();
+        this.$refs.form.reset();
+        this.$vuetify.goTo(this.$refs.formWrap);
       }
     },
 
