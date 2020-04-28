@@ -6,6 +6,8 @@ import com.test.yourself.model.testsystem.test.*;
 import org.springframework.stereotype.Service;
 
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,11 +46,7 @@ public class TestVerificationServiceImpl implements TestVerificationService {
     private boolean isCorrect(UserAnswer userAnswer) {
         Question question = userAnswer.getQuestion();
         List<Integer> correctAnswers = question.getCorrectAnswers();
-        List<Answer> answerSheet = userAnswer.getAnswers();
-        List<Answer> collect = answerSheet.stream()
-                .filter(answer -> correctAnswers.contains(answer.getNumber()))
-                .collect(Collectors.toList());
-        return correctAnswers.size() == collect.size();
+        List<Integer> userAnswers = userAnswer.getAnswerList();
+        return correctAnswers.containsAll(userAnswers) && userAnswers.size() == correctAnswers.size();
     }
-
 }

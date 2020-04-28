@@ -41,11 +41,7 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
         Question byId = questionService.findById(questionId);
         destination.setQuestion(byId);
 
-        List<Integer> answerList = source.getAnswerList();
-        List<Answer> collect = byId.getAnswers().stream()
-                .filter(answer -> answerList.contains(answer.getNumber()))
-                .collect(Collectors.toList());
-        destination.setAnswers(collect);
+
     }
 
     @Override
@@ -54,9 +50,6 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
         Long id = question.getId();
         destination.setQuestionId(id);
 
-        List<Integer> collect = source.getAnswers().stream()
-                .map(Answer::getNumber)
-                .collect(Collectors.toList());
-        destination.setAnswerList(collect);
+
     }
 }

@@ -58,18 +58,11 @@ public class TestVerificationServiceImplTest {
 
         subjectTest.setQuestions(questions);
 
-        List<Integer> oneAnswers = Arrays.asList(1);
-        List<Integer> twoAnswers = Arrays.asList(2);
-        List<Integer> threeAnswers = Arrays.asList(1);
 
-        UserAnswer oneAns = new UserAnswer(one,Arrays.asList(oneA));
-        UserAnswer twoAns = new UserAnswer(two,Arrays.asList(oneA));
-        UserAnswer threeAns = new UserAnswer(three,Arrays.asList(oneA));
-        List<UserAnswer> userAnswers = Arrays.asList(oneAns,twoAns,threeAns);
 
         answerSheet = new AnswerSheet();
         answerSheet.setSubjectTest(subjectTest);
-        answerSheet.setUserAnswers(userAnswers);
+
     }
 
     @Test

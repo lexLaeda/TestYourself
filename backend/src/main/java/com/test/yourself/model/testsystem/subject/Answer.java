@@ -17,5 +17,4 @@ public class Answer extends AbstractEntity {
 
     private Integer number;
     private String title;
-
 }

@@ -62,7 +62,7 @@ public class UserAnswerMapperTest {
 
         userAnswer = new UserAnswer();
         userAnswer.setQuestion(question);
-        userAnswer.setAnswers(answers);
+
 
         Mockito.when(questionService.findById(testId)).thenReturn(question);
         userAnswerMapper.initMapper();

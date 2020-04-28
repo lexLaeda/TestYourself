@@ -4,12 +4,10 @@ import com.test.yourself.model.AbstractEntity;
 import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import lombok.*;
+import org.hibernate.engine.internal.Cascade;
 
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +24,6 @@ public class UserAnswer extends AbstractEntity {
     @OneToOne
     private Question question;
 
-    @OneToMany
-    private List<Answer> answers = new ArrayList<>();
+    @ElementCollection
+    private List<Integer> answerList = new ArrayList<>();
 }
