@@ -27,8 +27,9 @@ public class TestResult extends AbstractEntity {
 
     private Integer percent;
 
+    @Column(name = "started")
     private LocalDateTime start;
-
+    @Column(name = "ended")
     private LocalDateTime end;
 
     @ElementCollection
