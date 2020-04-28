@@ -28,6 +28,8 @@ public class TestVerificationServiceImpl implements TestVerificationService {
         testResult.setAnswerSheet(answerSheet);
         testResult.setCorrectAmount(numOfCorrect);
         testResult.setPercent(correctPercent);
+        testResult.setStart(answerSheet.getTestStarted());
+        testResult.setEnd(answerSheet.getTestEnded());
         return testResult;
     }
 

@@ -1,10 +1,13 @@
 package com.test.yourself.service.test;
 
+import com.test.yourself.exception.AnswerValidationException;
 import com.test.yourself.exception.QuestionNotFoundException;
+import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
 import com.test.yourself.util.ReflectionUpdate;
+import com.test.yourself.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +28,29 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
-        return questionRepository.saveAndFlush(question);
+        if (checkAnswers(question.getAnswers())){
+            return questionRepository.saveAndFlush(question);
+        }
+        throw new AnswerValidationException("Answers can`t be the same");
     }
+
+    private boolean checkAnswers(List<Answer> answers) {
+        for (Answer answer : answers){
+            if (!checkAnswer(answers,answer)){
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean checkAnswer(List<Answer> answers, Answer currentAnswer){
+        String curTitle = currentAnswer.getTitle();
+        long amountOfSameAnswers = answers.stream()
+                .map(Answer::getTitle)
+                .filter(s -> StringUtils.isSameString(curTitle, s))
+                .count();
+        return amountOfSameAnswers == 1;
+    }
+
 
     @Override
     public List<Question> findAllBySubject(Subject subject) {
@@ -49,9 +73,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question deleteById(Long id) {
-        Question byId = findById(id);
+        Question removedQuestion = findById(id);
         questionRepository.deleteById(id);
-        return byId;
+        return removedQuestion;
     }
 
     @Override
@@ -78,8 +102,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question update(Long id, Question question) {
         Question questionFromDb = findById(id);
-        Question updated = ReflectionUpdate.updateObject(question, questionFromDb);
-        return questionRepository.saveAndFlush(updated);
+        questionFromDb.setName(question.getName());
+        questionFromDb.setDescription(question.getDescription());
+        questionFromDb.setSubject(question.getSubject());
+        questionFromDb.setAnswers(question.getAnswers());
+        return questionRepository.saveAndFlush(questionFromDb);
     }
 
     @Override
