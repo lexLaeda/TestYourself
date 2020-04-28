@@ -42,7 +42,7 @@
             :items="question_types"
             label="Тип вопроса"
             outlined
-            @change="postData.correctAnswers = []"
+            @change="postData.correctAnswers = [1]"
           ></v-select>
 
           <v-card
@@ -180,7 +180,7 @@
       ],
       postData: {
         mode: 'SINGLE',
-        correctAnswers: []
+        correctAnswers: [1]
       }
     }),
 
