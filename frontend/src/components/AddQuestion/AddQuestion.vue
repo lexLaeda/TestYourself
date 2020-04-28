@@ -22,7 +22,9 @@
           <v-textarea
             v-model="postData.description"
             label="Описание"
+            :rules="[v => !!v || validText]"
             outlined
+            required
           ></v-textarea>
 
           <v-autocomplete
@@ -40,7 +42,7 @@
             :items="question_types"
             label="Тип вопроса"
             outlined
-            @change="postData.correctAnswers = [0]"
+            @change="postData.correctAnswers = []"
           ></v-select>
 
           <v-card
@@ -57,7 +59,7 @@
                     <v-col cols="auto" class="py-0">
                       <v-checkbox
                           v-model="postData.correctAnswers"
-                          :value="index"
+                          :value="index + 1"
                           :rules="[postData.correctAnswers.length > 0]"
                           hide-details="true"
                       >
@@ -107,7 +109,7 @@
                    :key="index">
                     <v-col cols="auto" class="py-5">
                       <v-radio
-                        :value="index"
+                        :value="index + 1"
                       >
                       </v-radio>
                     </v-col>
@@ -178,7 +180,7 @@
       ],
       postData: {
         mode: 'SINGLE',
-        correctAnswers: [0]
+        correctAnswers: []
       }
     }),
 
