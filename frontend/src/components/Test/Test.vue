@@ -21,7 +21,7 @@
                   <div v-if="question.description" class="mt-2">{{ question.description }}</div>
                   <template v-if="question.mode === 'SINGLE'">
                     <v-radio-group
-                        v-model="userAnswer[index]['answers'][0]"
+                        v-model="userAnswer[index]['answerList'][0]"
                     >
                       <v-radio
                           class="mb-4"
@@ -37,7 +37,7 @@
                         v-for="(answer, key) in question.answers" :key="key"
                         :label="answer.title"
                         :value="answer.number"
-                        v-model="userAnswer[index]['answers']"
+                        v-model="userAnswer[index]['answerList']"
                         hide-details="true"
                     >
                     </v-checkbox>
@@ -113,14 +113,14 @@
         this.questions.forEach(question => {
           this.userAnswer.push({
             questionId: question.id,
-            answers: []
+            answerList: []
           });
         });
 
         let postData = this.postData;
         postData.testId = this.test.id;
-        postData.answers = this.userAnswer;
-        postData.start = moment().format(this.dateFormat);
+        postData.questionAnswerDtoList = this.userAnswer;
+        postData.testStarted = moment().format(this.dateFormat);
       },
 
       nextStep() {
@@ -136,8 +136,16 @@
       },
 
       sendTest() {
-        this.postData.end = moment().format(this.dateFormat);
-        console.log('TEST-ANSWERS =>', this.postData);
+        this.postData.testEnded = moment().format(this.dateFormat);
+        let postData = JSON.stringify(this.postData);
+        console.log('postData =>', this.postData);
+        this.$axiosJson.post(`/test_verification/test_result`, postData)
+          .then(function (response) {
+            console.log('TEST-ANSWERS =>', response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       }
     },
 

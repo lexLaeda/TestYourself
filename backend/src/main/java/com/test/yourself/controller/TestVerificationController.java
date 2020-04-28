@@ -30,7 +30,7 @@ public class TestVerificationController {
         this.testResultService = testResultService;
     }
 
-    @GetMapping("/test_result")
+    @PostMapping("/test_result")
     public ResponseEntity<TestResultDto> verifySubjectTest(@RequestBody AnswerSheetDto answerSheetDto) {
 
         AnswerSheet answerSheet = answerSheetMapper.toEntity(answerSheetDto);
