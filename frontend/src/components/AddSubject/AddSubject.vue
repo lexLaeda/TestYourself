@@ -66,6 +66,7 @@
     methods: {
       sendSubject() {
         this.$refs.form.validate();
+        console.log('postData =>', this.postData);
         let postData = JSON.stringify(this.postData);
         this.$axiosJson.post(`/subjects/add`, postData)
           .then(function (response) {

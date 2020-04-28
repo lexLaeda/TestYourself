@@ -235,8 +235,8 @@
       send() {
         this.$refs.form.validate();
         this.postData.answers = this.answers;
-        let postData = JSON.stringify(this.postData);
         console.log('postData =>', this.postData);
+        let postData = JSON.stringify(this.postData);
         this.$axiosJson.post(`/questions/add`, postData)
           .then(function (response) {
             console.log('ADD-QUESTION =>', response);
