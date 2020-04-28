@@ -16,16 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@ToString
 public class Question extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @Column(nullable = false)
     private Subject subject;
 
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String description;
 
     @Column(nullable = false)
@@ -36,9 +35,11 @@ public class Question extends AbstractEntity {
     private List<SubjectTest> subjectTests = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(nullable = false)
     private List<Answer> answers = new ArrayList<>();
 
     @ElementCollection
+    @Column(nullable = false)
     private List<Integer> correctAnswers = new ArrayList<>();
 
 }

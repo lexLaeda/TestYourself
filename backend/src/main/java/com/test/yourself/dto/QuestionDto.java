@@ -16,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class QuestionDto extends AbstractDto{
+
     @JsonProperty("subject")
     private Long subjectId;
 
@@ -28,6 +29,4 @@ public class QuestionDto extends AbstractDto{
     private List<Answer> answers;
 
     private List<Integer> correctAnswers;
-
-
 }

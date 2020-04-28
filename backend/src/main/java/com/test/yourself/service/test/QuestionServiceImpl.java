@@ -29,10 +29,9 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question add(Question question) {
         if (checkAnswers(question.getAnswers())){
-            Question questionSaved = questionRepository.saveAndFlush(question);
-            return questionSaved;
+            return questionRepository.saveAndFlush(question);
         }
-        throw new AnswerValidationException();
+        throw new AnswerValidationException("Answers can`t be the same");
     }
 
     private boolean checkAnswers(List<Answer> answers) {
@@ -45,11 +44,11 @@ public class QuestionServiceImpl implements QuestionService {
     }
     private boolean checkAnswer(List<Answer> answers, Answer currentAnswer){
         String curTitle = currentAnswer.getTitle();
-        long count = answers.stream()
+        long amountOfSameAnswers = answers.stream()
                 .map(Answer::getTitle)
                 .filter(s -> StringUtils.isSameString(curTitle, s))
                 .count();
-        return count == 0;
+        return amountOfSameAnswers == 1;
     }
 
 
@@ -74,9 +73,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question deleteById(Long id) {
-        Question byId = findById(id);
+        Question removedQuestion = findById(id);
         questionRepository.deleteById(id);
-        return byId;
+        return removedQuestion;
     }
 
     @Override
@@ -103,8 +102,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question update(Long id, Question question) {
         Question questionFromDb = findById(id);
-        Question updated = ReflectionUpdate.updateObject(question, questionFromDb);
-        return questionRepository.saveAndFlush(updated);
+        questionFromDb.setName(question.getName());
+        questionFromDb.setDescription(question.getDescription());
+        questionFromDb.setSubject(question.getSubject());
+        questionFromDb.setAnswers(question.getAnswers());
+        return questionRepository.saveAndFlush(questionFromDb);
     }
 
     @Override
