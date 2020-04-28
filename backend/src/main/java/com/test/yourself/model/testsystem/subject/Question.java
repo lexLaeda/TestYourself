@@ -19,7 +19,6 @@ import java.util.List;
 public class Question extends AbstractEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(nullable = false)
     private Subject subject;
 
     @Column(nullable = false)

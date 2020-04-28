@@ -28,6 +28,8 @@ public class TestVerificationServiceImpl implements TestVerificationService {
         testResult.setAnswerSheet(answerSheet);
         testResult.setCorrectAmount(numOfCorrect);
         testResult.setPercent(correctPercent);
+        testResult.setStart(answerSheet.getTestStarted());
+        testResult.setEnd(answerSheet.getTestEnded());
         return testResult;
     }
 
@@ -41,11 +43,8 @@ public class TestVerificationServiceImpl implements TestVerificationService {
 
     private boolean isCorrect(UserAnswer userAnswer) {
         Question question = userAnswer.getQuestion();
-        System.out.println(question);
         List<Integer> correctAnswers = question.getCorrectAnswers();
-        System.out.println(correctAnswers);
         List<Answer> answerSheet = userAnswer.getAnswers();
-        System.out.println(answerSheet);
         List<Answer> collect = answerSheet.stream()
                 .filter(answer -> correctAnswers.contains(answer.getNumber()))
                 .collect(Collectors.toList());

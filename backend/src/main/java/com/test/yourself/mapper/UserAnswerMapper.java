@@ -1,6 +1,7 @@
 package com.test.yourself.mapper;
 
 import com.test.yourself.dto.UserAnswerDto;
+import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.test.UserAnswer;
 import com.test.yourself.service.test.QuestionService;
@@ -8,6 +9,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> {
@@ -33,9 +36,16 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
 
     @Override
     protected void mapSpecificFields(UserAnswerDto source, UserAnswer destination) {
+
         Long questionId = source.getQuestionId();
         Question byId = questionService.findById(questionId);
         destination.setQuestion(byId);
+
+        List<Integer> answerList = source.getAnswerList();
+        List<Answer> collect = byId.getAnswers().stream()
+                .filter(answer -> answerList.contains(answer.getNumber()))
+                .collect(Collectors.toList());
+        destination.setAnswers(collect);
     }
 
     @Override
@@ -43,5 +53,10 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
         Question question = source.getQuestion();
         Long id = question.getId();
         destination.setQuestionId(id);
+
+        List<Integer> collect = source.getAnswers().stream()
+                .map(Answer::getNumber)
+                .collect(Collectors.toList());
+        destination.setAnswerList(collect);
     }
 }

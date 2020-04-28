@@ -27,6 +27,10 @@ public class TestResult extends AbstractEntity {
 
     private Integer percent;
 
+    private LocalDateTime start;
+
+    private LocalDateTime end;
+
     @ElementCollection
     private List<Long> listOfCorrectId = new ArrayList<>();
 
