@@ -1,10 +1,13 @@
 package com.test.yourself.service.test;
 
+import com.test.yourself.exception.AnswerValidationException;
 import com.test.yourself.exception.QuestionNotFoundException;
+import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
 import com.test.yourself.util.ReflectionUpdate;
+import com.test.yourself.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +28,30 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
-        return questionRepository.saveAndFlush(question);
+        if (checkAnswers(question.getAnswers())){
+            Question questionSaved = questionRepository.saveAndFlush(question);
+            return questionSaved;
+        }
+        throw new AnswerValidationException();
     }
+
+    private boolean checkAnswers(List<Answer> answers) {
+        for (Answer answer : answers){
+            if (!checkAnswer(answers,answer)){
+                return false;
+            }
+        }
+        return true;
+    }
+    private boolean checkAnswer(List<Answer> answers, Answer currentAnswer){
+        String curTitle = currentAnswer.getTitle();
+        long count = answers.stream()
+                .map(Answer::getTitle)
+                .filter(s -> StringUtils.isSameString(curTitle, s))
+                .count();
+        return count == 0;
+    }
+
 
     @Override
     public List<Question> findAllBySubject(Subject subject) {

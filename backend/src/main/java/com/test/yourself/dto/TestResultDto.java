@@ -1,13 +1,12 @@
 package com.test.yourself.dto;
 
 import lombok.Data;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
 @Data
 public class TestResultDto extends AbstractDto{
 
-    private String testName;
 
     private Long testId;
 
@@ -22,4 +21,7 @@ public class TestResultDto extends AbstractDto{
     private List<Integer> listOfCorrectId;
 
     private AnswerSheetDto answerSheetDto;
+
+
 }
+
