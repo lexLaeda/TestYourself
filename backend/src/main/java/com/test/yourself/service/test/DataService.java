@@ -10,7 +10,7 @@ public interface DataService <T extends AbstractEntity>{
     T findById(Long id);
     T findByName(String name);
     List<T> findAll();
-    T deleteById(Long id);
-    T delete(T entity);
+    Boolean deleteById(Long id);
+    Boolean delete(T entity);
     void deleteAll();
 }

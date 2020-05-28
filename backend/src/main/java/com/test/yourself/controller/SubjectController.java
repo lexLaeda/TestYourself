@@ -67,4 +67,10 @@ public class SubjectController {
                 .collect(Collectors.toList());
         return new ResponseEntity<>(subList, HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id) {
+        Boolean isDeleted = subjectService.deleteById(id);
+        return new ResponseEntity<>(isDeleted, HttpStatus.OK);
+    }
 }

@@ -46,17 +46,16 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
-    public SubjectTest delete(SubjectTest subjectTest) {
+    public Boolean delete(SubjectTest subjectTest) {
         testRepository.delete(subjectTest);
-        return subjectTest;
+        return true;
     }
 
 
     @Override
-    public SubjectTest deleteById(Long id) {
-        SubjectTest byId = findById(id);
+    public Boolean deleteById(Long id) {
         testRepository.deleteById(id);
-        return byId;
+        return true;
     }
 
     @Override

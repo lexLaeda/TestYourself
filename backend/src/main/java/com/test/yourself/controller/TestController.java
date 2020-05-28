@@ -59,4 +59,9 @@ public class TestController {
         return new ResponseEntity<>(results, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id){
+        Boolean isDeleted = testService.deleteById(id);
+        return new ResponseEntity<>(isDeleted,HttpStatus.OK);
+    }
 }

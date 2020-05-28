@@ -60,4 +60,10 @@ public class QuestionController {
         return new ResponseEntity<>(questionDto, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id){
+        Boolean isDeleted = questionService.deleteById(id);
+        return new ResponseEntity<>(isDeleted,HttpStatus.OK);
+    }
+
 }

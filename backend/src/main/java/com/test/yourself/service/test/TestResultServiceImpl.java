@@ -43,12 +43,12 @@ public class TestResultServiceImpl implements TestResultService {
     }
 
     @Override
-    public TestResult deleteById(Long id) {
+    public Boolean deleteById(Long id) {
         return null;
     }
 
     @Override
-    public TestResult delete(TestResult entity) {
+    public Boolean delete(TestResult entity) {
         return null;
     }
 

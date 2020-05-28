@@ -35,12 +35,8 @@ public class TestVerificationController {
 
         AnswerSheet answerSheet = answerSheetMapper.toEntity(answerSheetDto);
         TestResult testResult = verificationService.checkTest(answerSheet);
-        System.out.println(testResult.getPercent());
-        System.out.println(testResult.getCorrectAmount());
         TestResult savedResult = testResultService.add(testResult);
         TestResultDto testResultDto = testResultMapper.toDto(savedResult);
-        System.out.println(testResultDto.getCorrectAmount());
-        System.out.println(testResultDto.getPercent());
         return new ResponseEntity<>(testResultDto, HttpStatus.OK);
     }
 

@@ -6,7 +6,6 @@ import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
-import com.test.yourself.util.ReflectionUpdate;
 import com.test.yourself.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,21 +27,22 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public Question add(Question question) {
-        if (checkAnswers(question.getAnswers())){
+        if (isValidAnswers(question.getAnswers())) {
             return questionRepository.saveAndFlush(question);
         }
         throw new AnswerValidationException("Answers can`t be the same");
     }
 
-    private boolean checkAnswers(List<Answer> answers) {
-        for (Answer answer : answers){
-            if (!checkAnswer(answers,answer)){
+    private boolean isValidAnswers(List<Answer> answers) {
+        for (Answer answer : answers) {
+            if (!isValidAnswer(answers, answer)) {
                 return false;
             }
         }
         return true;
     }
-    private boolean checkAnswer(List<Answer> answers, Answer currentAnswer){
+
+    private boolean isValidAnswer(List<Answer> answers, Answer currentAnswer) {
         String curTitle = currentAnswer.getTitle();
         long amountOfSameAnswers = answers.stream()
                 .map(Answer::getTitle)
@@ -72,16 +72,15 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public Question deleteById(Long id) {
-        Question removedQuestion = findById(id);
+    public Boolean deleteById(Long id) {
         questionRepository.deleteById(id);
-        return removedQuestion;
+        return true;
     }
 
     @Override
-    public Question delete(Question entity) {
+    public Boolean delete(Question entity) {
         questionRepository.delete(entity);
-        return entity;
+        return true;
     }
 
     @Override
@@ -112,29 +111,29 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public List<Question> getRandomQuestionsBySubject(Subject subject, int size) {
         List<Question> questionPull = getQuestionsByPredicate(question -> subject.equals(question.getSubject()));
-        return getRandomQuestions(questionPull,size);
-     }
+        return getRandomQuestions(questionPull, size);
+    }
 
-     private List<Question> getRandomQuestions(List<Question> questionPull, int size){
+    private List<Question> getRandomQuestions(List<Question> questionPull, int size) {
         int pullSize = questionPull.size();
-        if (size >= pullSize){
+        if (size >= pullSize) {
             size = pullSize;
         }
         Set<Question> questions = new HashSet<>();
         Random random = new Random();
-        while (questions.size() < size){
+        while (questions.size() < size) {
             int randomIndex = random.nextInt(size);
             Question randomQuestion = questionPull.get(randomIndex);
             questions.add(randomQuestion);
         }
         return new ArrayList<>(questions);
-     }
+    }
 
-     private List<Question> getQuestionsByPredicate(Predicate<? super Question> predicate){
+    private List<Question> getQuestionsByPredicate(Predicate<? super Question> predicate) {
         return findAll().stream()
-                 .filter(predicate)
-                 .collect(Collectors.toList());
-     }
+                .filter(predicate)
+                .collect(Collectors.toList());
+    }
 
 
 }
