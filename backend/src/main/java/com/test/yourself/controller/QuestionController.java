@@ -3,12 +3,15 @@ package com.test.yourself.controller;
 import com.test.yourself.dto.QuestionDto;
 import com.test.yourself.mapper.QuestionMapper;
 import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.service.test.QuestionService;
+import com.test.yourself.service.test.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,15 +20,17 @@ import java.util.stream.Collectors;
 public class QuestionController {
     private QuestionService questionService;
     private QuestionMapper questionMapper;
+    private SubjectService subjectService;
 
     @Autowired
-    public QuestionController(QuestionMapper questionMapper, QuestionService questionService) {
+    public QuestionController(QuestionMapper questionMapper, QuestionService questionService, SubjectService subjectService) {
         this.questionService = questionService;
         this.questionMapper = questionMapper;
+        this.subjectService = subjectService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<QuestionDto> addQuestion(@RequestBody QuestionDto questionDTO) {
+    public ResponseEntity<QuestionDto> addQuestion(@Valid @RequestBody QuestionDto questionDTO) {
         Question question = questionMapper.toEntity(questionDTO);
         Question fromdb = questionService.add(question);
         return new ResponseEntity<>(questionMapper.toDto(fromdb), HttpStatus.OK);
@@ -40,7 +45,8 @@ public class QuestionController {
     @GetMapping("/subject")
     @ResponseBody
     public ResponseEntity<List<QuestionDto>> findAllBySubject(@RequestParam("sub_id") Long subjectId) {
-        List<QuestionDto> questions = questionService.findAllBySubjectId(subjectId).stream()
+        Subject subject = subjectService.findById(subjectId);
+        List<QuestionDto> questions = questionService.findAllBySubject(subject).stream()
                 .map(question -> questionMapper.toDto(question))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(questions, HttpStatus.OK);
@@ -61,9 +67,9 @@ public class QuestionController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id){
+    public ResponseEntity<Boolean> deleteById(@PathVariable("id") Long id) {
         Boolean isDeleted = questionService.deleteById(id);
-        return new ResponseEntity<>(isDeleted,HttpStatus.OK);
+        return new ResponseEntity<>(isDeleted, HttpStatus.OK);
     }
 
 }

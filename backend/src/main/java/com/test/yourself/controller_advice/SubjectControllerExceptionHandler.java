@@ -14,6 +14,7 @@ public class SubjectControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({SQLException.class, NullPointerException.class})
-    public void handle() {}
+    public void handle() {
+    }
 
 }

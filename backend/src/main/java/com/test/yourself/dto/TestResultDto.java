@@ -1,11 +1,12 @@
 package com.test.yourself.dto;
 
 import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class TestResultDto extends AbstractDto{
+public class TestResultDto extends AbstractDto {
 
 
     private Long testId;

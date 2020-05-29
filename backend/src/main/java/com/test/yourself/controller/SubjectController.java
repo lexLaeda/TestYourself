@@ -7,8 +7,10 @@ import com.test.yourself.service.test.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -32,14 +34,14 @@ public class SubjectController {
     }
 
     @PostMapping(value = "/add", produces = "application/json")
-    public ResponseEntity<SubjectDto> addNewSubject(@RequestBody SubjectDto subjectDto) {
+    public ResponseEntity<SubjectDto> addNewSubject(@Valid @RequestBody SubjectDto subjectDto) {
         Subject subject = subjectMapper.toEntity(subjectDto);
         Subject savedSubject = subjectService.add(subject);
         return new ResponseEntity<>(subjectMapper.toDto(savedSubject), HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<SubjectDto> updateSubject(@RequestBody SubjectDto subjectDto, @PathVariable Long id) {
+    public ResponseEntity<SubjectDto> updateSubject(@Valid @RequestBody SubjectDto subjectDto, @PathVariable Long id) {
         Subject subject = subjectMapper.toEntity(subjectDto);
         Subject updatedSubject = subjectService.update(id, subject);
         return new ResponseEntity<>(subjectMapper.toDto(updatedSubject), HttpStatus.OK);

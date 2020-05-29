@@ -2,10 +2,8 @@ package com.test.yourself.mapper;
 
 import com.test.yourself.dto.AnswerSheetDto;
 import com.test.yourself.dto.TestResultDto;
-import com.test.yourself.model.testsystem.test.AnswerSheet;
 import com.test.yourself.model.testsystem.test.SubjectTest;
 import com.test.yourself.model.testsystem.test.TestResult;
-import com.test.yourself.service.test.QuestionService;
 import com.test.yourself.service.test.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +18,14 @@ public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto> 
 
     private TestService testService;
 
-    private AnswerSheetMapper answerSheetMapper;
+
 
     @Autowired
-    TestResultMapper(ModelMapper modelMapper, TestService testService, AnswerSheetMapper answerSheetMapper) {
+    TestResultMapper(ModelMapper modelMapper, TestService testService) {
         super(TestResult.class, TestResultDto.class);
         this.modelMapper = modelMapper;
         this.testService = testService;
-        this.answerSheetMapper = answerSheetMapper;
+
     }
 
     @PostConstruct
@@ -42,8 +40,8 @@ public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto> 
     @Override
     protected void mapSpecificFields(TestResult source, TestResultDto destination) {
 
-        AnswerSheet answerSheet = source.getAnswerSheet();
-        destination.setAnswerSheetDto(answerSheetMapper.toDto(answerSheet));
+
+
 
         SubjectTest subjectTest = source.getSubjectTest();
         destination.setTestId(subjectTest.getId());
@@ -57,7 +55,7 @@ public class TestResultMapper extends AbstractMapper<TestResult, TestResultDto> 
         destination.setSubjectTest(subjectTest);
 
         AnswerSheetDto answerSheetDto = source.getAnswerSheetDto();
-        destination.setAnswerSheet(answerSheetMapper.toEntity(answerSheetDto));
+
     }
 
 

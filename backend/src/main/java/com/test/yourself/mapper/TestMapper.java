@@ -47,11 +47,7 @@ public class TestMapper extends AbstractMapper<SubjectTest, SubjectTestDto> {
         Long subId = source.getSubject().getId();
         destination.setSubjectId(subId);
         List<Question> questions = source.getQuestions();
-        List<QuestionDto> questionDtos = questions.stream()
-                .map(question -> questionMapper.toDto(question))
-                .peek(questionDto -> questionDto.getCorrectAnswers().clear())
-                .collect(Collectors.toList());
-        destination.setQuestions(questionDtos);
+
     }
 
     @Override

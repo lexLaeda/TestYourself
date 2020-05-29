@@ -9,7 +9,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
-public class SubjectTestDto extends AbstractDto{
+public class SubjectTestDto extends AbstractDto {
 
     private Long subjectId;
 

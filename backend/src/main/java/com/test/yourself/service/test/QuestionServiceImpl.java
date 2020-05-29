@@ -1,13 +1,11 @@
 package com.test.yourself.service.test;
 
-import com.test.yourself.exception.AnswerValidationException;
 import com.test.yourself.exception.QuestionNotFoundException;
-import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import com.test.yourself.repository.QuestionRepository;
-import com.test.yourself.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,91 +19,18 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Autowired
     public QuestionServiceImpl(QuestionRepository questionRepository) {
-
         this.questionRepository = questionRepository;
-    }
-
-    @Override
-    public Question add(Question question) {
-        if (isValidAnswers(question.getAnswers())) {
-            return questionRepository.saveAndFlush(question);
-        }
-        throw new AnswerValidationException("Answers can`t be the same");
-    }
-
-    private boolean isValidAnswers(List<Answer> answers) {
-        for (Answer answer : answers) {
-            if (!isValidAnswer(answers, answer)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private boolean isValidAnswer(List<Answer> answers, Answer currentAnswer) {
-        String curTitle = currentAnswer.getTitle();
-        long amountOfSameAnswers = answers.stream()
-                .map(Answer::getTitle)
-                .filter(s -> StringUtils.isSameString(curTitle, s))
-                .count();
-        return amountOfSameAnswers == 1;
     }
 
 
     @Override
     public List<Question> findAllBySubject(Subject subject) {
-        List<Question> questions = questionRepository.findAll();
-        return questions.stream()
-                .filter(question -> subject.equals(question.getSubject()))
-                .collect(Collectors.toList());
+        return this.questionRepository.findAllBySubject(subject);
     }
 
     @Override
     public List<Question> findAllBySubjectId(Long subjectId) {
-
-        return questionRepository.findAllBySubjectId(subjectId);
-    }
-
-    @Override
-    public List<Question> findAll() {
-        return questionRepository.findAll();
-    }
-
-    @Override
-    public Boolean deleteById(Long id) {
-        questionRepository.deleteById(id);
-        return true;
-    }
-
-    @Override
-    public Boolean delete(Question entity) {
-        questionRepository.delete(entity);
-        return true;
-    }
-
-    @Override
-    public void deleteAll() {
-        questionRepository.deleteAll();
-    }
-
-    @Override
-    public Question findById(Long id) {
-        return questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new);
-    }
-
-    @Override
-    public Question findByName(String name) {
-        return questionRepository.findByName(name);
-    }
-
-    @Override
-    public Question update(Long id, Question question) {
-        Question questionFromDb = findById(id);
-        questionFromDb.setName(question.getName());
-        questionFromDb.setDescription(question.getDescription());
-        questionFromDb.setSubject(question.getSubject());
-        questionFromDb.setAnswers(question.getAnswers());
-        return questionRepository.saveAndFlush(questionFromDb);
+        return null;
     }
 
     @Override
@@ -136,4 +61,56 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
 
+    @Override
+    public Question add(Question entity) {
+        return questionRepository.saveAndFlush(entity);
+    }
+
+    @Override
+    public Question update(Long id, Question entity) {
+        Question question = questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new);
+        entity.setId(id);
+        return questionRepository.save(entity);
+    }
+
+    @Override
+    public Question findById(Long id) {
+        return questionRepository.findById(id).orElseThrow(QuestionNotFoundException::new);
+
+    }
+
+    @Override
+    public Question findByName(String name) {
+        return questionRepository.findByText(name);
+    }
+
+    @Override
+    public List<Question> findAll() {
+        return questionRepository.findAll();
+    }
+
+    @Override
+    public Boolean deleteById(Long id) {
+        try {
+            questionRepository.deleteById(id);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean delete(Question entity) {
+        try {
+            questionRepository.delete(entity);
+            return true;
+        } catch (EmptyResultDataAccessException e) {
+            return false;
+        }
+    }
+
+    @Override
+    public void deleteAll() {
+        questionRepository.deleteAll();
+    }
 }

@@ -2,8 +2,8 @@ package com.test.yourself.model.testsystem.subject;
 
 import com.test.yourself.model.AbstractEntity;
 import com.test.yourself.model.enums.QuestionMode;
-import com.test.yourself.model.testsystem.test.SubjectTest;
 import lombok.*;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,33 +12,36 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "questions")
+@Table(name = "question")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class Question extends AbstractEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "question_id")
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, name = "text")
+    private String text;
 
+    @Column(name = "description")
     private String description;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "mode")
     @Enumerated(EnumType.STRING)
     private QuestionMode mode;
 
-    @ManyToMany(mappedBy = "questions")
-    private List<SubjectTest> subjectTests = new ArrayList<>();
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @Column(nullable = false)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "question_answer",
+            joinColumns = {@JoinColumn(name = "question_id")},
+            inverseJoinColumns = {@JoinColumn(name = "answer_id")})
     private List<Answer> answers = new ArrayList<>();
-
-    @ElementCollection
-    @Column(nullable = false)
-    private List<Integer> correctAnswers = new ArrayList<>();
 
 }

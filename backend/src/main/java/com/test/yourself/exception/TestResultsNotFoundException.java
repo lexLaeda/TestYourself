@@ -1,6 +1,6 @@
 package com.test.yourself.exception;
 
-public class TestResultsNotFoundException extends RuntimeException{
+public class TestResultsNotFoundException extends RuntimeException {
     public TestResultsNotFoundException() {
     }
 

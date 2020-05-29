@@ -1,10 +1,13 @@
 package com.test.yourself.mapper;
 
+import com.test.yourself.dto.QuestionAnswerDto;
 import com.test.yourself.dto.UserAnswerDto;
-import com.test.yourself.model.testsystem.subject.Answer;
 import com.test.yourself.model.testsystem.subject.Question;
+import com.test.yourself.model.testsystem.test.QuestionAnswer;
+import com.test.yourself.model.testsystem.test.SubjectTest;
 import com.test.yourself.model.testsystem.test.UserAnswer;
 import com.test.yourself.service.test.QuestionService;
+import com.test.yourself.service.test.TestService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +20,16 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
 
     private ModelMapper modelMapper;
     private QuestionService questionService;
+    private QuestionAnswerMapper questionAnswerMapper;
+    private TestService testService;
 
-    public UserAnswerMapper(ModelMapper modelMapper, QuestionService questionService) {
+    public UserAnswerMapper(ModelMapper modelMapper, QuestionService questionService,
+                            QuestionAnswerMapper questionAnswerMapper, TestService testService) {
         super(UserAnswer.class, UserAnswerDto.class);
         this.modelMapper = modelMapper;
         this.questionService = questionService;
-
+        this.questionAnswerMapper = questionAnswerMapper;
+        this.testService = testService;
     }
 
     @PostConstruct
@@ -36,20 +43,17 @@ public class UserAnswerMapper extends AbstractMapper<UserAnswer, UserAnswerDto> 
 
     @Override
     protected void mapSpecificFields(UserAnswerDto source, UserAnswer destination) {
-
-        Long questionId = source.getQuestionId();
-        Question byId = questionService.findById(questionId);
-        destination.setQuestion(byId);
-
-
+        List<QuestionAnswerDto> answers = source.getAnswers();
+        List<QuestionAnswer> collect = answers.stream()
+                .map(questionAnswerDto -> questionAnswerMapper.toEntity(questionAnswerDto))
+                .collect(Collectors.toList());
+        destination.setQuestionAnswers(collect);
+        SubjectTest byId = testService.findById(source.getId());
+        destination.setSubjectTest(byId);
     }
 
     @Override
     protected void mapSpecificFields(UserAnswer source, UserAnswerDto destination) {
-        Question question = source.getQuestion();
-        Long id = question.getId();
-        destination.setQuestionId(id);
-
 
     }
 }

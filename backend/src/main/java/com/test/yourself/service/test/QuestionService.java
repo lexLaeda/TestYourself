@@ -5,7 +5,7 @@ import com.test.yourself.model.testsystem.subject.Subject;
 
 import java.util.List;
 
-public interface QuestionService extends DataService<Question>{
+public interface QuestionService extends DataService<Question> {
 
     List<Question> findAllBySubject(Subject subject);
 

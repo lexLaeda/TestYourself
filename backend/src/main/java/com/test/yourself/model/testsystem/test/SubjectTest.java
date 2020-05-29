@@ -5,41 +5,43 @@ import com.test.yourself.model.enums.TestMode;
 import com.test.yourself.model.testsystem.subject.Question;
 import com.test.yourself.model.testsystem.subject.Subject;
 import lombok.*;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 @Getter
 @Setter
 @Entity
-@Table(name = "subjectTests")
+@Table(name = "test")
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(callSuper = false)
 public class SubjectTest extends AbstractEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
+    @JoinColumn(name = "subject_id")
     private Subject subject;
 
-    @OneToMany(mappedBy = "subjectTest")
-    private Set<TestResult> testResults = new HashSet<>();
-
+    @Column(name = "name")
     private String name;
 
     @Enumerated(EnumType.STRING)
-    private TestMode testMode;
+    @Column(name = "mode")
+    private TestMode mode;
 
     @ManyToMany
     @JoinTable(
             name = "test_questions",
-            joinColumns = @JoinColumn(name = "question_id"),
-            inverseJoinColumns = @JoinColumn(name = "test_id"))
+            joinColumns = @JoinColumn(name = "test_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id"))
     private List<Question> questions = new ArrayList<>();
 
 }

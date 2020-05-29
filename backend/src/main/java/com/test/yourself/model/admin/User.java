@@ -1,11 +1,12 @@
 package com.test.yourself.model.admin;
 
+import com.test.yourself.model.AbstractEntity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class User {
+public class User extends AbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,5 +31,5 @@ public class User {
     private String email;
 
     @ManyToMany(cascade = CascadeType.PERSIST)
-    private Set<Role> roleSet;
+    private Set<Role> roles = new HashSet<>();
 }
