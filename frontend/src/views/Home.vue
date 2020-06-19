@@ -1,17 +1,32 @@
 <template>
   <div>
-    <test-generator></test-generator>
+    Hello: {{hello}}
   </div>
 </template>
 
 <script>
-  import TestGenerator from "../components/Test/TestGenerator";
 
   export default {
     name: 'Home',
+    data: () => ({
+      hello: ''
+    }),
+    methods: {
+      getData() {
+        this.$axios.get(`/hello`).then(response => {
+          if (response.status === 200) {
+            let data = response.data;
+            this.hello = data;
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+    },
 
-    components: {
-      TestGenerator
+    mounted() {
+      this.getData();
     }
   }
 </script>
