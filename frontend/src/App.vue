@@ -1,4 +1,5 @@
 <template>
+  ТЕСТ
   <v-app>
     <toolbar></toolbar>
 
@@ -26,6 +27,7 @@
       </v-row>
     </v-footer>
   </v-app>
+  TEST
 </template>
 
 <script>
